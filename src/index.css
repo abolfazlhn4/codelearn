@@ -59,7 +59,6 @@
 @layer base {
   body {
     font-family: var(--font-yekan);
-    font-weight: 400;
     direction: rtl;
   }
 }

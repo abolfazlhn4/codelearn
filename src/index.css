@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_01.ttf") format("truetype");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_02.ttf") format("truetype");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_03.ttf") format("truetype");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_04.ttf") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_05.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_06.ttf") format("truetype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_07.ttf") format("truetype");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url("/fonts/Yekan_08.ttf") format("truetype");
+  font-weight: 900;
+}
+
+@theme {
+  --font-yekan: "YekanBakh", sans-serif;
+
+  /* تعریف وزن‌ها برای استفاده راحت */
+  --font-weight-thin: 100;
+  --font-weight-hairline: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-yekan);
+    font-weight: 400;
+    direction: rtl;
+  }
+}

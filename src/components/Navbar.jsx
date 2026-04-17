@@ -58,6 +58,8 @@ const Navbar = () => {
           {/* استفاده از absolute برای اطمینان از قرارگیری دقیق در مرکز */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
             {/* در اینجا باید عکس لوگوی خود را قرار دهید. */}
+            <div className="w-10 h-10 bg-gradient-to-tr from-[#3b3ab5] to-[#4caf50] rounded-xl flex items-center justify-center text-white transform rotate-12"></div>
+            {/*
             <div className="w-10 h-10 flex items-center justify-center">
               <img
                 src="/path-to-your-logo.png"
@@ -65,6 +67,7 @@ const Navbar = () => {
                 className="w-full h-full object-contain"
               />
             </div>
+            */}
           </div>
 
           {/* سمت چپ: دکمه‌ها */}

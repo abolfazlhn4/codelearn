@@ -165,7 +165,7 @@ const CoursesSection = () => {
                     <Users className="w-4 h-4" strokeWidth={2} />
                     <span className="text-sm">{course.studentsCount} نفر</span>
                   </div>
-                  <span className="text-[#4caf50] font-black text-sm">
+                  <span className="text-[#4caf50] font-medium text-sm">
                     {course.price}
                   </span>
                 </div>

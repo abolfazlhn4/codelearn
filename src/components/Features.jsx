@@ -1,107 +1,85 @@
 import React from "react";
+import { Wallet, Settings, Users, MonitorPlay } from "lucide-react";
 
-const Features = () => {
+const FeaturesSection = () => {
   const features = [
     {
+      id: 1,
+      title: "پرداخت اقساطی",
+      description:
+        "امکان پرداخت هزینه دوره‌ها به صورت اقساطی و بدون بهره برای راحتی شما.",
+      icon: <Wallet className="w-6 h-6 text-white" />,
+      bgColor: "bg-white",
+    },
+    {
+      id: 2,
       title: "پشتیبانی دائمی",
-      desc: "پاسخگویی به سوالات در تمام مراحل یادگیری",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-indigo-600"
-        >
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      ),
-      bgColor: "bg-indigo-50",
+      description:
+        "پشتیبانی ۲۴ ساعته در ۷ روز هفته توسط متخصصین برای رفع مشکلات شما.",
+      icon: <Settings className="w-6 h-6 text-white" />,
+      bgColor: "bg-[#e5f0d1]", // کارت سبز رنگ
     },
     {
-      title: "مدرک معتبر",
-      desc: "ارائه گواهی پایان دوره برای ورود به بازار کار",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-lime-700"
-        >
-          <path d="M12 15l-2 5l2 2l2-2l-2-5" />
-          <path d="M15 13l-3 8l-3-8l3-8l3 8z" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-      ),
-      bgColor: "bg-lime-50",
+      id: 3,
+      title: "اساتید مجرب",
+      description:
+        "بهره‌گیری از بهترین اساتید با تجربه کاری بالا در پروژه‌های واقعی.",
+      icon: <Users className="w-6 h-6 text-white" />,
+      bgColor: "bg-white",
     },
     {
-      title: "پروژه‌ محور",
-      desc: "یادگیری عمیق با انجام پروژه‌های واقعی و عملی",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-orange-600"
-        >
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-        </svg>
-      ),
-      bgColor: "bg-orange-50",
+      id: 4,
+      title: "پروژه محور",
+      description:
+        "یادگیری مفاهیم از طریق انجام پروژه‌های کاربردی و ورود به بازار کار.",
+      icon: <MonitorPlay className="w-6 h-6 text-white" />,
+      bgColor: "bg-white",
     },
   ];
 
   return (
     <section
-      className="w-full max-w-7xl mx-auto px-6 py-16 font-yekan"
       dir="rtl"
+      className="bg-[#f8f9fa] font-yekan pt-8 pb-20 px-4 sm:px-8"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {features.map((item, index) => (
-          <div
-            key={index}
-            className="group flex items-center gap-6 p-6 bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 cursor-default"
-          >
-            {/* آیکون */}
-            <div
-              className={`w-16 h-16 shrink-0 flex items-center justify-center rounded-2xl ${item.bgColor} group-hover:scale-110 transition-transform`}
-            >
-              {item.icon}
-            </div>
+      <div className="max-w-7xl mx-auto">
+        {/* بخش عنوان */}
+        <div className="text-center mb-16 space-y-3">
+          <p className="text-gray-500 font-medium text-sm">ویژگی های ما</p>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900">
+            چرا باید سایت مارو انتخاب کنید؟
+          </h2>
+        </div>
 
-            {/* متن */}
-            <div className="flex flex-col gap-1">
-              <h4 className="text-lg font-black text-gray-900 leading-tight">
-                {item.title}
-              </h4>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                {item.desc}
+        {/* گرید کارت‌ها */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature, index) => (
+            <div
+              key={feature.id}
+              className={`
+                ${feature.bgColor} 
+                rounded-[2rem] p-8 
+                shadow-sm hover:shadow-md transition-shadow duration-300
+                flex flex-col items-center text-center
+                ${/* ایجاد افکت پله‌ای فقط در دسکتاپ */ ""}
+                ${index % 2 === 0 ? "lg:-translate-y-4" : "lg:translate-y-4"}
+              `}
+            >
+              <div className="bg-[#3b3ab5] w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-extrabold text-gray-900 mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-gray-500 font-normal text-sm leading-relaxed">
+                {feature.description}
               </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-export default Features;
+export default FeaturesSection;

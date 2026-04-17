@@ -43,8 +43,6 @@
 
 @theme {
   --font-yekan: "YekanBakh", sans-serif;
-
-  /* تعریف وزن‌ها برای استفاده راحت */
   --font-weight-thin: 100;
   --font-weight-hairline: 100;
   --font-weight-extralight: 200;

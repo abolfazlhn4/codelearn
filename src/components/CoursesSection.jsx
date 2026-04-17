@@ -8,7 +8,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { coursesData, categories } from "../data/coursesData";
-
+import { Link } from "react-router-dom";
 const CoursesSection = () => {
   const [activeCategory, setActiveCategory] = useState("backend");
   const scrollContainerRef = useRef(null);
@@ -128,8 +128,9 @@ const CoursesSection = () => {
         >
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => (
-              <div
+              <Link
                 key={course.id}
+                to={`/product/${course.id}`}
                 className="snap-start bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group cursor-pointer border border-transparent hover:border-[#3b3ab5]/10"
               >
                 <div className="bg-[#3b3ab5] w-full h-44 rounded-2xl mb-5 flex items-center justify-center text-white/50 group-hover:scale-[1.02] transition-transform duration-300">
@@ -150,6 +151,7 @@ const CoursesSection = () => {
                       {course.teacher}
                     </span>
                   </div>
+                  {/* برای اگه خواستیم با زدن رو لایک وارد صفحه محصول نشه اینجا تغییرات را انجام بدیم */}
                   <button className="text-gray-300 hover:text-red-500 transition-colors">
                     <Heart
                       className="w-5 h-5 fill-transparent hover:fill-red-500"
@@ -169,7 +171,7 @@ const CoursesSection = () => {
                     {course.price}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="col-span-full w-full text-center py-10 text-gray-500">

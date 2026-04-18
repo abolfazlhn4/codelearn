@@ -78,10 +78,11 @@ const Navbar = () => {
             </button>
 
             {/* دکمه ورود / ثبت نام */}
-            <button className="bg-[#3b3ab5] text-white p-2.5 sm:px-5 sm:py-2.5 rounded-xl font-medium text-sm hover:bg-opacity-90 transition-all shadow-sm flex items-center justify-center">
-              {/* در سایز بزرگ متن نشان داده می‌شود */}
+            <button
+              onClick={() => (window.location.href = "/auth")}
+              className="bg-[#3b3ab5] text-white p-2.5 sm:px-5 sm:py-2.5 rounded-xl font-medium text-sm hover:bg-opacity-90 transition-all shadow-sm flex items-center justify-center cursor-pointer"
+            >
               <span className="hidden sm:block">ورود / ثبت نام</span>
-              {/* در سایز موبایل (کوچکتر از sm) آیکون نشان داده می‌شود */}
               <User className="w-5 h-5 sm:hidden" strokeWidth={1.5} />
             </button>
           </div>

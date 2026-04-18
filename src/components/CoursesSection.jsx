@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { coursesData, categories } from "../data/coursesData";
 import { Link } from "react-router-dom";
+import { useFavorites } from "../context/FavoritesContext";
+
 const CoursesSection = () => {
   const [activeCategory, setActiveCategory] = useState("backend");
   const scrollContainerRef = useRef(null);
@@ -60,6 +62,8 @@ const CoursesSection = () => {
       }
     }
   };
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   return (
     <section
@@ -151,10 +155,20 @@ const CoursesSection = () => {
                       {course.teacher}
                     </span>
                   </div>
-                  {/* برای اگه خواستیم با زدن رو لایک وارد صفحه محصول نشه اینجا تغییرات را انجام بدیم */}
-                  <button className="text-gray-300 hover:text-red-500 transition-colors">
+
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleFavorite(course.id);
+                    }}
+                    className="transition-colors z-10"
+                  >
                     <Heart
-                      className="w-5 h-5 fill-transparent hover:fill-red-500"
+                      className={`w-5 h-5 transition-all ${
+                        isFavorite(course.id)
+                          ? "fill-red-500 text-red-500"
+                          : "fill-transparent text-gray-300 hover:text-red-500"
+                      }`}
                       strokeWidth={2}
                     />
                   </button>

@@ -12,6 +12,7 @@ import {
   Users,
   ArrowLeft,
 } from "lucide-react";
+import { useFavorites } from "../context/FavoritesContext";
 
 const Product = () => {
   const { id } = useParams();
@@ -37,6 +38,8 @@ const Product = () => {
       </div>
     );
   }
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   return (
     <div
@@ -112,9 +115,20 @@ const Product = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button className="p-3.5 border border-red-200 rounded-xl hover:bg-red-50 transition-colors group">
+                  <button
+                    onClick={() => toggleFavorite(course.id)}
+                    className={`p-3.5 border rounded-xl transition-colors group ${
+                      isFavorite(course.id)
+                        ? "bg-red-50 border-red-200"
+                        : "border-gray-200 hover:bg-red-50"
+                    }`}
+                  >
                     <Heart
-                      className="w-6 h-6 text-red-400 group-hover:text-red-500"
+                      className={`w-6 h-6 transition-all ${
+                        isFavorite(course.id)
+                          ? "text-red-500 fill-red-500"
+                          : "text-gray-400 group-hover:text-red-400"
+                      }`}
                       strokeWidth={1.5}
                     />
                   </button>

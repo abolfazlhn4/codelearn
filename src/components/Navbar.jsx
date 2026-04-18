@@ -9,9 +9,9 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "صفحه اصلی", href: "#", active: true },
-    { name: "دوره های آموزشی", href: "#", active: false },
-    { name: "درباره ما", href: "#", active: false },
+    { name: "صفحه اصلی", href: "/", active: true },
+    { name: "دوره های آموزشی", href: "/CoursesArchive", active: false },
+    { name: "درباره ما", href: "/Aboutus", active: false },
   ];
 
   return (

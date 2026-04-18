@@ -1,11 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 
+// 1. کامپوننت شمارشگر جذاب
+const Counter = ({ target, prefix = "", duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime = null;
+
+    const animateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+
+      // محاسبه درصد پیشرفت انیمیشن (از 0 تا 1)
+      const percentage = Math.min(progress / duration, 1);
+
+      // افکت Easing (برای اینکه در انتها سرعت شمارش کم شود و جذاب‌تر به نظر برسد)
+      const easeOut = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
+
+      setCount(Math.floor(easeOut * target));
+
+      if (progress < duration) {
+        requestAnimationFrame(animateCount);
+      }
+    };
+
+    requestAnimationFrame(animateCount);
+  }, [target, duration]);
+
+  // تابع تبدیل اعداد انگلیسی به فارسی
+  const toPersianNumeral = (num) => {
+    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    return num.toString().replace(/\d/g, (digit) => persianDigits[digit]);
+  };
+
+  return (
+    <span>
+      {prefix}
+      {toPersianNumeral(count)}
+    </span>
+  );
+};
+
+// 2. کامپوننت اصلی
 const HeroSection = () => {
+  // ساختار دیتا را کمی تغییر دادیم تا اعداد خالص قابل شمارش باشند
   const stats = [
-    { id: 1, number: "+۱۸", label: "متخصص مجرب" },
-    { id: 2, number: "+۲۴", label: "دوره آموزشی موفق" },
-    { id: 3, number: "+۱۵۰", label: "هنرجوی موفق" },
+    { id: 1, target: 18, prefix: "+", label: "متخصص مجرب" },
+    { id: 2, target: 24, prefix: "+", label: "دوره آموزشی موفق" },
+    { id: 3, target: 150, prefix: "+", label: "هنرجوی موفق" },
   ];
 
   return (
@@ -39,10 +82,6 @@ const HeroSection = () => {
 
           {/* کانتینر سبز و تصویر شخص */}
           <div className="bg-[#e5f0d1] w-full aspect-square rounded-[3rem] overflow-hidden flex items-end justify-center relative shadow-sm">
-            {/* 
-              توجه: اینجا آدرس تصویر خودتون رو جایگزین کنید.
-              کلاس‌های زیر برای نمایش بهتر عکس بدون پس‌زمینه در کانتینر تنظیم شده‌اند.
-            */}
             <img
               src="/path-to-your-person-image.png"
               alt="مدرس برنامه‌نویسی"
@@ -58,11 +97,13 @@ const HeroSection = () => {
               key={stat.id}
               className="text-center flex flex-col items-center gap-2"
             >
-              {/* اعداد با وزن بسیار ضخیم */}
-              <p className="text-3xl lg:text-4xl font-black text-black tracking-wide">
-                {stat.number}
+              <p
+                className="text-3xl lg:text-4xl font-black text-black tracking-wide flex items-center justify-center"
+                dir="ltr"
+              >
+                {/* استفاده از کامپوننت شمارشگر */}
+                <Counter target={stat.target} prefix={stat.prefix} />
               </p>
-              {/* متن توضیحات با وزن عادی */}
               <p className="font-normal text-gray-700 text-sm">{stat.label}</p>
             </div>
           ))}

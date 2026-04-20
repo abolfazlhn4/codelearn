@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // بررسی وضعیت ورود کاربر هنگام لود شدن نوبار
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -55,20 +64,9 @@ const Navbar = () => {
           </div>
 
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-            {/* در اینجا باید عکس لوگوی خود را قرار دهید. */}
             <div className="w-10 h-10 bg-gradient-to-tr from-[#3b3ab5] to-[#4caf50] rounded-xl flex items-center justify-center text-white transform rotate-12"></div>
-            {/*
-            <div className="w-10 h-10 flex items-center justify-center">
-              <img
-                src="/path-to-your-logo.png"
-                alt="Logo"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            */}
           </div>
 
-          {/* سمت چپ: دکمه‌ها */}
           <div className="flex items-center gap-3">
             <Link
               to="/cart"
@@ -82,11 +80,14 @@ const Navbar = () => {
               )}
             </Link>
 
+            {/* تغییر لینک دکمه بر اساس وضعیت لاگین */}
             <Link
-              to="/auth"
+              to={isLoggedIn ? "/user-panel" : "/auth"}
               className="bg-[#3b3ab5] text-white p-2.5 sm:px-5 sm:py-2.5 rounded-xl font-medium text-sm hover:bg-opacity-90 transition-all shadow-sm flex items-center justify-center cursor-pointer"
             >
-              <span className="hidden sm:block">ورود / ثبت نام</span>
+              <span className="hidden sm:block">
+                {isLoggedIn ? "پنل کاربری" : "ورود / ثبت نام"}
+              </span>
               <User className="w-5 h-5 sm:hidden" strokeWidth={1.5} />
             </Link>
           </div>

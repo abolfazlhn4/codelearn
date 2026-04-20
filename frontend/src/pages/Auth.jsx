@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [action, setAction] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // شبیه سازی لاگین/ثبت نام با ذخیره در لوکال استوریج
+    const userData = { isLoggedIn: true, username: "کاربر مهمان" };
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    // انتقال به پنل کاربری و رفرش برای آپدیت شدن نوبار
+    window.location.href = "/user-panel";
+  };
 
   return (
     <div className="flex justify-center items-center py-16 px-4 bg-gray-50 min-h-[calc(100vh-200px)]">
@@ -22,9 +35,10 @@ export default function Auth() {
           {action === "login" ? "خوش برگشتی :)" : "عضو خانواده ما شو :)"}
         </p>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
+            required
             placeholder="نام کاربری (انگلیسی)"
             className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400"
             dir="rtl"
@@ -33,6 +47,7 @@ export default function Auth() {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              required
               placeholder="رمز عبور"
               className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400 pl-10"
               dir="rtl"
@@ -46,14 +61,15 @@ export default function Auth() {
             </button>
           </div>
 
-          {action === "register" ? (
+          {action === "register" && (
             <input
               type={showPassword ? "text" : "password"}
+              required
               placeholder="تکرار رمز عبور"
               className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400"
               dir="rtl"
             />
-          ) : null}
+          )}
 
           <button
             type="submit"

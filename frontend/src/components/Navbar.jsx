@@ -16,7 +16,7 @@ const Navbar = () => {
     { name: "درباره ما", href: "/Aboutus", active: false },
   ];
 
-  const { cartItems } = useCart(); // تعداد آیتم ها رو از کانتکست بگیر
+  const { cartItems } = useCart();
 
   return (
     <header

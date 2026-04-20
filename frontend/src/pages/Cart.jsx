@@ -89,9 +89,12 @@ const Cart = () => {
                 <p className="text-xs text-gray-400 mb-6">
                   هزینه‌های ارسال در مرحله بعد محاسبه خواهد شد.
                 </p>
-                <button className="w-full bg-[#4b9b65] text-white py-3 rounded-xl hover:bg-green-700 transition-colors shadow-sm font-medium">
-                  ادامه فرآیند خرید
-                </button>
+                <Link
+                  to="/checkout"
+                  className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-colors shadow-md mb-3"
+                >
+                  ادامه جهت تسویه حساب
+                </Link>
               </div>
             </div>
           </div>

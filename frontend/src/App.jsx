@@ -26,7 +26,7 @@ function App() {
             <Route path="/CoursesArchive" element={<CoursesArchive />} />
             <Route path="/Aboutus" element={<Aboutus />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/panel" element={<UserPanel />} />
+            <Route path="/user-panel" element={<UserPanel />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment" element={<PaymentGateway />} />

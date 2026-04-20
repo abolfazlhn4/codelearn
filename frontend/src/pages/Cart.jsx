@@ -3,20 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
 
-// یک تابع کمکی برای تبدیل قیمت متنی به عدد
 const parsePrice = (priceString) => {
-  if (
-    typeof priceString !== "string" ||
-    priceString.toLowerCase() === "رایگان"
-  ) {
+  if (typeof priceString !== "string" || priceString.toLowerCase() === "رایگان")
     return 0;
-  }
-  // حذف "تومان" و "هزار" و تبدیل کاراکترهای فارسی به انگلیسی
-  const normalized = priceString
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  let normalized = priceString.replace(/[۰-۹]/g, (w) =>
+    persianDigits.indexOf(w),
+  );
+  normalized = normalized
     .replace(/,/g, "")
     .replace("تومان", "")
     .replace("هزار", "000")
-    .trim();
+    .replace(/\s/g, "");
   return parseInt(normalized, 10) || 0;
 };
 
@@ -45,7 +43,6 @@ const Cart = () => {
 
         {cartItems.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* لیست آیتم ها */}
             <div className="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-4">
               {cartItems.map((item) => (
                 <div
@@ -74,24 +71,23 @@ const Cart = () => {
               ))}
             </div>
 
-            {/* خلاصه سفارش */}
             <div className="lg:col-span-1">
               <div className="sticky top-28 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                 <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-3">
                   خلاصه سفارش
                 </h2>
-                <div className="flex justify-between items-center mb-4 text-gray-600">
+                <div className="flex justify-between items-center mb-6 text-gray-600">
                   <span>جمع کل:</span>
                   <span className="font-bold text-lg text-black">
-                    {totalPrice.toLocaleString("fa-IR")} تومان
+                    {totalPrice > 0
+                      ? `${totalPrice.toLocaleString("fa-IR")} تومان`
+                      : "رایگان"}
                   </span>
                 </div>
-                <p className="text-xs text-gray-400 mb-6">
-                  هزینه‌های ارسال در مرحله بعد محاسبه خواهد شد.
-                </p>
+
                 <Link
                   to="/checkout"
-                  className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-colors shadow-md mb-3"
+                  className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-colors shadow-md"
                 >
                   ادامه جهت تسویه حساب
                 </Link>

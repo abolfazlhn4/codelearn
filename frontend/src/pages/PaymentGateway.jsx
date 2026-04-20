@@ -26,9 +26,22 @@ export default function PaymentGateway() {
   );
 
   const handlePayment = () => {
-    alert("پرداخت با موفقیت انجام شد! از خرید شما متشکریم.");
+    const existingPurchases =
+      JSON.parse(localStorage.getItem("purchasedCourses")) || [];
+
+    // استخراج آیدی دوره‌های سبد خرید
+    const newPurchasesIds = cartItems.map((item) => item.id);
+
+    // ترکیب و حذف آیدی‌های تکراری (در صورت خرید مجدد یک دوره)
+    const allPurchases = [
+      ...new Set([...existingPurchases, ...newPurchasesIds]),
+    ];
+
+    localStorage.setItem("purchasedCourses", JSON.stringify(allPurchases));
+
+    alert("پرداخت با موفقیت انجام شد! دوره‌ها به پنل کاربری شما اضافه شدند.");
     clearCart();
-    navigate("/");
+    navigate("/user-panel");
   };
 
   const handleCancel = () => {

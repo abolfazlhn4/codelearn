@@ -1,21 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
-import { Heart, User, Users, ImageIcon } from "lucide-react";
+import { Heart, User, ImageIcon, PlayCircle } from "lucide-react";
 
 const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
+  const [purchasedIds, setPurchasedIds] = useState([]);
+
+  // خواندن دوره‌های خریداری شده از لوکال استوریج هنگام لود شدن صفحه
+  useEffect(() => {
+    const storedPurchases =
+      JSON.parse(localStorage.getItem("purchasedCourses")) || [];
+    setPurchasedIds(storedPurchases);
+  }, []);
 
   const favoriteCourses = coursesData.filter((course) =>
     favorites.includes(course.id),
   );
+  const purchasedCourses = coursesData.filter((course) =>
+    purchasedIds.includes(course.id),
+  );
 
   return (
     <div dir="rtl" className="min-h-screen bg-[#f8f9fa] py-12 px-4 font-yekan">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-black text-gray-800 mb-8">پنل کاربری</h1>
+      <div className="max-w-6xl mx-auto space-y-8">
+        <h1 className="text-3xl font-black text-gray-800">پنل کاربری</h1>
 
+        {/* بخش دوره‌های خریداری شده */}
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-700 mb-6 border-b pb-4">
+            دوره‌های خریداری شده من
+          </h2>
+
+          {purchasedCourses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {purchasedCourses.map((course) => (
+                <Link
+                  key={course.id}
+                  to={`/product/${course.id}`}
+                  className="bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group border border-transparent hover:border-green-500/20"
+                >
+                  <div className="bg-green-500 w-full h-40 rounded-2xl mb-5 flex items-center justify-center text-white/50 group-hover:scale-[1.02] transition-transform duration-300 relative">
+                    <PlayCircle className="w-12 h-12 text-white" />
+                  </div>
+                  <h3 className="font-black text-base text-black mb-2 px-1 group-hover:text-green-600 transition-colors">
+                    {course.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-gray-600 mt-auto px-1 mb-2">
+                    <User className="w-4 h-4" strokeWidth={2} />
+                    <span className="text-xs font-medium">
+                      {course.teacher}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              شما هنوز هیچ دوره‌ای خریداری نکرده‌اید.
+            </div>
+          )}
+        </div>
+
+        {/* بخش علاقه‌مندی‌ها */}
         <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
           <h2 className="text-xl font-bold text-gray-700 mb-6 border-b pb-4">
             دوره‌های مورد علاقه من
@@ -69,7 +117,7 @@ const UserPanel = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-8 text-gray-500">
               شما هنوز هیچ دوره‌ای را به علاقه‌مندی‌ها اضافه نکرده‌اید.
             </div>
           )}

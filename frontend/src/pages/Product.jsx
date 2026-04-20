@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
 
+import { useCart } from "../context/CartContext";
+import { Check } from "lucide-react";
+
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,6 +43,8 @@ const Product = () => {
   }
 
   const { toggleFavorite, isFavorite } = useFavorites();
+
+  const { addToCart, isInCart } = useCart();
 
   return (
     <div
@@ -133,9 +138,26 @@ const Product = () => {
                     />
                   </button>
 
-                  <button className="flex-1 bg-[#4b9b65] hover:bg-green-700 text-white font-medium py-3.5 rounded-xl transition-colors shadow-sm flex justify-center items-center gap-2 text-sm">
-                    <ShoppingBag className="w-5 h-5" />
-                    افزودن به سبد خرید
+                  <button
+                    onClick={() => addToCart(course)}
+                    disabled={isInCart(course.id)} // دکمه غیرفعال میشه اگر در سبد باشه
+                    className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${
+                      isInCart(course.id)
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-[#4b9b65] hover:bg-green-700 text-white"
+                    }`}
+                  >
+                    {isInCart(course.id) ? (
+                      <>
+                        <Check className="w-5 h-5" />
+                        موجود در سبد خرید
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-5 h-5" />
+                        افزودن به سبد خرید
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

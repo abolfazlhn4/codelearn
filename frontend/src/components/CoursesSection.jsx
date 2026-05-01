@@ -15,7 +15,6 @@ const CoursesSection = () => {
   const [activeCategory, setActiveCategory] = useState("backend");
   const scrollContainerRef = useRef(null);
 
-  // استیت‌های مربوط به فعال/غیرفعال بودن فلش‌ها
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
 
@@ -31,9 +30,8 @@ const CoursesSection = () => {
       const absScrollLeft = Math.abs(Math.round(scrollLeft));
       const maxScroll = scrollWidth - clientWidth;
 
-      // اگر از صفر فاصله گرفته باشیم، یعنی می‌توانیم به عقب (راست) برگردیم
       setCanScrollPrev(absScrollLeft > 2);
-      // اگر به حداکثر اسکرول نرسیده باشیم، یعنی می‌توانیم به جلو (چپ) برویم
+
       setCanScrollNext(absScrollLeft < maxScroll - 2);
     }
   };

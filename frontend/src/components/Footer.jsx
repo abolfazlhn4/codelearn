@@ -12,7 +12,6 @@ const Footer = () => {
   return (
     <footer dir="rtl" className="bg-white font-yekan border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 md:py-14">
-        {/* ----------- بخش بالا: لوگو و شبکه‌های اجتماعی ----------- */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
           {/* لوگو */}
           <div className="flex items-center gap-3">
@@ -27,9 +26,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* شبکه‌های اجتماعی */}
           <div className="flex items-center gap-3">
-            {/* Instagram */}
             <a
               href="#"
               className="w-10 h-10 rounded-xl bg-[#e5f0d1] text-gray-700 flex items-center justify-center hover:bg-[#d8e8bc] transition-colors"
@@ -37,7 +34,6 @@ const Footer = () => {
               <CameraIcon className="w-6 h-6" />
             </a>
 
-            {/* Telegram */}
             <a
               href="#"
               className="w-10 h-10 rounded-xl bg-[#3b3ab5] text-white flex items-center justify-center hover:bg-[#302fa0] transition-colors shadow-md"
@@ -45,7 +41,6 @@ const Footer = () => {
               <PaperAirplaneIcon className="w-6 h-6 rotate-45" />
             </a>
 
-            {/* GitHub */}
             <a
               href="#"
               className="w-10 h-10 rounded-xl bg-[#e5f0d1] text-gray-700 flex items-center justify-center hover:bg-[#d8e8bc] transition-colors"
@@ -53,7 +48,6 @@ const Footer = () => {
               <CodeBracketIcon className="w-6 h-6" />
             </a>
 
-            {/* YouTube */}
             <a
               href="#"
               className="w-10 h-10 rounded-xl bg-[#e5f0d1] text-gray-700 flex items-center justify-center hover:bg-[#d8e8bc] transition-colors"
@@ -63,10 +57,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* خط جدا کننده */}
         <hr className="border-gray-200 mb-10" />
 
-        {/* ----------- بخش پایین: ستون‌های محتوا ----------- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* ستون اول: درباره ما */}
           <div className="flex flex-col text-right">

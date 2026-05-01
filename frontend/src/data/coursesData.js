@@ -6,7 +6,6 @@ export const categories = [
 ];
 
 export const coursesData = [
-  // ----------- بک اند -----------
   {
     id: 1,
     categoryId: "backend",

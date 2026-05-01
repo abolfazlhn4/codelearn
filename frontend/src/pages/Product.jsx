@@ -96,9 +96,7 @@ const Product = () => {
 
           {/* ستون سمت چپ */}
           <div className="lg:col-span-1">
-            {/* این دایو داخلی رو sticky کردیم تا داخل ستون بالا و پایین بره */}
             <div className="sticky top-28 space-y-6">
-              {/* دکمه بازگشت */}
               <button
                 onClick={() => navigate(-1)}
                 className="flex items-center gap-2 text-gray-600 hover:text-[#3b3ab5] transition-colors font-medium text-sm bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-gray-100 w-fit"
@@ -106,7 +104,6 @@ const Product = () => {
                 <ArrowLeft className="w-4 h-4" />
                 <span>بازگشت به لیست دوره‌ها</span>
               </button>
-              {/* باکس قیمت */}
               <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
                   <span className="text-gray-600 text-sm font-medium">
@@ -140,7 +137,7 @@ const Product = () => {
 
                   <button
                     onClick={() => addToCart(course)}
-                    disabled={isInCart(course.id)} // دکمه غیرفعال میشه اگر در سبد باشه
+                    disabled={isInCart(course.id)}
                     className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${
                       isInCart(course.id)
                         ? "bg-gray-200 text-gray-500 cursor-not-allowed"

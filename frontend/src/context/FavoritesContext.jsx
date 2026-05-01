@@ -7,11 +7,11 @@ export const useFavorites = () => useContext(FavoritesContext);
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem("favorites");
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : []; // "[1,4,7]"    parse =>   [1,4,7]
   });
 
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    localStorage.setItem("favorites", JSON.stringify(favorites)); //[1,4,7]    stringify =>   "[1,4,7]"
   }, [favorites]);
 
   const toggleFavorite = (id) => {

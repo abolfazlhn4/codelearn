@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 
-// 1. کامپوننت شمارشگر جذاب
 const Counter = ({ target, prefix = "", duration = 2000 }) => {
   const [count, setCount] = useState(0);
 
@@ -28,7 +27,6 @@ const Counter = ({ target, prefix = "", duration = 2000 }) => {
     requestAnimationFrame(animateCount);
   }, [target, duration]);
 
-  // تابع تبدیل اعداد انگلیسی به فارسی
   const toPersianNumeral = (num) => {
     const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
     return num.toString().replace(/\d/g, (digit) => persianDigits[digit]);
@@ -42,9 +40,7 @@ const Counter = ({ target, prefix = "", duration = 2000 }) => {
   );
 };
 
-// 2. کامپوننت اصلی
 const HeroSection = () => {
-  // ساختار دیتا را کمی تغییر دادیم تا اعداد خالص قابل شمارش باشند
   const stats = [
     { id: 1, target: 18, prefix: "+", label: "متخصص مجرب" },
     { id: 2, target: 24, prefix: "+", label: "دوره آموزشی موفق" },
@@ -57,7 +53,6 @@ const HeroSection = () => {
       className="bg-[#f8f9fa] flex items-center justify-center font-yekan pt-12 pb-20 px-4 sm:px-8"
     >
       <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8">
-        {/* سمت راست: محتوای متنی */}
         <div className="flex-1 text-center lg:text-right space-y-10">
           <h1 className="text-5xl md:text-5xl lg:text-6xl font-black text-black leading-[1.3]">
             آکادمی آموزش <br />
@@ -75,12 +70,9 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* بخش وسط: تصویر و پس‌زمینه‌های هندسی */}
         <div className="flex-1 flex justify-center w-full max-w-md relative z-10">
-          {/* شکل آبی پس‌زمینه (جابجا شده به بالا و چپ) */}
           <div className="absolute -top-6 -left-6 w-full h-full bg-[#3b3ab5] rounded-[3rem] -z-10"></div>
 
-          {/* کانتینر سبز و تصویر شخص */}
           <div className="bg-[#e5f0d1] w-full aspect-square rounded-[3rem] overflow-hidden flex items-end justify-center relative shadow-sm">
             <img
               src="/path-to-your-person-image.png"
@@ -90,7 +82,6 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* سمت چپ: آمار و ارقام */}
         <div className="flex flex-row lg:flex-col gap-10 justify-center flex-wrap lg:w-48">
           {stats.map((stat) => (
             <div
@@ -101,7 +92,6 @@ const HeroSection = () => {
                 className="text-3xl lg:text-4xl font-black text-black tracking-wide flex items-center justify-center"
                 dir="ltr"
               >
-                {/* استفاده از کامپوننت شمارشگر */}
                 <Counter target={stat.target} prefix={stat.prefix} />
               </p>
               <p className="font-normal text-gray-700 text-sm">{stat.label}</p>

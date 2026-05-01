@@ -7,7 +7,6 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // بررسی وضعیت ورود کاربر هنگام لود شدن نوبار
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -80,7 +79,6 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* تغییر لینک دکمه بر اساس وضعیت لاگین */}
             <Link
               to={isLoggedIn ? "/user-panel" : "/auth"}
               className="bg-[#3b3ab5] text-white p-2.5 sm:px-5 sm:py-2.5 rounded-xl font-medium text-sm hover:bg-opacity-90 transition-all shadow-sm flex items-center justify-center cursor-pointer"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { coursesData } from "../data/coursesData.js";
 import {
   Play,
@@ -13,6 +13,8 @@ import {
   ArrowLeft,
   Check,
   Video,
+  User,
+  Image as ImageIcon,
 } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
@@ -20,6 +22,10 @@ import { useCart } from "../context/CartContext";
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   const [isPurchased, setIsPurchased] = useState(false);
 
@@ -32,6 +38,14 @@ const Product = () => {
   }, [id]);
 
   const course = coursesData.find((item) => item.id === parseInt(id));
+
+  const relatedCourses = coursesData
+    .filter(
+      (item) =>
+        item.categoryId === course?.categoryId && item.id !== course?.id,
+    )
+    .slice(0, 4);
+
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addToCart, isInCart } = useCart();
 
@@ -60,6 +74,7 @@ const Product = () => {
       className="pt-6 pb-20 font-yekan min-h-screen bg-[#f8f9fa] px-4 sm:px-8"
     >
       <div className="max-w-6xl mx-auto">
+        {/* مسیر راهنما (Breadcrumb) */}
         <div className="text-sm text-gray-500 mb-8 border-b border-gray-200 pb-4">
           <span>صفحه اصلی</span>
           <span className="mx-2">/</span>
@@ -173,7 +188,11 @@ const Product = () => {
                     قیمت دوره :
                   </span>
                   <span
-                    className={`text-xl font-bold ${course.price === "رایگان" ? "text-green-500" : "text-[#4b9b65]"}`}
+                    className={`text-xl font-bold ${
+                      course.price === "رایگان"
+                        ? "text-green-500"
+                        : "text-[#4b9b65]"
+                    }`}
                   >
                     {course.price}
                   </span>
@@ -309,6 +328,59 @@ const Product = () => {
             </div>
           </div>
         </div>
+
+        {/* بخش دوره‌های مشابه */}
+        {relatedCourses.length > 0 && (
+          <div className="mt-16 border-t border-gray-200 pt-10">
+            <h3 className="text-2xl font-black text-gray-800 mb-8 flex items-center gap-2">
+              دوره‌های مشابه
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedCourses.map((relatedCourse) => (
+                <Link
+                  key={relatedCourse.id}
+                  to={`/product/${relatedCourse.id}`}
+                  className="bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group border border-transparent hover:border-[#3b3ab5]/10"
+                >
+                  <div className="bg-[#3b3ab5] w-full h-40 rounded-2xl mb-5 flex items-center justify-center text-white/50 group-hover:scale-[1.02] transition-transform duration-300">
+                    <ImageIcon className="w-10 h-10" />
+                  </div>
+
+                  <h3 className="font-black text-lg text-black mb-2 px-1 group-hover:text-[#3b3ab5] transition-colors truncate">
+                    {relatedCourse.title}
+                  </h3>
+                  <p className="font-normal text-gray-500 text-sm mb-6 leading-relaxed px-1 line-clamp-2">
+                    {relatedCourse.description}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-auto px-1 mb-4">
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <User className="w-4 h-4" strokeWidth={2} />
+                      <span className="text-sm font-medium">
+                        {relatedCourse.teacher}
+                      </span>
+                    </div>
+                  </div>
+
+                  <hr className="border-gray-100 mb-4" />
+
+                  <div className="flex items-center justify-between px-1">
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <Users className="w-4 h-4" strokeWidth={2} />
+                      <span className="text-sm">
+                        {relatedCourse.studentsCount} نفر
+                      </span>
+                    </div>
+                    <span className="text-[#4caf50] font-medium text-sm">
+                      {relatedCourse.price}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

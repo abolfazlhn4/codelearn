@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { coursesData } from "../data/coursesData.js";
 import {
@@ -11,17 +11,29 @@ import {
   ListChecks,
   Users,
   ArrowLeft,
+  Check,
+  Video,
 } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
-
 import { useCart } from "../context/CartContext";
-import { Check } from "lucide-react";
 
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [isPurchased, setIsPurchased] = useState(false);
+
+  useEffect(() => {
+    const purchased =
+      JSON.parse(localStorage.getItem("purchasedCourses")) || [];
+    if (purchased.includes(parseInt(id))) {
+      setIsPurchased(true);
+    }
+  }, [id]);
+
   const course = coursesData.find((item) => item.id === parseInt(id));
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const { addToCart, isInCart } = useCart();
 
   if (!course) {
     return (
@@ -42,10 +54,6 @@ const Product = () => {
     );
   }
 
-  const { toggleFavorite, isFavorite } = useFavorites();
-
-  const { addToCart, isInCart } = useCart();
-
   return (
     <div
       dir="rtl"
@@ -57,13 +65,22 @@ const Product = () => {
           <span className="mx-2">/</span>
           <span>دوره ها</span>
           <span className="mx-2">/</span>
-          <span>دسته بندی بک اند</span>
+          <span>
+            دسته بندی{" "}
+            {course.categoryId === "backend"
+              ? "بک اند"
+              : course.categoryId === "frontend"
+                ? "فرانت اند"
+                : course.categoryId === "android"
+                  ? "اندروید"
+                  : "دسکتاپ"}
+          </span>
           <span className="mx-2">/</span>
           <span className="text-gray-700">{course.title}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
-          {/* ستون سمت راست: ویدیو و توضیحات */}
+          {/* ستون سمت راست: ویدیو و توضیحات / سرفصل‌ها */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-[#3b3ab5] rounded-3xl aspect-[16/9] flex justify-center items-center relative overflow-hidden shadow-sm">
               <button className="bg-transparent rounded-full p-2 group transition-transform hover:scale-110">
@@ -80,17 +97,62 @@ const Product = () => {
               </h1>
 
               <p className="text-gray-600 leading-8 text-justify mb-8">
-                {course.description ||
-                  "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..."}
+                {course.description}
               </p>
 
-              <h2 className="text-2xl font-black text-gray-800 mb-4 mt-8">
-                توضیحات دوره
-              </h2>
-              <p className="text-gray-600 leading-8 text-justify">
-                {course.longDescription ||
-                  "کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد..."}
-              </p>
+              {isPurchased ? (
+                // نمایش سرفصل‌ها در صورت خرید دوره
+                <div>
+                  <h2 className="text-2xl font-black text-gray-800 mb-6 mt-8 border-b pb-3 flex items-center gap-2">
+                    <Video className="w-6 h-6 text-[#3b3ab5]" />
+                    محتوای دوره (جلسات)
+                  </h2>
+                  <div className="space-y-4">
+                    {course.syllabus?.map((chapter) => (
+                      <div
+                        key={chapter.chapterId}
+                        className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm"
+                      >
+                        <div className="bg-gray-50 px-5 py-4 font-bold text-gray-800 border-b border-gray-100">
+                          {chapter.title}
+                        </div>
+                        <div className="divide-y divide-gray-50">
+                          {chapter.episodes.map((episode) => (
+                            <div
+                              key={episode.id}
+                              className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <Play className="w-4 h-4 text-[#3b3ab5]" />
+                                <span className="text-gray-700 text-sm">
+                                  {episode.title}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-4 text-xs text-gray-500">
+                                <span>{episode.duration}</span>
+                                <button className="flex items-center gap-1 text-[#3b3ab5] hover:text-blue-700 font-medium bg-blue-50 px-3 py-1.5 rounded-lg transition-colors">
+                                  <CloudDownload className="w-4 h-4" />
+                                  دانلود / پخش
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                // نمایش توضیحات کامل در صورتی که دوره خریداری نشده باشد
+                <>
+                  <h2 className="text-2xl font-black text-gray-800 mb-4 mt-8">
+                    توضیحات دوره
+                  </h2>
+                  <p className="text-gray-600 leading-8 text-justify">
+                    {course.longDescription}
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -104,6 +166,7 @@ const Product = () => {
                 <ArrowLeft className="w-4 h-4" />
                 <span>بازگشت به لیست دوره‌ها</span>
               </button>
+
               <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
                   <span className="text-gray-600 text-sm font-medium">
@@ -135,27 +198,34 @@ const Product = () => {
                     />
                   </button>
 
-                  <button
-                    onClick={() => addToCart(course)}
-                    disabled={isInCart(course.id)}
-                    className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${
-                      isInCart(course.id)
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-[#4b9b65] hover:bg-green-700 text-white"
-                    }`}
-                  >
-                    {isInCart(course.id) ? (
-                      <>
-                        <Check className="w-5 h-5" />
-                        موجود در سبد خرید
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingBag className="w-5 h-5" />
-                        افزودن به سبد خرید
-                      </>
-                    )}
-                  </button>
+                  {isPurchased ? (
+                    <div className="flex-1 font-medium py-3.5 rounded-xl flex justify-center items-center gap-2 text-sm bg-blue-50 text-[#3b3ab5] border border-blue-100 cursor-default">
+                      <Check className="w-5 h-5" />
+                      شما دانشجوی این دوره هستید
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => addToCart(course)}
+                      disabled={isInCart(course.id)}
+                      className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${
+                        isInCart(course.id)
+                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                          : "bg-[#4b9b65] hover:bg-green-700 text-white"
+                      }`}
+                    >
+                      {isInCart(course.id) ? (
+                        <>
+                          <Check className="w-5 h-5" />
+                          موجود در سبد خرید
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag className="w-5 h-5" />
+                          افزودن به سبد خرید
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
               </div>
 

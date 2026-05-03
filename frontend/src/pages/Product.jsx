@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { coursesData } from "../data/coursesData.js";
 import {
@@ -15,6 +15,8 @@ import {
   Video,
   User,
   Image as ImageIcon,
+  ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
@@ -22,12 +24,15 @@ import { useCart } from "../context/CartContext";
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
   const [isPurchased, setIsPurchased] = useState(false);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
   useEffect(() => {
     const purchased =
@@ -39,15 +44,63 @@ const Product = () => {
 
   const course = coursesData.find((item) => item.id === parseInt(id));
 
-  const relatedCourses = coursesData
-    .filter(
-      (item) =>
-        item.categoryId === course?.categoryId && item.id !== course?.id,
-    )
-    .slice(0, 4);
+  const relatedCourses = coursesData.filter(
+    (item) => item.categoryId === course?.categoryId && item.id !== course?.id,
+  );
 
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addToCart, isInCart } = useCart();
+
+  const getCategoryName = (catId) => {
+    switch (catId) {
+      case "backend":
+        return "بک اند";
+      case "frontend":
+        return "فرانت اند";
+      case "android":
+        return "اندروید";
+      case "desktop":
+        return "دسکتاپ";
+      default:
+        return catId;
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      const absScrollLeft = Math.abs(Math.round(scrollLeft));
+      const maxScroll = scrollWidth - clientWidth;
+
+      setCanScrollPrev(absScrollLeft > 2);
+      setCanScrollNext(absScrollLeft < maxScroll - 2);
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener("resize", handleScroll);
+    return () => window.removeEventListener("resize", handleScroll);
+  }, [relatedCourses.length]);
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const firstCard = container.firstElementChild;
+
+      if (firstCard) {
+        const scrollAmount = firstCard.offsetWidth + 24;
+        const scrollOffset =
+          direction === "next" ? -scrollAmount : scrollAmount;
+
+        container.scrollBy({
+          left: scrollOffset,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
 
   if (!course) {
     return (
@@ -56,7 +109,7 @@ const Product = () => {
         className="pt-16 pb-32 text-center font-yekan bg-[#f8f9fa] flex flex-col items-center justify-center"
       >
         <h1 className="text-2xl font-black text-gray-800 mb-4">
-          دوره‌ای با این شناسه یافت نشد!{" "}
+          دوره‌ای با این شناسه یافت نشد!
         </h1>
         <button
           onClick={() => navigate(-1)}
@@ -75,22 +128,26 @@ const Product = () => {
     >
       <div className="max-w-6xl mx-auto">
         {/* مسیر راهنما (Breadcrumb) */}
-        <div className="text-sm text-gray-500 mb-8 border-b border-gray-200 pb-4">
-          <span>صفحه اصلی</span>
-          <span className="mx-2">/</span>
-          <span>دوره ها</span>
-          <span className="mx-2">/</span>
-          <span>
-            دسته بندی{" "}
-            {course.categoryId === "backend"
-              ? "بک اند"
-              : course.categoryId === "frontend"
-                ? "فرانت اند"
-                : course.categoryId === "android"
-                  ? "اندروید"
-                  : "دسکتاپ"}
-          </span>
-          <span className="mx-2">/</span>
+        <div className="flex flex-wrap items-center text-sm text-gray-500 mb-8 border-b border-gray-200 pb-4 gap-2">
+          <Link to="/" className="hover:text-[#3b3ab5] transition-colors">
+            صفحه اصلی
+          </Link>
+          <span className="text-gray-400">/</span>
+          <Link
+            to="/CoursesArchive"
+            className="hover:text-[#3b3ab5] transition-colors"
+          >
+            دوره ها
+          </Link>
+          <span className="text-gray-400">/</span>
+          <Link
+            to={`/CoursesArchive?category=${course.categoryId}`}
+            state={{ selectedCategory: course.categoryId }}
+            className="hover:text-[#3b3ab5] transition-colors"
+          >
+            دسته بندی {getCategoryName(course.categoryId)}
+          </Link>
+          <span className="text-gray-400">/</span>
           <span className="text-gray-700">{course.title}</span>
         </div>
 
@@ -116,7 +173,6 @@ const Product = () => {
               </p>
 
               {isPurchased ? (
-                // نمایش سرفصل‌ها در صورت خرید دوره
                 <div>
                   <h2 className="text-2xl font-black text-gray-800 mb-6 mt-8 border-b pb-3 flex items-center gap-2">
                     <Video className="w-6 h-6 text-[#3b3ab5]" />
@@ -158,7 +214,6 @@ const Product = () => {
                   </div>
                 </div>
               ) : (
-                // نمایش توضیحات کامل در صورتی که دوره خریداری نشده باشد
                 <>
                   <h2 className="text-2xl font-black text-gray-800 mb-4 mt-8">
                     توضیحات دوره
@@ -188,11 +243,7 @@ const Product = () => {
                     قیمت دوره :
                   </span>
                   <span
-                    className={`text-xl font-bold ${
-                      course.price === "رایگان"
-                        ? "text-green-500"
-                        : "text-[#4b9b65]"
-                    }`}
+                    className={`text-xl font-bold ${course.price === "رایگان" ? "text-green-500" : "text-[#4b9b65]"}`}
                   >
                     {course.price}
                   </span>
@@ -201,18 +252,10 @@ const Product = () => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => toggleFavorite(course.id)}
-                    className={`p-3.5 border rounded-xl transition-colors group ${
-                      isFavorite(course.id)
-                        ? "bg-red-50 border-red-200"
-                        : "border-gray-200 hover:bg-red-50"
-                    }`}
+                    className={`p-3.5 border rounded-xl transition-colors group ${isFavorite(course.id) ? "bg-red-50 border-red-200" : "border-gray-200 hover:bg-red-50"}`}
                   >
                     <Heart
-                      className={`w-6 h-6 transition-all ${
-                        isFavorite(course.id)
-                          ? "text-red-500 fill-red-500"
-                          : "text-gray-400 group-hover:text-red-400"
-                      }`}
+                      className={`w-6 h-6 transition-all ${isFavorite(course.id) ? "text-red-500 fill-red-500" : "text-gray-400 group-hover:text-red-400"}`}
                       strokeWidth={1.5}
                     />
                   </button>
@@ -226,21 +269,15 @@ const Product = () => {
                     <button
                       onClick={() => addToCart(course)}
                       disabled={isInCart(course.id)}
-                      className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${
-                        isInCart(course.id)
-                          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                          : "bg-[#4b9b65] hover:bg-green-700 text-white"
-                      }`}
+                      className={`flex-1 font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm ${isInCart(course.id) ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[#4b9b65] hover:bg-green-700 text-white"}`}
                     >
                       {isInCart(course.id) ? (
                         <>
-                          <Check className="w-5 h-5" />
-                          موجود در سبد خرید
+                          <Check className="w-5 h-5" /> موجود در سبد خرید
                         </>
                       ) : (
                         <>
-                          <ShoppingBag className="w-5 h-5" />
-                          افزودن به سبد خرید
+                          <ShoppingBag className="w-5 h-5" /> افزودن به سبد خرید
                         </>
                       )}
                     </button>
@@ -263,9 +300,7 @@ const Product = () => {
                       {course.duration || "۲۲ ساعت"}
                     </span>
                   </div>
-
                   <hr className="border-gray-100" />
-
                   <div className="flex justify-between items-center text-sm">
                     <div className="flex items-center gap-2 text-gray-800">
                       <LayoutGrid
@@ -278,9 +313,7 @@ const Product = () => {
                       {course.sessionsCount || "۹۱ جلسه"}
                     </span>
                   </div>
-
                   <hr className="border-gray-100" />
-
                   <div className="flex justify-between items-center text-sm">
                     <div className="flex items-center gap-2 text-gray-800">
                       <CloudDownload
@@ -293,9 +326,7 @@ const Product = () => {
                       {course.viewType || "به صورت دانلودی"}
                     </span>
                   </div>
-
                   <hr className="border-gray-100" />
-
                   <div className="flex justify-between items-center text-sm">
                     <div className="flex items-center gap-2 text-gray-800">
                       <ListChecks
@@ -308,9 +339,7 @@ const Product = () => {
                       {course.prerequisites || "پیش نیازی ندارد"}
                     </span>
                   </div>
-
                   <hr className="border-gray-100" />
-
                   <div className="flex justify-between items-center text-sm">
                     <div className="flex items-center gap-2 text-gray-800">
                       <Users
@@ -332,16 +361,48 @@ const Product = () => {
         {/* بخش دوره‌های مشابه */}
         {relatedCourses.length > 0 && (
           <div className="mt-16 border-t border-gray-200 pt-10">
-            <h3 className="text-2xl font-black text-gray-800 mb-8 flex items-center gap-2">
-              دوره‌های مشابه
-            </h3>
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-2xl font-black text-gray-800 flex items-center gap-2">
+                دوره‌های مشابه
+              </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* پیکان‌های ناوبری */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => scroll("prev")}
+                  disabled={!canScrollPrev}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center transition-all ${
+                    canScrollPrev
+                      ? "text-gray-600 hover:bg-[#3b3ab5] hover:text-white hover:border-[#3b3ab5] cursor-pointer"
+                      : "text-gray-300 opacity-50 cursor-not-allowed"
+                  }`}
+                >
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+                <button
+                  onClick={() => scroll("next")}
+                  disabled={!canScrollNext}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center transition-all ${
+                    canScrollNext
+                      ? "text-gray-600 hover:bg-[#3b3ab5] hover:text-white hover:border-[#3b3ab5] cursor-pointer"
+                      : "text-gray-300 opacity-50 cursor-not-allowed"
+                  }`}
+                >
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="grid grid-flow-col auto-cols-[100%] sm:auto-cols-[calc(50%-12px)] lg:auto-cols-[calc(25%-18px)] gap-6 overflow-x-auto pb-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth"
+            >
               {relatedCourses.map((relatedCourse) => (
                 <Link
                   key={relatedCourse.id}
                   to={`/product/${relatedCourse.id}`}
-                  className="bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group border border-transparent hover:border-[#3b3ab5]/10"
+                  className="snap-start bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group border border-transparent hover:border-[#3b3ab5]/10"
                 >
                   <div className="bg-[#3b3ab5] w-full h-40 rounded-2xl mb-5 flex items-center justify-center text-white/50 group-hover:scale-[1.02] transition-transform duration-300">
                     <ImageIcon className="w-10 h-10" />

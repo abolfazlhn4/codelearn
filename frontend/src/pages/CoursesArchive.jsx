@@ -1,14 +1,28 @@
-import React, { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useMemo, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom"; // useLocation اضافه شد
 import { User, Heart, Users, Image as ImageIcon, Filter } from "lucide-react";
 import { coursesData, categories } from "../data/coursesData";
 import { useFavorites } from "../context/FavoritesContext";
 
 const CoursesArchive = () => {
+  const location = useLocation(); // دریافت اطلاعات URL
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceFilter, setPriceFilter] = useState("all"); // 'all', 'free', 'paid'
 
   const { toggleFavorite, isFavorite } = useFavorites();
+
+  // بررسی URL هنگام لود شدن صفحه یا تغییر آن
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const categoryQuery = searchParams.get("category");
+
+    // اگر در آدرس category وجود داشت، آن را به عنوان دسته انتخاب شده قرار بده
+    if (categoryQuery) {
+      setSelectedCategory(categoryQuery);
+    } else {
+      setSelectedCategory("all"); // در غیر این صورت همه دوره‌ها
+    }
+  }, [location.search]);
 
   const filteredCourses = useMemo(() => {
     return coursesData.filter((course) => {

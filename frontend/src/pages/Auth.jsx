@@ -1,93 +1,120 @@
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Auth() {
-  const [action, setAction] = useState("login");
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const [step, setStep] = useState("phone");
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [sessionToken, setSessionToken] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const baseURL = "http://127.0.0.1:8000";
+
+  const handleSendOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    // شبیه سازی لاگین/ثبت نام با ذخیره در لوکال استوریج
-    const userData = { isLoggedIn: true, username: "کاربر مهمان" };
-    localStorage.setItem("user", JSON.stringify(userData));
+    try {
+      const res = await axios.post(
+        `${baseURL}/api/v1/users/auth/phone/register/`,
+        {
+          phone_number: phone,
+        },
+      );
+      setSessionToken(res.data.session_token);
+      setStep("verify");
+    } catch (err) {
+      setError("خطا در ارسال کد. شماره را بررسی کنید.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    // انتقال به پنل کاربری و رفرش برای آپدیت شدن نوبار
-    window.location.href = "/user-panel";
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await axios.post(
+        `${baseURL}/api/v1/users/auth/phone/verify/`,
+        {
+          phone_number: phone,
+          security_code: otp,
+          session_token: sessionToken,
+        },
+      );
+
+      localStorage.setItem("access_token", res.data.access_token);
+      localStorage.setItem("refresh_token", res.data.refresh_token);
+      localStorage.setItem("user_phone", phone);
+
+      window.location.href = "/user-panel";
+    } catch (err) {
+      setError("کد واردشده اشتباه است یا منقضی شده.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center py-16 px-4 bg-gray-50 min-h-[calc(100vh-200px)]">
-      <div className="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] w-full max-w-sm border border-gray-100">
-        <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-green-400 rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-lg">
-            {"</>"}
-          </div>
-        </div>
-
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-          {action === "login" ? "ورود به اکانت" : "ساخت حساب"}
+    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+      <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-sm">
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-6">
+          {step === "phone" ? "ورود با شماره موبایل" : "تأیید کد ارسال‌شده"}
         </h2>
 
-        <p className="text-center text-gray-500 mb-8 text-sm">
-          {action === "login" ? "خوش برگشتی :)" : "عضو خانواده ما شو :)"}
-        </p>
+        {error && (
+          <div className="text-red-600 text-center mb-4 text-sm">{error}</div>
+        )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            required
-            placeholder="نام کاربری (انگلیسی)"
-            className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400"
-            dir="rtl"
-          />
-
-          <div className="relative">
+        <form
+          onSubmit={step === "phone" ? handleSendOtp : handleVerifyOtp}
+          className="space-y-4"
+        >
+          {step === "phone" ? (
             <input
-              type={showPassword ? "text" : "password"}
+              type="tel"
+              placeholder="شماره موبایل (مثلاً 0912...)"
+              className="w-full p-3 rounded-xl bg-gray-100 text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               required
-              placeholder="رمز عبور"
-              className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400 pl-10"
-              dir="rtl"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-            </button>
-          </div>
-
-          {action === "register" && (
+          ) : (
             <input
-              type={showPassword ? "text" : "password"}
+              type="text"
+              placeholder="کد یک‌بار مصرف"
+              className="w-full p-3 rounded-xl bg-gray-100 text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               required
-              placeholder="تکرار رمز عبور"
-              className="w-full bg-gray-100/80 text-gray-800 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-[#3D31B4] transition-all text-right text-sm placeholder-gray-400"
-              dir="rtl"
             />
           )}
 
           <button
             type="submit"
-            className="w-full bg-[#3D31B4] hover:bg-[#32279c] text-white font-medium py-3 rounded-xl transition-colors mt-2 text-sm shadow-md shadow-indigo-200"
+            disabled={loading}
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all"
           >
-            {action === "login" ? "ورود" : "ثبت نام"}
+            {loading
+              ? "در حال پردازش..."
+              : step === "phone"
+                ? "ارسال کد"
+                : "تأیید کد"}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-gray-400 font-medium flex justify-center items-center gap-1">
-          <span>{action === "login" ? "حساب ندارید؟" : "حساب دارید؟"}</span>
+        {step === "verify" && (
           <button
-            onClick={() => setAction(action === "login" ? "register" : "login")}
-            className="text-gray-500 hover:text-gray-800 transition-colors border-b border-gray-300 hover:border-gray-800 pb-0.5"
+            className="mt-4 text-sm text-gray-500 hover:underline"
+            onClick={() => setStep("phone")}
           >
-            کلیک کنید
+            بازگشت به مرحله قبل
           </button>
-        </div>
+        )}
       </div>
     </div>
   );

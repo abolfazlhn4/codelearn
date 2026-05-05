@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+
+import api from "../api/api.js";
 
 export default function Auth() {
   const [step, setStep] = useState("phone");
@@ -9,20 +10,15 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const baseURL = "http://127.0.0.1:8000";
-
   const handleSendOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const res = await axios.post(
-        `${baseURL}/api/v1/users/auth/phone/register/`,
-        {
-          phone_number: phone,
-        },
-      );
+      const res = await api.post(`/api/v1/users/auth/phone/register/`, {
+        phone_number: phone,
+      });
       setSessionToken(res.data.session_token);
       setStep("verify");
     } catch (err) {
@@ -38,17 +34,20 @@ export default function Auth() {
     setError(null);
 
     try {
-      const res = await axios.post(
-        `${baseURL}/api/v1/users/auth/phone/verify/`,
+      //اضافه شدن "با کریدنشال" برای دریافت و ذخیره کوکی رفرش توکن
+      const res = await api.post(
+        `/api/v1/users/auth/phone/verify/`,
         {
           phone_number: phone,
           security_code: otp,
           session_token: sessionToken,
         },
+        {
+          withCredentials: true, //برای ذخیره کوکی HttpOnly
+        },
       );
 
       localStorage.setItem("access_token", res.data.access_token);
-      localStorage.setItem("refresh_token", res.data.refresh_token);
       localStorage.setItem("user_phone", phone);
 
       window.location.href = "/user-panel";

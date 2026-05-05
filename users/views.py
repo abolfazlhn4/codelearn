@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from users.services import get_tokens_for_user, set_refresh_cookie
 
+
 @extend_schema(
     tags=['Authentication'],
     summary='Send OTP code to the student phone number.',
@@ -105,7 +106,7 @@ class SMSVerificationViewSet(VerificationViewSet):
         response = Response({
             'access_token': str(tokens.get('access')),
             'is_user_created': created,
-            'user_id': user.id,
+            'phone_number': phone_number,
         }, status=status.HTTP_200_OK)
         set_refresh_cookie(response, tokens.get('refresh'))
 

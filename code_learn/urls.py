@@ -24,8 +24,13 @@ schema_urls = [
     path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
+app_urls = [
+    path('users/', include('users.urls')),
+    path('courses/', include('courses.urls')),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/users/', include('users.urls')),
+    path('api/v1/', include(app_urls)),
     path('api/schema/', include(schema_urls)),
 ]

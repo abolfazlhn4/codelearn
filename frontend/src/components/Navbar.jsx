@@ -25,8 +25,8 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
+    const token = localStorage.getItem("access_token");
+    if (token) {
       setIsLoggedIn(true);
     }
   }, []);

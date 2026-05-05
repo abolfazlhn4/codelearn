@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
 import { Heart, User, ImageIcon, PlayCircle } from "lucide-react";
@@ -7,13 +7,19 @@ import { Heart, User, ImageIcon, PlayCircle } from "lucide-react";
 const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const [purchasedIds, setPurchasedIds] = useState([]);
+  const navigate = useNavigate();
 
-  // خواندن دوره‌های خریداری شده از لوکال استوریج هنگام لود شدن صفحه
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/auth", { replace: true });
+      return;
+    }
+
     const storedPurchases =
       JSON.parse(localStorage.getItem("purchasedCourses")) || [];
     setPurchasedIds(storedPurchases);
-  }, []);
+  }, [navigate]);
 
   const favoriteCourses = coursesData.filter((course) =>
     favorites.includes(course.id),

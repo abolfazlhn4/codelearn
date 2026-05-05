@@ -25,16 +25,19 @@ class SMSSandboxBackend(BaseBackend):
         self._key = options.get('sandbox_key')
         self._from = options.get('from')
         self._token = options.get("sandbox_token")
-        self.client = SmsIr(self._key, self._from)
+        # fake client
+        # self.client = SmsIr(self._key, self._from)
 
     def generate_message(self, security_code, context=None):
         return f"[SANDBOX] Your code is {security_code}"
 
     def send_sms(self, number, message):
-        self.client.send_sms(number, message)
+        # fakeclient.fake_send_sms(self, number, message)
+        pass
 
     def send_bulk_sms(self, numbers, message):
-        self.client.send_bulk_sms(numbers, message)
+        # fakeclient.send_bulk_sms(numbers, message)
+        pass
 
     def generate_security_code(self):
         return self._token

@@ -3,10 +3,16 @@ from django.db import models
 
 
 class Category(models.Model):
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children')
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        related_name='children',
+        null=True,
+        blank=True,
+    )
 
     label = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.label
@@ -35,18 +41,19 @@ class Course(models.Model):
     )
 
     title = models.CharField(max_length=25)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     thumbnail = models.ImageField(upload_to=course_field_path, null=True, blank=True)
     trailer = models.FileField(upload_to=course_field_path, null=True, blank=True)
-    short_description = models.CharField(max_length=100)
-    real_price = models.PositiveIntegerField(help_text='price in toman')
+    short_description = models.CharField(max_length=100, null=True, blank=True)
+    real_price = models.PositiveIntegerField(help_text='price in toman', default=0)
     discount = models.PositiveIntegerField(null=True, blank=True, help_text='percent of discount',)
-    requirements = models.TextField()
+    requirements = models.TextField(null=True, blank=True)
     status = models.CharField(choices=STATUS_CHOICES, default='draft', max_length=5)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(null=True, blank=True)
     archived_at = models.DateTimeField(null=True, blank=True)
+    is_free = models.BooleanField(default=False)
 
     @property
     def price(self):
@@ -75,7 +82,7 @@ class Lesson(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='lessons')
 
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     video = models.FileField(upload_to=lesson_directory_path)
     is_free = models.BooleanField(default=False)
 

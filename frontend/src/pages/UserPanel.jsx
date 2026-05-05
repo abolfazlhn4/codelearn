@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
-import { Heart, User, ImageIcon, PlayCircle } from "lucide-react";
+import { Heart, User, ImageIcon, PlayCircle, LogOut } from "lucide-react"; // LogOut اضافه شد
 
 const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
@@ -27,6 +27,13 @@ const UserPanel = () => {
   const purchasedCourses = coursesData.filter((course) =>
     purchasedIds.includes(course.id),
   );
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user_phone");
+
+    navigate("/auth", { replace: true });
+  };
 
   return (
     <div dir="rtl" className="min-h-screen bg-[#f8f9fa] py-12 px-4 font-yekan">
@@ -127,6 +134,16 @@ const UserPanel = () => {
               شما هنوز هیچ دوره‌ای را به علاقه‌مندی‌ها اضافه نکرده‌اید.
             </div>
           )}
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-6 py-3 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-2xl font-bold transition-all duration-300 shadow-sm border border-red-100"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>خروج از حساب کاربری</span>
+          </button>
         </div>
       </div>
     </div>

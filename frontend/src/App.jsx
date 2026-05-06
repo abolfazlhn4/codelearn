@@ -28,7 +28,14 @@ function App() {
             <Route path="/CoursesArchive" element={<CoursesArchive />} />
             <Route path="/Aboutus" element={<Aboutus />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/user-panel" element={<UserPanel />} />
+            <Route
+              path="/user-panel/*"
+              element={
+                <ProtectedRoute allowedRoles={["student"]}>
+                  <UserPanel />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/instructor-panel" element={<InstructorPanel />} />
             <Route path="/cart" element={<Cart />} />
             <Route

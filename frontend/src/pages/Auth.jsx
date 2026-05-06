@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import api from "../api/api.js";
 
 export default function Auth() {
   const [role, setRole] = useState("student");
   const [step, setStep] = useState("phone");
   const [phonePart, setPhonePart] = useState("");
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [sessionToken, setSessionToken] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const otpInputs = useRef([]);
 
   const handleTabChange = (newRole) => {
     setRole(newRole);
     setStep("phone");
     setPhonePart("");
-    setOtp("");
+    setOtp(["", "", "", "", "", ""]);
     setError(null);
   };
 
@@ -37,11 +38,45 @@ export default function Auth() {
       });
       setSessionToken(res.data.session_token);
       setStep("verify");
+      setTimeout(() => otpInputs.current[0]?.focus(), 100);
     } catch (err) {
       setError("خطا در ارسال کد. شماره را بررسی کنید.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOtpChange = (index, value) => {
+    if (!/^\d*$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+
+    if (value && index < 5) {
+      otpInputs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      otpInputs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
+    const newOtp = [...otp];
+
+    for (let i = 0; i < Math.min(pastedData.length, 6); i++) {
+      newOtp[i] = pastedData[i];
+    }
+
+    setOtp(newOtp);
+    const nextEmpty = newOtp.findIndex((val) => !val);
+    const focusIndex = nextEmpty === -1 ? 5 : nextEmpty;
+    otpInputs.current[focusIndex]?.focus();
   };
 
   const handleVerifyOtp = async (e) => {
@@ -50,13 +85,14 @@ export default function Auth() {
     setError(null);
 
     const fullPhone = `+98${phonePart}`;
+    const otpCode = otp.join("");
 
     try {
       const res = await api.post(
         `/api/v1/users/auth/phone/verify/`,
         {
           phone_number: fullPhone,
-          security_code: otp,
+          security_code: otpCode,
           session_token: sessionToken,
           role: role,
         },
@@ -74,6 +110,8 @@ export default function Auth() {
       }
     } catch (err) {
       setError("کد واردشده اشتباه است یا منقضی شده.");
+      setOtp(["", "", "", "", "", ""]);
+      otpInputs.current[0]?.focus();
     } finally {
       setLoading(false);
     }
@@ -148,21 +186,27 @@ export default function Auth() {
               />
             </div>
           ) : (
-            <input
-              type="text"
-              dir="ltr"
-              placeholder="000000"
-              className="w-full p-4 rounded-2xl bg-gray-50 text-gray-800 border border-gray-200 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-center font-bold text-2xl tracking-[0.5em]"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-              maxLength={6}
-              required
-            />
+            <div className="flex justify-center gap-2 sm:gap-3" dir="ltr">
+              {otp.map((digit, index) => (
+                <input
+                  key={index}
+                  ref={(el) => (otpInputs.current[index] = el)}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleOtpChange(index, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                  onPaste={index === 0 ? handleOtpPaste : undefined}
+                  className="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-xl bg-gray-50 border-2 border-gray-200 text-gray-800 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all"
+                />
+              ))}
+            </div>
           )}
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || (step === "verify" && otp.some((d) => !d))}
             className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all duration-300"
           >
             {loading
@@ -176,7 +220,10 @@ export default function Auth() {
         {step === "verify" && (
           <button
             className="mt-6 text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors w-full text-center"
-            onClick={() => setStep("phone")}
+            onClick={() => {
+              setStep("phone");
+              setOtp(["", "", "", "", "", ""]);
+            }}
           >
             ویرایش شماره موبایل
           </button>

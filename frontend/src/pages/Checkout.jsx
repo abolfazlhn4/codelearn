@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -21,6 +21,14 @@ export default function Checkout() {
   const { cartItems } = useCart();
   const navigate = useNavigate();
   const [discountCode, setDiscountCode] = useState("");
+  const [phonePart, setPhonePart] = useState("");
+
+  useEffect(() => {
+    const storedPhone = localStorage.getItem("user_phone");
+    if (storedPhone && storedPhone.startsWith("+98")) {
+      setPhonePart(storedPhone.substring(3));
+    }
+  }, []);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + parsePrice(item.price),
@@ -63,7 +71,6 @@ export default function Checkout() {
               <div>
                 <label className="block text-sm text-gray-600 mb-1">نام</label>
                 <input
-                  required
                   type="text"
                   className="w-full border border-gray-200 rounded-lg p-2.5 outline-none focus:border-blue-500"
                 />
@@ -73,30 +80,36 @@ export default function Checkout() {
                   نام خانوادگی
                 </label>
                 <input
-                  required
                   type="text"
                   className="w-full border border-gray-200 rounded-lg p-2.5 outline-none focus:border-blue-500"
                 />
               </div>
             </div>
+
             <div>
               <label className="block text-sm text-gray-600 mb-1">
                 شماره تلفن
               </label>
-              <input
-                required
-                type="tel"
-                pattern="^09[0-9]{9}$"
-                maxLength="11"
-                title="شماره تلفن باید ۱۱ رقمی باشد و با 09 شروع شود"
-                onInput={(e) => {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }}
-                className="w-full border border-gray-200 rounded-lg p-2.5 outline-none focus:border-blue-500 text-left"
+              <div
+                className="flex items-center w-full p-2 rounded-lg bg-gray-50 border border-gray-200 text-left opacity-80 cursor-not-allowed"
                 dir="ltr"
-                placeholder="09123456789"
-              />
+              >
+                <span className="text-gray-500 font-bold text-base pr-3 border-r border-gray-300">
+                  +98
+                </span>
+                <input
+                  required
+                  type="tel"
+                  readOnly
+                  value={phonePart}
+                  className="w-full bg-transparent outline-none pl-3 text-gray-600 font-medium text-base tracking-wider cursor-not-allowed"
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                شماره تلفن بر اساس حساب کاربری شما تکمیل شده است.
+              </p>
             </div>
+
             <div>
               <label className="block text-sm text-gray-600 mb-1">
                 کد تخفیف (اختیاری)

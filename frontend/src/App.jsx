@@ -14,6 +14,7 @@ import InstructorPanel from "./pages/InstructorPanel";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import PaymentGateway from "./pages/PaymentGateway";
+import ProtectedRoute from "./components/ProtectedRoute"; // مسیر فایل را مطابق پروژه خود اصلاح کنید
 
 function App() {
   return (
@@ -30,8 +31,22 @@ function App() {
             <Route path="/user-panel" element={<UserPanel />} />
             <Route path="/instructor-panel" element={<InstructorPanel />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/payment" element={<PaymentGateway />} />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payment"
+              element={
+                <ProtectedRoute>
+                  <PaymentGateway />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
           <Footer />
         </BrowserRouter>

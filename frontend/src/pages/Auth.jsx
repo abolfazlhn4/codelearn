@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api.js";
 
 export default function Auth() {
@@ -10,6 +11,10 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const otpInputs = useRef([]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname;
 
   const handleTabChange = (newRole) => {
     setRole(newRole);
@@ -48,11 +53,9 @@ export default function Auth() {
 
   const handleOtpChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
-
     const newOtp = [...otp];
     newOtp[index] = value.slice(-1);
     setOtp(newOtp);
-
     if (value && index < 5) {
       otpInputs.current[index + 1]?.focus();
     }
@@ -68,11 +71,9 @@ export default function Auth() {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
     const newOtp = [...otp];
-
     for (let i = 0; i < Math.min(pastedData.length, 6); i++) {
       newOtp[i] = pastedData[i];
     }
-
     setOtp(newOtp);
     const nextEmpty = newOtp.findIndex((val) => !val);
     const focusIndex = nextEmpty === -1 ? 5 : nextEmpty;
@@ -103,10 +104,13 @@ export default function Auth() {
       localStorage.setItem("user_phone", fullPhone);
       localStorage.setItem("user_role", role);
 
-      if (role === "instructor") {
-        window.location.href = "/instructor-panel";
+      //کاربر یا بعد از لاگین میره پنل کاربری یا دکمه پرداخت رو زده بوده که اومده لاگین کنه و بعد بره ادامه پرداخت
+      if (from) {
+        navigate(from, { replace: true });
+      } else if (role === "instructor") {
+        navigate("/instructor-panel", { replace: true });
       } else {
-        window.location.href = "/user-panel";
+        navigate("/user-panel", { replace: true });
       }
     } catch (err) {
       setError("کد واردشده اشتباه است یا منقضی شده.");
@@ -120,6 +124,13 @@ export default function Auth() {
   return (
     <div className="flex justify-center mt-20 mb-16 bg-transparent" dir="rtl">
       <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-6 sm:p-8 w-full max-w-md mx-4 transition-all">
+        {/* 3. نمایش نوتیفیکیشن در صورتی که کاربر از صفحه پرداخت به اینجا ارجاع داده شده باشد */}
+        {from && (
+          <div className="bg-amber-50 text-amber-700 px-4 py-3 rounded-xl mb-6 text-sm font-bold border border-amber-200 text-center">
+            برای ادامه مراحل پرداخت، لطفاً ابتدا وارد حساب کاربری خود شوید.
+          </div>
+        )}
+
         {/* تب‌های انتخاب نقش */}
         <div className="flex bg-gray-50 p-1.5 rounded-2xl mb-8 border border-gray-100">
           <button
@@ -165,6 +176,7 @@ export default function Auth() {
           onSubmit={step === "phone" ? handleSendOtp : handleVerifyOtp}
           className="space-y-5"
         >
+          {/* ... ادامه فرم که تغییری نکرده ... */}
           {step === "phone" ? (
             <div
               className="flex items-center w-full p-4 rounded-2xl bg-gray-50 border border-gray-200 focus-within:bg-white focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-indigo-500/10 transition-all text-left"

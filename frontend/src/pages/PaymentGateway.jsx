@@ -29,10 +29,8 @@ export default function PaymentGateway() {
     const existingPurchases =
       JSON.parse(localStorage.getItem("purchasedCourses")) || [];
 
-    // استخراج آیدی دوره‌های سبد خرید
     const newPurchasesIds = cartItems.map((item) => item.id);
 
-    // ترکیب و حذف آیدی‌های تکراری (در صورت خرید مجدد یک دوره)
     const allPurchases = [
       ...new Set([...existingPurchases, ...newPurchasesIds]),
     ];

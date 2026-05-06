@@ -10,6 +10,7 @@ import CoursesArchive from "./pages/CoursesArchive";
 import Aboutus from "./pages/Aboutus";
 import Auth from "./pages/Auth";
 import UserPanel from "./pages/UserPanel";
+import InstructorPanel from "./pages/InstructorPanel";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import PaymentGateway from "./pages/PaymentGateway";
@@ -27,6 +28,7 @@ function App() {
             <Route path="/Aboutus" element={<Aboutus />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/user-panel" element={<UserPanel />} />
+            <Route path="/instructor-panel" element={<InstructorPanel />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment" element={<PaymentGateway />} />

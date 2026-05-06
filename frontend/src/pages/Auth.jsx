@@ -58,13 +58,14 @@ export default function Auth() {
           phone_number: fullPhone,
           security_code: otp,
           session_token: sessionToken,
-          //role
+          role: role,
         },
         { withCredentials: true },
       );
 
       localStorage.setItem("access_token", res.data.access_token);
       localStorage.setItem("user_phone", fullPhone);
+      localStorage.setItem("user_role", role);
 
       if (role === "instructor") {
         window.location.href = "/instructor-panel";

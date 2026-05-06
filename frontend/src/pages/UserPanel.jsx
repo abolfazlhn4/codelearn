@@ -12,8 +12,15 @@ const UserPanel = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    const role = localStorage.getItem("user_role");
+
     if (!token) {
       navigate("/auth", { replace: true });
+      return;
+    }
+
+    if (role !== "student") {
+      navigate("/instructor-panel", { replace: true });
       return;
     }
 
@@ -41,6 +48,7 @@ const UserPanel = () => {
     } finally {
       localStorage.removeItem("access_token");
       localStorage.removeItem("user_phone");
+      localStorage.removeItem("user_role");
       navigate("/auth", { replace: true });
     }
   };

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
-import { Heart, User, ImageIcon, PlayCircle, LogOut } from "lucide-react"; // LogOut اضافه شد
+import { Heart, User, ImageIcon, PlayCircle, LogOut } from "lucide-react";
+import api from "../api/api";
 
 const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
@@ -28,11 +29,20 @@ const UserPanel = () => {
     purchasedIds.includes(course.id),
   );
 
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("user_phone");
-
-    navigate("/auth", { replace: true });
+  const handleLogout = async () => {
+    try {
+      await api.post(
+        "/api/v1/users/me/logout/",
+        {},
+        { withCredentials: true }, // برای ارسال و حذف کوکی رفرش‌توکن
+      );
+    } catch (error) {
+      console.error("خطا در خروج از حساب:", error);
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("user_phone");
+      navigate("/auth", { replace: true });
+    }
   };
 
   return (

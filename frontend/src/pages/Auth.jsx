@@ -58,6 +58,7 @@ export default function Auth() {
           phone_number: fullPhone,
           security_code: otp,
           session_token: sessionToken,
+          //role
         },
         { withCredentials: true },
       );

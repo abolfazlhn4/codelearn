@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from phone_verify.api import VerificationViewSet
+from phonenumbers.phonenumber import PhoneNumber
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -26,14 +27,14 @@ class SMSVerificationViewSet(VerificationViewSet):
         serializer = CustomSMSVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        phone_number = serializer.validated_data['phone_number']
+        phone_number: PhoneNumber = serializer.validated_data['phone_number']
         role = serializer.validated_data['role']
 
         # create or get user
         user, created = get_user_model().objects.get_or_create(
             phone_number=phone_number,
             role=role,
-            username=phone_number,
+            username=role.title() + '_' + phone_number.as_national,
         )
 
         # create token

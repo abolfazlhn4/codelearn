@@ -123,7 +123,7 @@ verify_schema = extend_schema(
         'application/json': {
             'type': 'object',
             'properties': {
-                'session_key': {
+                'session_token': {
                     'type': 'string',
                     'example': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
                     'description': 'session key that send in past step',
@@ -138,6 +138,11 @@ verify_schema = extend_schema(
                     'enum': ['student', 'instructor'],
                     'example': 'student',
                     'description': 'User role (student or instructor)'
+                },
+                'security_code': {
+                    'type': 'integer',
+                    'example': 123456,
+                    'description': '6 digit security code',
                 },
             },
             'required': ['phone_number', 'role']
@@ -201,7 +206,9 @@ verify_schema = extend_schema(
             description='Login as a new student (account will be created automatically)',
             value={
                 'phone_number': '+989123456789',
-                'role': 'student'
+                'role': 'student',
+                'session_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3...',
+                'security_code': 123456,
             },
             request_only=True,
         ),
@@ -210,7 +217,9 @@ verify_schema = extend_schema(
             description='Login as an existing instructor',
             value={
                 'phone_number': '+989123456789',
-                'role': 'instructor'
+                'role': 'instructor',
+                'session_key': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3...',
+                'security_code': 123456,
             },
             request_only=True,
         ),
@@ -240,7 +249,7 @@ verify_schema = extend_schema(
             name='Error - Invalid role',
             description='Response when role is not student or instructor',
             value={
-                'role': ['"admin" is not a valid choice.']
+                'Error': ['"admin" is not a valid choice.']
             },
             response_only=True,
         ),
@@ -249,13 +258,6 @@ verify_schema = extend_schema(
 
 # ========== complete schema for viewset ==========
 sms_verification_schema_view = extend_schema_view(
-    # disable unwanted default methods
-    list=extend_schema(exclude=True),
-    retrieve=extend_schema(exclude=True),
-    update=extend_schema(exclude=True),
-    partial_update=extend_schema(exclude=True),
-    destroy=extend_schema(exclude=True),
-
     # schema for register method (send OTP)
     register=register_schema,
 

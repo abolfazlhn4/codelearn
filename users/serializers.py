@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from phone_verify.serializers import SMSVerificationSerializer
 from rest_framework import serializers
 
-from users.models import Role
+from users.models import Role, InstructorVerification
 
 
 class CustomSMSVerificationSerializer(SMSVerificationSerializer):
@@ -19,4 +19,14 @@ class ProfileSerializer(serializers.ModelSerializer):
             'is_active',
             'groups',
             'user_permissions',
+        ]
+
+class InstructorVerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InstructorVerification
+        exclude = ['reviewed_by']
+        read_only_fields = [
+            'status',
+            'reject_reason',
+            'reviewed_at',
         ]

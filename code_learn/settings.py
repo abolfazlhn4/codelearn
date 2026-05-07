@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+
+from django.templatetags.static import static
 from environs import Env
+from django.utils.translation import gettext_lazy as _
 
 env = Env()
 env.read_env()
@@ -35,6 +38,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'code_learn.urls'
@@ -119,18 +124,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('fa', _('Persian')),
+    ('en', _('English')),
+]
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'utc'
 
-USE_I18N = False
-
-USE_TZ = False
+USE_I18N = True
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
@@ -188,4 +199,13 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_DIST': 'SIDECAR',
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
+}
+
+UNFOLD = {
+    'SITE_TITLE': _('Code Learn'),
+    'SITE_HEADER': _('Code Learn'),
+    'SHOW_LANGUAGES': True,
+    'STYLES': [
+        lambda request: static('css/style.css'),
+    ],
 }

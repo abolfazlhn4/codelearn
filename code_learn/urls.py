@@ -14,9 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
+from code_learn import settings
 
 schema_urls = [
     path('', SpectacularAPIView.as_view(), name='schema'),
@@ -30,7 +34,14 @@ app_urls = [
 ]
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('api/v1/', include(app_urls)),
     path('api/schema/', include(schema_urls)),
 ]
+
+urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
+)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

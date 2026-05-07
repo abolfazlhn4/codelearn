@@ -56,7 +56,21 @@ const ProfileTab = () => {
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
+      const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!validTypes.includes(file.type)) {
+        alert("لطفاً فقط تصاویر با فرمت JPG یا PNG انتخاب کنید.");
+        e.target.value = "";
+        return;
+      }
+
+      const maxSize = 500 * 1024;
+      if (file.size > maxSize) {
+        alert("حجم تصویر نباید بیشتر از ۵۰۰ کیلوبایت باشد.");
+        e.target.value = "";
+        return;
+      }
       setAvatarFile(file);
       setAvatarPreview(URL.createObjectURL(file));
     }
@@ -134,7 +148,7 @@ const ProfileTab = () => {
           <div className="flex flex-col items-center sm:items-start">
             <input
               type="file"
-              accept="image/*"
+              accept=".png, .jpg, .jpeg"
               onChange={handleAvatarChange}
               ref={fileInputRef}
               className="hidden"

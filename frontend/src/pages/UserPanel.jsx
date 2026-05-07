@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
-import axios from "axios";
+import api from "../api/api";
 import {
   Heart,
   User,
@@ -34,7 +34,6 @@ import WalletTab from "./user-panel-tabs/WalletTab";
 const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const [purchasedIds, setPurchasedIds] = useState([]);
-  const [profileData, setProfileData] = useState(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,13 +60,10 @@ const UserPanel = () => {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      await axios.post(
+      await api.post(
         "/api/v1/users/me/logout/",
         {},
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
           withCredentials: true,
         },
       );

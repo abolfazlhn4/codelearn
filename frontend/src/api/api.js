@@ -31,7 +31,7 @@ api.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          `${baseURL}/api/v1/users/token/refresh/`,
+          `${baseURL}/api/v1/users/auth/token/refresh/`,
           {},
           {
             withCredentials: true,

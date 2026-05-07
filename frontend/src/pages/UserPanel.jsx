@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { coursesData } from "../data/coursesData";
+import axios from "axios";
 import {
   Heart,
   User,
@@ -20,7 +21,6 @@ import {
   ShoppingBag,
   HeadphonesIcon,
 } from "lucide-react";
-import api from "../api/api";
 
 import DashboardTab from "./user-panel-tabs/DashboardTab";
 import CoursesTab from "./user-panel-tabs/CoursesTab";
@@ -35,6 +35,7 @@ const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const [purchasedIds, setPurchasedIds] = useState([]);
   const [profileData, setProfileData] = useState(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,18 +56,31 @@ const UserPanel = () => {
     const storedPurchases =
       JSON.parse(localStorage.getItem("purchasedCourses")) || [];
     setPurchasedIds(storedPurchases);
-
-    setProfileData({
-      first_name: "کاربر",
-      last_name: "تست",
-      email: "user@example.com",
-      phone_number: localStorage.getItem("user_phone") || "+98",
-    });
   }, [navigate]);
 
-  const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-    alert("اطلاعات با موفقیت بروزرسانی شد.");
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await axios.post(
+        "/api/v1/users/me/logout/",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+          withCredentials: true,
+        },
+      );
+    } catch (error) {
+      console.error("Server logout failed:", error);
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("user_phone");
+      localStorage.removeItem("user_role");
+
+      navigate("/auth", { replace: true });
+      setIsLoggingOut(false);
+    }
   };
 
   const favoriteCourses = coursesData.filter((course) =>
@@ -75,13 +89,6 @@ const UserPanel = () => {
   const purchasedCourses = coursesData.filter((course) =>
     purchasedIds.includes(course.id),
   );
-
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("user_phone");
-    localStorage.removeItem("user_role");
-    navigate("/auth", { replace: true });
-  };
 
   const menuItems = [
     { path: "/user-panel", title: "داشبورد", icon: LayoutDashboard },
@@ -94,7 +101,6 @@ const UserPanel = () => {
     { path: "/user-panel/profile", title: "اطلاعات کاربری", icon: UserCog },
   ];
 
-  // تشخیص دقیق تب فعال
   const isActive = (path) => {
     const currentPath = location.pathname.replace(/\/$/, "");
     return currentPath === path;
@@ -106,7 +112,6 @@ const UserPanel = () => {
       className="min-h-screen bg-[#f3f4f6] py-4 md:py-8 px-4 font-yekan"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6">
-        {/* سایدبار */}
         <aside className="w-full md:w-72 flex-shrink-0">
           <div className="bg-white p-4 md:p-6 rounded-3xl shadow-sm border border-gray-100 md:sticky md:top-8">
             <div className="hidden md:flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
@@ -116,7 +121,7 @@ const UserPanel = () => {
               <div className="overflow-hidden">
                 <p className="font-bold text-gray-800 truncate">کاربر دانشجو</p>
                 <p className="text-xs text-gray-500 mt-1 truncate" dir="ltr">
-                  {profileData?.phone_number}
+                  {localStorage.getItem("user_phone")}
                 </p>
               </div>
             </div>
@@ -147,16 +152,16 @@ const UserPanel = () => {
             <div className="hidden md:block mt-8 pt-6 border-t border-gray-100">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors text-sm font-medium"
+                disabled={isLoggingOut}
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors text-sm font-medium disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <LogOut className="w-5 h-5" />
-                خروج از حساب
+                {isLoggingOut ? "در حال خروج..." : "خروج از حساب"}
               </button>
             </div>
           </div>
         </aside>
 
-        {/* محتوای اصلی */}
         <main className="flex-1 bg-white p-5 md:p-8 rounded-3xl shadow-sm border border-gray-100 min-h-[600px] overflow-hidden">
           <Routes>
             <Route
@@ -185,16 +190,7 @@ const UserPanel = () => {
                 />
               }
             />
-            <Route
-              path="profile"
-              element={
-                <ProfileTab
-                  profileData={profileData}
-                  setProfileData={setProfileData}
-                  handleProfileUpdate={handleProfileUpdate}
-                />
-              }
-            />
+            <Route path="profile" element={<ProfileTab />} />
             <Route path="certificates" element={<CertificatesTab />} />
             <Route path="tickets" element={<TicketsTab />} />
             <Route path="wallet" element={<WalletTab />} />

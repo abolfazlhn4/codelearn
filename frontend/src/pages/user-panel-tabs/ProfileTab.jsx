@@ -8,7 +8,7 @@ const ProfileTab = () => {
     last_name: "",
     email: "",
     birth_date: "",
-    gender: "",
+    sex: "",
     phone_number: "",
     avatar: null,
   });
@@ -31,7 +31,7 @@ const ProfileTab = () => {
           last_name: data.last_name || "",
           email: data.email || "",
           birth_date: data.birth_date || "",
-          gender: data.gender || "",
+          sex: data.sex || "",
           phone_number: data.phone_number || "",
           avatar: data.avatar || null,
         };
@@ -75,8 +75,8 @@ const ProfileTab = () => {
     if (profileData.birth_date) {
       formData.append("birth_date", profileData.birth_date);
     }
-    if (profileData.gender) {
-      formData.append("gender", profileData.gender);
+    if (profileData.sex) {
+      formData.append("sex", profileData.sex);
     }
 
     if (avatarFile) {
@@ -215,19 +215,18 @@ const ProfileTab = () => {
           <div>
             <label className="block text-sm text-gray-600 mb-2">جنسیت</label>
             <select
-              name="gender"
-              value={profileData.gender}
+              name="sex"
+              value={profileData.sex}
               onChange={handleChange}
               className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-blue-500 bg-gray-50 focus:bg-white transition-colors appearance-none"
             >
               <option value="">انتخاب کنید...</option>
-              <option value="male">مرد</option>
-              <option value="female">زن</option>
+              <option value="M">مرد</option>
+              <option value="F">زن</option>
             </select>
           </div>
         </div>
 
-        {/* دکمه ثبت */}
         <div className="pt-4 border-t mt-8">
           <button
             type="submit"

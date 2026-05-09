@@ -1,67 +1,84 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom"; // useLocation اضافه شد
-import { User, Heart, Users, Image as ImageIcon, Filter, Search } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  User,
+  Heart,
+  Users,
+  Image as ImageIcon,
+  Filter,
+  Search,
+  ChevronRight,
+  ChevronLeft,
+} from "lucide-react";
 import { coursesData, categories } from "../data/coursesData";
 import { useFavorites } from "../context/FavoritesContext";
 
 const CoursesArchive = () => {
-  const location = useLocation(); // دریافت اطلاعات URL
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [priceFilter, setPriceFilter] = useState("all"); // 'all', 'free', 'paid'
+  const [priceFilter, setPriceFilter] = useState("all");
 
- //جستوجو
-   const [searchTerm, setSearchTerm] = useState(() => {
+  const [searchTerm, setSearchTerm] = useState(() => {
     return localStorage.getItem("courseSearchTerm") || "";
   });
 
-  // استیت‌های بازه قیمتی و مرتب‌سازی
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortOrder, setSortOrder] = useState("newest");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  // آپدیت کردن لوکال استوریج هر بار که مقدار سرچ عوض میشه
   useEffect(() => {
     localStorage.setItem("courseSearchTerm", searchTerm);
   }, [searchTerm]);
 
-  // بررسی URL هنگام لود شدن صفحه یا تغییر آن
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const categoryQuery = searchParams.get("category");
 
-    // اگر در آدرس category وجود داشت، آن را به عنوان دسته انتخاب شده قرار بده
     if (categoryQuery) {
       setSelectedCategory(categoryQuery);
     } else {
-      setSelectedCategory("all"); // در غیر این صورت همه دوره‌ها
+      setSelectedCategory("all");
     }
   }, [location.search]);
 
-const parsePrice = (priceStr) => {
-  if (!priceStr) return 0;
-  const numStr = priceStr.toString().replace(/[^\d۰-۹]/g, '');
-  const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  let englishNum = numStr;
-  persianNumbers.forEach((pNum, index) => {
-    englishNum = englishNum.replace(new RegExp(pNum, 'g'), index.toString());
-  });
-  return parseInt(englishNum) || 0;
-};
+  // اگر هرکدام از فیلترها تغییر کرد، برگردیم به صفحه اول
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    selectedCategory,
+    priceFilter,
+    searchTerm,
+    minPrice,
+    maxPrice,
+    sortOrder,
+  ]);
+
+  const parsePrice = (priceStr) => {
+    if (!priceStr) return 0;
+    const numStr = priceStr.toString().replace(/[^\d۰-۹]/g, "");
+    const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    let englishNum = numStr;
+    persianNumbers.forEach((pNum, index) => {
+      englishNum = englishNum.replace(new RegExp(pNum, "g"), index.toString());
+    });
+    return parseInt(englishNum) || 0;
+  };
 
   const filteredCourses = useMemo(() => {
     let result = coursesData.filter((course) => {
-       // 1. فیلتر دسته‌بندی
       const matchCategory =
         selectedCategory === "all"
           ? true
           : course.categoryId === selectedCategory;
+      const matchSearch = course.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
-       // 2. فیلتر جستجو
-      const matchSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase());
-
-      // 3. فیلتر وضعیت قیمت
       let matchPrice = true;
       const priceVal = parsePrice(course.price);
       const isFree = priceVal === 0;
@@ -69,15 +86,16 @@ const parsePrice = (priceStr) => {
       if (priceFilter === "free") matchPrice = isFree;
       if (priceFilter === "paid") matchPrice = !isFree;
 
-       // 4. فیلتر بازه قیمتی (فقط وقتی رایگان انتخاب نشده)
       let matchPriceRange = true;
       if (priceFilter !== "free") {
-        if (minPrice && priceVal < parseInt(minPrice, 10)) matchPriceRange = false;
-        if (maxPrice && priceVal > parseInt(maxPrice, 10)) matchPriceRange = false;
+        if (minPrice && priceVal < parseInt(minPrice, 10))
+          matchPriceRange = false;
+        if (maxPrice && priceVal > parseInt(maxPrice, 10))
+          matchPriceRange = false;
       }
-       return matchCategory && matchSearch && matchPrice && matchPriceRange;
+      return matchCategory && matchSearch && matchPrice && matchPriceRange;
     });
-    // 5. مرتب‌سازی
+
     result.sort((a, b) => {
       const priceA = parsePrice(a.price);
       const priceB = parsePrice(b.price);
@@ -88,14 +106,34 @@ const parsePrice = (priceStr) => {
         case "top_rated":
           return (b.studentsCount || 0) - (a.studentsCount || 0);
         case "oldest":
-          return a.id - b.id; // فرض بر اینکه آیدی کوچکتر قدیمی‌تره
+          return a.id - b.id;
         case "newest":
         default:
           return b.id - a.id;
       }
     });
     return result;
-  }, [selectedCategory, priceFilter, searchTerm, minPrice, maxPrice, sortOrder]);
+  }, [
+    selectedCategory,
+    priceFilter,
+    searchTerm,
+    minPrice,
+    maxPrice,
+    sortOrder,
+  ]);
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+  const currentCourses = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCourses.slice(startIndex, endIndex);
+  }, [currentPage, filteredCourses]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div
@@ -103,13 +141,13 @@ const parsePrice = (priceStr) => {
       className="bg-[#f8f9fa] min-h-screen py-10 px-4 sm:px-8 font-yekan"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        {/* سایدبار فیلترها */}
+        {/* سایدبار فیلترها (بدون تغییر) */}
         <aside className="w-full md:w-1/4 bg-white p-6 rounded-[2rem] shadow-sm h-fit border border-gray-100">
           <div className="flex items-center gap-2 mb-6 text-black">
             <Filter className="w-5 h-5" />
             <h2 className="font-black text-xl">فیلترها</h2>
           </div>
-        {/* جستجو */}
+
           <div className="mb-8">
             <h3 className="font-bold text-gray-700 mb-4">جستجو</h3>
             <div className="relative">
@@ -123,7 +161,7 @@ const parsePrice = (priceStr) => {
               <Search className="w-4 h-4 text-gray-400 absolute right-3 top-3.5" />
             </div>
           </div>
-          {/* فیلتر دسته‌بندی */}
+
           <div className="mb-8">
             <h3 className="font-bold text-gray-700 mb-4">دسته‌بندی‌ها</h3>
             <div className="flex flex-col gap-3">
@@ -155,7 +193,6 @@ const parsePrice = (priceStr) => {
             </div>
           </div>
 
-          {/* فیلتر قیمت */}
           <div>
             <h3 className="font-bold text-gray-700 mb-4">وضعیت قیمت</h3>
             <div className="flex flex-col gap-3">
@@ -190,80 +227,83 @@ const parsePrice = (priceStr) => {
                 <span className="text-sm text-gray-600">نقدی</span>
               </label>
             </div>
-          {/* بازه قیمتی */}
-           {priceFilter !== "free" && (
-            <div className="mt-6">
-              <h4 className="text-sm font-semibold mb-3 text-gray-700">
-                بازه قیمت (تومان)
-              </h4>
-          {/* نمایش بازه انتخاب شده */}
-            <div className="flex justify-between mb-4 text-xs">
-             <div className="flex flex-col">
-               <span className="text-gray-500">ارزانترین</span>
-               <span className="font-semibold text-[#3b3ab5]">
-                  {minPrice ? parseInt(minPrice).toLocaleString('fa-IR') : '۰'} تومان
-               </span>
-             </div>
-             <div className="flex flex-col text-left">
-               <span className="text-gray-500">گرانترین</span>
-               <span className="font-semibold text-[#3b3ab5]">
-                 {maxPrice ? parseInt(maxPrice).toLocaleString('fa-IR') : '30,000,000'} تومان
-               </span>
-             </div>
-            </div>
 
-          {/* اینپوت‌های بازه */}
-            <div className="flex gap-2">
-              <input
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                placeholder="از"
-                className="w-1/2 p-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3b3ab5]"
-              />
-              <input
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                placeholder="تا"
-                className="w-1/2 p-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3b3ab5]"
-              />
-            </div>
-           </div>
-          )}
-        </div>
+            {priceFilter !== "free" && (
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold mb-3 text-gray-700">
+                  بازه قیمت (تومان)
+                </h4>
+                <div className="flex justify-between mb-4 text-xs">
+                  <div className="flex flex-col">
+                    <span className="text-gray-500">ارزانترین</span>
+                    <span className="font-semibold text-[#3b3ab5]">
+                      {minPrice
+                        ? parseInt(minPrice).toLocaleString("fa-IR")
+                        : "۰"}{" "}
+                      تومان
+                    </span>
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <span className="text-gray-500">گرانترین</span>
+                    <span className="font-semibold text-[#3b3ab5]">
+                      {maxPrice
+                        ? parseInt(maxPrice).toLocaleString("fa-IR")
+                        : "30,000,000"}{" "}
+                      تومان
+                    </span>
+                  </div>
+                </div>
 
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                    placeholder="از"
+                    className="w-1/2 p-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3b3ab5]"
+                  />
+                  <input
+                    type="number"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                    placeholder="تا"
+                    className="w-1/2 p-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#3b3ab5]"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </aside>
 
         {/* بخش نمایش محصولات */}
         <main className="w-full md:w-3/4">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
             <div>
-             <h1 className="text-2xl font-black text-black">آرشیو دوره‌ها</h1>
-             <span className="text-sm text-gray-500">
-               {filteredCourses.length} دوره یافت شد
-             </span>
-           </div>
+              <h1 className="text-2xl font-black text-black">آرشیو دوره‌ها</h1>
+              <span className="text-sm text-gray-500">
+                {filteredCourses.length} دوره یافت شد
+              </span>
+            </div>
 
-           {/* مرتب‌سازی */}
-             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-gray-100 shadow-sm">
-               <span className="text-sm text-gray-600">مرتب‌سازی:</span>
-               <select
-                 value={sortOrder}
-                 onChange={(e) => setSortOrder(e.target.value)}
-                 className="text-sm bg-transparent font-bold text-gray-800 focus:outline-none cursor-pointer"
-               >
-                 <option value="newest">جدیدترین</option>
-                 <option value="oldest">قدیمی‌ترین</option>
-                 <option value="price_high">بیشترین قیمت</option>
-                 <option value="top_rated">محبوب‌ترین</option>
-               </select>
-             </div>
-           </div>
+            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-gray-100 shadow-sm">
+              <span className="text-sm text-gray-600">مرتب‌سازی:</span>
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="text-sm bg-transparent font-bold text-gray-800 focus:outline-none cursor-pointer"
+              >
+                <option value="newest">جدیدترین</option>
+                <option value="oldest">قدیمی‌ترین</option>
+                <option value="price_high">بیشترین قیمت</option>
+                <option value="top_rated">محبوب‌ترین</option>
+              </select>
+            </div>
+          </div>
 
+          {/* استفاده از currentCourses به جای filteredCourses در اینجا */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.length > 0 ? (
-              filteredCourses.map((course) => (
+            {currentCourses.length > 0 ? (
+              currentCourses.map((course) => (
                 <Link
                   key={course.id}
                   to={`/product/${course.id}`}
@@ -327,6 +367,48 @@ const parsePrice = (priceStr) => {
               </div>
             )}
           </div>
+
+          {/* صفحه بندی */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-10">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-2.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Previous Page"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-1">
+                {[...Array(totalPages)].map((_, index) => {
+                  const pageNumber = index + 1;
+                  return (
+                    <button
+                      key={pageNumber}
+                      onClick={() => handlePageChange(pageNumber)}
+                      className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                        currentPage === pageNumber
+                          ? "bg-[#3b3ab5] text-white shadow-md shadow-[#3b3ab5]/20"
+                          : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                      }`}
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-2.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Next Page"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </main>
       </div>
     </div>

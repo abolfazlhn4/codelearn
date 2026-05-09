@@ -40,15 +40,9 @@ const UserPanel = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    const role = localStorage.getItem("user_role");
 
     if (!token) {
       navigate("/auth", { replace: true });
-      return;
-    }
-
-    if (role !== "student") {
-      navigate("/instructor-panel", { replace: true });
       return;
     }
 
@@ -98,7 +92,7 @@ const UserPanel = () => {
   ];
 
   const isActive = (path) => {
-    const currentPath = location.pathname.replace(/\/$/, "");
+    const currentPath = location.pathname.replace(/\/$/, ""); //اگر اخر استرینگ اسلش باشه حذف میکنه
     return currentPath === path;
   };
 

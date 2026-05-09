@@ -3,18 +3,21 @@ import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
+//۱۲,۰۰۰ تومان     =>
+//12000
 const parsePrice = (priceString) => {
   if (typeof priceString !== "string" || priceString.toLowerCase() === "رایگان")
     return 0;
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  let normalized = priceString.replace(/[۰-۹]/g, (w) =>
-    persianDigits.indexOf(w),
+  let normalized = priceString.replace(
+    /[۰-۹]/g, // g یعنی همه‌شان را در کل رشته پیدا کن
+    (word) => persianDigits.indexOf(word),
   );
   normalized = normalized
     .replace(/,/g, "")
     .replace("تومان", "")
     .replace("هزار", "000")
-    .replace(/\s/g, "");
+    .replace(/\s/g, ""); //فاصله حذف شه
   return parseInt(normalized, 10) || 0;
 };
 

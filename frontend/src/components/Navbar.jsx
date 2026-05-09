@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import CartPopup from "./CartPopup"; // ایمپورت کامپوننت جدید
+import CartPopup from "./CartPopup";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -96,7 +96,6 @@ const Navbar = () => {
                 )}
               </Link>
 
-              {/* استفاده از کامپوننت جدا شده برای پاپ‌آپ */}
               <CartPopup
                 isOpen={isCartOpen}
                 onMouseEnter={() => setIsCartOpen(true)}

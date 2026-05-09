@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, ShoppingBag, User, Trash2 } from "lucide-react";
+import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-
-const parsePrice = (priceString) => {
-  if (typeof priceString !== "string" || priceString.toLowerCase() === "رایگان")
-    return 0;
-  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  let normalized = priceString.replace(/[۰-۹]/g, (w) =>
-    persianDigits.indexOf(w),
-  );
-  normalized = normalized
-    .replace(/,/g, "")
-    .replace("تومان", "")
-    .replace("هزار", "000")
-    .replace(/\s/g, "");
-  return parseInt(normalized, 10) || 0;
-};
+import CartPopup from "./CartPopup"; // ایمپورت کامپوننت جدید
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const { cartItems } = useCart();
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -41,13 +28,6 @@ const Navbar = () => {
     { name: "درباره ما", href: "/Aboutus", active: false },
   ];
 
-  const { cartItems, removeFromCart } = useCart();
-
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + parsePrice(item.price),
-    0,
-  );
-
   return (
     <header
       dir="rtl"
@@ -55,6 +35,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] px-4 md:px-6 py-3 flex items-center justify-between relative">
+          {/* بخش سمت راست: منو موبایل و لینک‌های دسکتاپ */}
           <div className="flex items-center">
             <button
               onClick={toggleMenu}
@@ -84,12 +65,20 @@ const Navbar = () => {
             </nav>
           </div>
 
+          {/* بخش وسط: لوگو */}
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-            <div className="w-10 h-10 bg-gradient-to-tr from-[#3b3ab5] to-[#4caf50] rounded-xl flex items-center justify-center text-white transform rotate-12"></div>
+            <Link to="/">
+              <img
+                src="/pictures/logo.png"
+                alt="logo"
+                className="w-12 h-12 object-contain rounded-xl"
+              />
+            </Link>
           </div>
 
+          {/* بخش سمت چپ: سبد خرید و دکمه ورود */}
           <div className="flex items-center gap-3">
-            {/* بخش آیکون سبد خرید با قابلیت هاور */}
+            {/* کانتینر سبد خرید با هندل کردن هاور */}
             <div
               className="relative group"
               onMouseEnter={() => setIsCartOpen(true)}
@@ -107,83 +96,12 @@ const Navbar = () => {
                 )}
               </Link>
 
-              {/* منوی شناور سبد خرید */}
-              <div
-                className={`absolute left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 transition-all duration-300 origin-top-left ${
-                  isCartOpen
-                    ? "opacity-100 scale-100 visible"
-                    : "opacity-0 scale-95 invisible"
-                }`}
+              {/* استفاده از کامپوننت جدا شده برای پاپ‌آپ */}
+              <CartPopup
+                isOpen={isCartOpen}
                 onMouseEnter={() => setIsCartOpen(true)}
                 onMouseLeave={() => setIsCartOpen(false)}
-              >
-                <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
-                  <span className="font-bold text-gray-800 text-sm">
-                    سبد خرید ({cartItems.length} دوره)
-                  </span>
-                  <Link
-                    to="/cart"
-                    className="text-xs text-[#3b3ab5] hover:underline"
-                  >
-                    مشاهده سبد
-                  </Link>
-                </div>
-
-                {cartItems.length > 0 ? (
-                  <>
-                    <div className="max-h-60 overflow-y-auto pr-1 space-y-3 custom-scrollbar">
-                      {cartItems.map((item) => (
-                        <div
-                          key={item.id}
-                          className="flex items-start gap-3 border-b border-gray-50 pb-3 last:border-0 last:pb-0"
-                        >
-                          <div className="w-12 h-12 bg-gray-100 rounded-lg flex-shrink-0"></div>
-                          <div className="flex-1">
-                            <h4 className="text-sm font-bold text-gray-800 line-clamp-1">
-                              {item.title}
-                            </h4>
-                            <div className="flex items-center justify-between mt-1">
-                              <span className="text-xs font-medium text-[#4caf50]">
-                                {item.price}
-                              </span>
-                              <button
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  removeFromCart(item.id);
-                                }}
-                                className="text-gray-400 hover:text-red-500 transition-colors"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                      <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm text-gray-600">مبلغ کل:</span>
-                        <span className="text-sm font-bold text-gray-900">
-                          {totalPrice > 0
-                            ? `${totalPrice.toLocaleString("fa-IR")} تومان`
-                            : "رایگان"}
-                        </span>
-                      </div>
-                      <Link
-                        to="/checkout"
-                        className="block w-full text-center bg-[#3b3ab5] text-white py-2 rounded-xl text-sm font-medium hover:bg-opacity-90 transition-colors"
-                      >
-                        تسویه حساب
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <div className="py-6 text-center text-gray-500 text-sm">
-                    سبد خرید شما خالی است
-                  </div>
-                )}
-              </div>
+              />
             </div>
 
             <Link
@@ -198,6 +116,7 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* منوی موبایل */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-24 left-4 right-4 bg-white rounded-2xl shadow-xl p-4 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 z-50">
             {navLinks.map((link, index) => (

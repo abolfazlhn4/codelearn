@@ -14,9 +14,7 @@ const Aboutus = () => {
         </p>
 
         <div className="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-md">
-          <p className="text-blue-700 font-semibold">
-            برنامه نویسی • barnamenevis.ir
-          </p>
+          <p className="text-blue-700 font-semibold">کد لرن • codeLearn.ir</p>
         </div>
       </div>
     </div>

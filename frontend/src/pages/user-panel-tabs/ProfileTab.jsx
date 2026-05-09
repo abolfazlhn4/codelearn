@@ -162,7 +162,7 @@ const ProfileTab = () => {
               تغییر آواتار
             </button>
             <p className="text-xs text-gray-500 mt-2">
-              تصاویر با فرمت JPG, PNG یا GIF
+              تصاویر با فرمت JPG, PNG
             </p>
           </div>
         </div>

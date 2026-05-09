@@ -39,7 +39,6 @@ const Counter = ({ target, prefix = "", duration = 2000 }) => {
     </span>
   );
 };
-
 const HeroSection = () => {
   const stats = [
     { id: 1, target: 18, prefix: "+", label: "متخصص مجرب" },
@@ -50,7 +49,8 @@ const HeroSection = () => {
   return (
     <section
       dir="rtl"
-      className="bg-[#f8f9fa] flex items-center justify-center font-yekan pt-12 pb-20 px-4 sm:px-8"
+      // پدینگ بالا (pt-12) به pt-24 تغییر کرد تا فاصله از هدر بیشتر شود
+      className="bg-[#f8f9fa] flex items-center justify-center font-yekan xl:pt-36 lg:pt-36 sm:pt-12 pt-12 pb-20 px-4 sm:px-8"
     >
       <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8">
         <div className="flex-1 text-center lg:text-right space-y-10">
@@ -70,19 +70,22 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex justify-center w-full max-w-md relative z-10">
+        {/* تغییرات سایز، مارجین و عرض برای رسپانسیو بهتر اعمال شد */}
+        <div className="flex-1 flex justify-center w-[85%] sm:w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] relative z-10 mt-20 lg:mt-0 mx-auto">
+          {/* مربع بنفش پس‌زمینه */}
           <div className="absolute -top-6 -left-6 w-full h-full bg-[#3b3ab5] rounded-[3rem] -z-10"></div>
 
-          <div className="bg-[#e5f0d1] w-full aspect-square rounded-[3rem] overflow-hidden flex items-end justify-center relative shadow-sm">
+          {/* مربع سبز و نگهدارنده تصویر */}
+          <div className="bg-[#e5f0d1] w-full aspect-square rounded-[3rem] flex items-end justify-center relative shadow-sm">
             <img
-              src="/path-to-your-person-image.png"
+              src="/pictures/handsome_adult_blond_man_smiling_cheerfully_feeling_happy.png"
               alt="مدرس برنامه‌نویسی"
-              className="object-cover w-[85%] h-auto drop-shadow-2xl translate-y-4"
+              className="absolute bottom-0 object-contain w-[95%] sm:w-[105%] h-auto drop-shadow-2xl z-20"
             />
           </div>
         </div>
 
-        <div className="flex flex-row lg:flex-col gap-10 justify-center flex-wrap lg:w-48">
+        <div className="flex flex-row lg:flex-col gap-10 justify-center flex-wrap lg:w-48 mt-12 lg:mt-0">
           {stats.map((stat) => (
             <div
               key={stat.id}

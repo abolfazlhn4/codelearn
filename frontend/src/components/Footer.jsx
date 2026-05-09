@@ -13,15 +13,19 @@ const Footer = () => {
     <footer dir="rtl" className="bg-white font-yekan border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 md:py-14">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
-          {/* لوگو */}
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-tr from-[#3b3ab5] to-[#4caf50] rounded-xl flex items-center justify-center text-white transform rotate-12"></div>
+            <img
+              src="/pictures/logo.png"
+              alt="logo"
+              className="w-12 h-12 object-contain rounded-xl"
+            />
+
             <div className="flex flex-col">
               <span className="font-black text-xl text-black">
-                برنامه نویسی
+                وب سایت کد لرن
               </span>
               <span className="text-sm text-gray-500 font-sans tracking-wider">
-                barnamenevis.ir
+                codeLearn.ir
               </span>
             </div>
           </div>
@@ -151,7 +155,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-4">
               <li className="flex items-center gap-3 text-gray-500 hover:text-[#3b3ab5] transition-colors cursor-pointer">
                 <EnvelopeIcon className="w-5 h-5" />
-                <span className="text-sm font-sans">admin@barnamenevis.ir</span>
+                <span className="text-sm font-sans">admin@codeLearn.ir</span>
               </li>
 
               <li className="flex items-center gap-3 text-gray-500 hover:text-[#3b3ab5] transition-colors cursor-pointer">

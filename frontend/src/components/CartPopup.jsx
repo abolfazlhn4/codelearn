@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
-// تابع کمکی برای محاسبه قیمت
 const parsePrice = (priceString) => {
   if (typeof priceString !== "string" || priceString.toLowerCase() === "رایگان")
     return 0;
@@ -54,7 +53,6 @@ const CartPopup = ({ isOpen, onMouseEnter, onMouseLeave }) => {
                 key={item.id}
                 className="flex items-start gap-3 border-b border-gray-50 pb-3 last:border-0 last:pb-0"
               >
-                {/* تصویر دوره - می‌توانید آدرس تصویر واقعی را جایگزین کنید */}
                 <div className="w-12 h-12 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                   <img
                     src={item.image || "/pictures/course-placeholder.png"}

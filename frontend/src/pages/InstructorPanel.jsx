@@ -12,12 +12,13 @@ import {
   LogOut,
   LayoutDashboard,
   UserCog,
-  PlusCircle,
   DollarSign,
   MessagesSquare,
+  BookOpen,
 } from "lucide-react";
 
 import DashboardTab from "./teacher-panel-tabs/DashboardTab";
+import ManageCoursesTab from "./teacher-panel-tabs/ManageCoursesTab";
 import AddCourseTab from "./teacher-panel-tabs/AddCourseTab";
 import RevenueTab from "./teacher-panel-tabs/RevenueTab";
 import TicketsTab from "./teacher-panel-tabs/TicketsTab";
@@ -36,7 +37,6 @@ const InstructorPanel = () => {
       navigate("/auth", { replace: true });
       return;
     }
-
     if (role !== "instructor") {
       navigate("/user-panel", { replace: true });
       return;
@@ -61,9 +61,9 @@ const InstructorPanel = () => {
   const menuItems = [
     { path: "/instructor-panel", title: "داشبورد", icon: LayoutDashboard },
     {
-      path: "/instructor-panel/add-course",
-      title: "افزودن دوره",
-      icon: PlusCircle,
+      path: "/instructor-panel/manage-courses",
+      title: "مدیریت دوره‌ها",
+      icon: BookOpen,
     },
     {
       path: "/instructor-panel/revenue",
@@ -78,8 +78,14 @@ const InstructorPanel = () => {
     { path: "/instructor-panel/profile", title: "ویرایش حساب", icon: UserCog },
   ];
 
+  // برای روشن ماندن تب وقتی داخل افزودن دوره هستیم
   const isActive = (path) => {
     const currentPath = location.pathname.replace(/\/$/, "");
+    if (
+      path === "/instructor-panel/manage-courses" &&
+      currentPath.includes("add-course")
+    )
+      return true;
     return currentPath === path;
   };
 
@@ -142,6 +148,7 @@ const InstructorPanel = () => {
         <main className="flex-1 bg-white p-5 md:p-8 rounded-3xl shadow-sm border border-gray-100 min-h-[600px] overflow-hidden">
           <Routes>
             <Route path="/" element={<DashboardTab />} />
+            <Route path="manage-courses" element={<ManageCoursesTab />} />
             <Route path="add-course" element={<AddCourseTab />} />
             <Route path="revenue" element={<RevenueTab />} />
             <Route path="tickets" element={<TicketsTab />} />

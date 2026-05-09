@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { PlusCircle, Edit, Globe, Lock } from "lucide-react";
 
 const ManageCoursesTab = () => {
-  // دیتای تستی دوره‌های آپلود شده قبلی
   const courses = [
     {
       id: 1,

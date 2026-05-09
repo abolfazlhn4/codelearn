@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/api";
-import { User, Upload } from "lucide-react";
+import { User, Upload, Trash2 } from "lucide-react";
 
 const ProfileTab = () => {
   const [profileData, setProfileData] = useState({
@@ -17,6 +17,7 @@ const ProfileTab = () => {
   const [saving, setSaving] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
+  const [avatarRemoved, setAvatarRemoved] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -73,6 +74,16 @@ const ProfileTab = () => {
       }
       setAvatarFile(file);
       setAvatarPreview(URL.createObjectURL(file));
+      setAvatarRemoved(false); // اگر عکس جدید انتخاب کرد، حالت حذف لغو می‌شود
+    }
+  };
+
+  const handleDeleteAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview(null);
+    setAvatarRemoved(true); // فعال کردن پرچم حذف آواتار برای ارسال به سرور
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -95,6 +106,8 @@ const ProfileTab = () => {
 
     if (avatarFile) {
       formData.append("avatar", avatarFile);
+    } else if (avatarRemoved) {
+      formData.append("avatar", "");
     }
 
     try {
@@ -108,6 +121,7 @@ const ProfileTab = () => {
       const data = response.data;
       setAvatarPreview(data.avatar);
       setAvatarFile(null);
+      setAvatarRemoved(false);
     } catch (error) {
       console.error("Failed to update profile:", error.response?.data);
       alert("خطا در بروزرسانی اطلاعات. لطفاً دوباره تلاش کنید.");
@@ -153,14 +167,27 @@ const ProfileTab = () => {
               ref={fileInputRef}
               className="hidden"
             />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current.click()}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
-            >
-              <Upload className="w-4 h-4" />
-              تغییر آواتار
-            </button>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current.click()}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                <Upload className="w-4 h-4" />
+                تغییر آواتار
+              </button>
+
+              {avatarPreview && (
+                <button
+                  type="button"
+                  onClick={handleDeleteAvatar}
+                  className="bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  حذف
+                </button>
+              )}
+            </div>
             <p className="text-xs text-gray-500 mt-2">
               تصاویر با فرمت JPG, PNG
             </p>

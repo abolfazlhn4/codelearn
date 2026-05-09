@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/api";
-import { User, Upload, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import {
+  User,
+  Upload,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Trash2,
+} from "lucide-react";
 
 const ProfileTab = () => {
   const [profileData, setProfileData] = useState({
@@ -14,6 +21,7 @@ const ProfileTab = () => {
   });
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
+  const [avatarRemoved, setAvatarRemoved] = useState(false);
 
   const [verifyData, setVerifyData] = useState({
     national_id: "",
@@ -88,6 +96,16 @@ const ProfileTab = () => {
       }
       setAvatarFile(file);
       setAvatarPreview(URL.createObjectURL(file));
+      setAvatarRemoved(false);
+    }
+  };
+
+  const handleDeleteAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview(null);
+    setAvatarRemoved(true);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -113,7 +131,12 @@ const ProfileTab = () => {
     if (profileData.birth_date)
       formData.append("birth_date", profileData.birth_date);
     if (profileData.sex) formData.append("sex", profileData.sex);
-    if (avatarFile) formData.append("avatar", avatarFile);
+
+    if (avatarFile) {
+      formData.append("avatar", avatarFile);
+    } else if (avatarRemoved) {
+      formData.append("avatar", "");
+    }
 
     try {
       const response = await api.patch("/api/v1/users/me/profile/", formData, {
@@ -122,6 +145,7 @@ const ProfileTab = () => {
       alert("اطلاعات پروفایل با موفقیت بروزرسانی شد.");
       setAvatarPreview(response.data.avatar);
       setAvatarFile(null);
+      setAvatarRemoved(false);
     } catch (error) {
       console.error("Failed to update profile:", error);
       alert("خطا در بروزرسانی اطلاعات.");
@@ -140,7 +164,6 @@ const ProfileTab = () => {
     setSubmittingVerify(true);
     const formData = new FormData();
 
-    // فقط فایل مدرک و رزومه به بک‌اند ارسال می‌شود
     formData.append(idImageType, idImageFile);
     if (verifyData.resume) {
       formData.append("resume", verifyData.resume);
@@ -225,13 +248,27 @@ const ProfileTab = () => {
                 ref={fileInputRef}
                 className="hidden"
               />
-              <button
-                type="button"
-                onClick={() => fileInputRef.current.click()}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                <Upload className="w-4 h-4" /> تغییر آواتار
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
+                >
+                  <Upload className="w-4 h-4" /> تغییر آواتار
+                </button>
+
+                {/* دکمه حذف آواتار */}
+                {avatarPreview && (
+                  <button
+                    type="button"
+                    onClick={handleDeleteAvatar}
+                    className="bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    حذف
+                  </button>
+                )}
+              </div>
               <p className="text-xs text-gray-500 mt-2">
                 تصاویر با فرمت JPG, PNG (حداکثر 500KB)
               </p>

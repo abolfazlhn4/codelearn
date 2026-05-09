@@ -35,6 +35,13 @@ const UserPanel = () => {
   const { favorites, toggleFavorite } = useFavorites();
   const [purchasedIds, setPurchasedIds] = useState([]);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    avatar: null,
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -49,6 +56,21 @@ const UserPanel = () => {
     const storedPurchases =
       JSON.parse(localStorage.getItem("purchasedCourses")) || [];
     setPurchasedIds(storedPurchases);
+
+    const fetchUserData = async () => {
+      try {
+        const response = await api.get("/api/v1/users/me/profile/");
+        setUserInfo({
+          firstName: response.data.first_name || "",
+          lastName: response.data.last_name || "",
+          avatar: response.data.avatar || null,
+        });
+      } catch (error) {
+        console.error("Failed to fetch user data for sidebar:", error);
+      }
+    };
+
+    fetchUserData();
   }, [navigate]);
 
   const handleLogout = async () => {
@@ -92,9 +114,14 @@ const UserPanel = () => {
   ];
 
   const isActive = (path) => {
-    const currentPath = location.pathname.replace(/\/$/, ""); //اگر اخر استرینگ اسلش باشه حذف میکنه
+    const currentPath = location.pathname.replace(/\/$/, "");
     return currentPath === path;
   };
+
+  const displayName =
+    userInfo.firstName || userInfo.lastName
+      ? `${userInfo.firstName} ${userInfo.lastName}`.trim()
+      : "کاربر دانشجو";
 
   return (
     <div
@@ -105,11 +132,25 @@ const UserPanel = () => {
         <aside className="w-full md:w-72 flex-shrink-0">
           <div className="bg-white p-4 md:p-6 rounded-3xl shadow-sm border border-gray-100 md:sticky md:top-8">
             <div className="hidden md:flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
-              <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
-                <User className="w-7 h-7" />
-              </div>
+              {userInfo.avatar ? (
+                <img
+                  src={userInfo.avatar}
+                  alt="User Avatar"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-gray-100 shrink-0"
+                />
+              ) : (
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+                  <User className="w-7 h-7" />
+                </div>
+              )}
+
               <div className="overflow-hidden">
-                <p className="font-bold text-gray-800 truncate">کاربر دانشجو</p>
+                <p
+                  className="font-bold text-gray-800 truncate"
+                  title={displayName}
+                >
+                  {displayName}
+                </p>
                 <p className="text-xs text-gray-500 mt-1 truncate" dir="ltr">
                   {localStorage.getItem("user_phone")}
                 </p>

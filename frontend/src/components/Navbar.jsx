@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartPopup from "./CartPopup";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState("student");
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const { cartItems } = useCart();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    const role = localStorage.getItem("user_role");
+
     if (token) {
       setIsLoggedIn(true);
+      if (role) setUserRole(role);
+    } else {
+      setIsLoggedIn(false);
     }
-  }, []);
+  }, [location.pathname]);
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -27,6 +34,9 @@ const Navbar = () => {
     { name: "دوره های آموزشی", href: "/CoursesArchive", active: false },
     { name: "درباره ما", href: "/Aboutus", active: false },
   ];
+
+  const panelLink =
+    userRole === "instructor" ? "/instructor-panel" : "/user-panel";
 
   return (
     <header
@@ -104,7 +114,7 @@ const Navbar = () => {
             </div>
 
             <Link
-              to={isLoggedIn ? "/user-panel" : "/auth"}
+              to={isLoggedIn ? panelLink : "/auth"}
               className="bg-[#3b3ab5] text-white p-2.5 sm:px-5 sm:py-2.5 rounded-xl font-medium text-sm hover:bg-opacity-90 transition-all shadow-sm flex items-center justify-center cursor-pointer"
             >
               <span className="hidden sm:block">

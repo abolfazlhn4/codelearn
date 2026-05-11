@@ -30,9 +30,9 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "صفحه اصلی", href: "/", active: true },
-    { name: "دوره های آموزشی", href: "/CoursesArchive", active: false },
-    { name: "درباره ما", href: "/Aboutus", active: false },
+    { name: "صفحه اصلی", href: "/" },
+    { name: "دوره های آموزشی", href: "/CoursesArchive" },
+    { name: "درباره ما", href: "/Aboutus" },
   ];
 
   const panelLink =
@@ -59,19 +59,23 @@ const Navbar = () => {
             </button>
 
             <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className={`text-sm lg:text-base transition-colors hover:text-[#3b3ab5] ${
-                    link.active
-                      ? "font-medium text-black"
-                      : "font-normal text-gray-600"
-                  }`}
-                >
-                  {link.name}
-                </a>
-              ))}
+              {navLinks.map((link, index) => {
+                const isActive = location.pathname === link.href;
+
+                return (
+                  <Link
+                    key={index}
+                    to={link.href}
+                    className={`text-sm lg:text-base transition-colors hover:text-[#3b3ab5] ${
+                      isActive
+                        ? "font-medium text-black"
+                        : "font-normal text-gray-600"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
@@ -128,19 +132,24 @@ const Navbar = () => {
         {/* منوی موبایل */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-24 left-4 right-4 bg-white rounded-2xl shadow-xl p-4 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 z-50">
-            {navLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className={`p-2 rounded-lg text-sm ${
-                  link.active
-                    ? "bg-gray-50 font-medium text-black"
-                    : "font-normal text-gray-600"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link, index) => {
+              const isActive = location.pathname === link.href;
+
+              return (
+                <Link
+                  key={index}
+                  to={link.href}
+                  className={`p-2 rounded-lg text-sm ${
+                    isActive
+                      ? "bg-gray-50 font-bold text-black"
+                      : "font-normal text-gray-600"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>

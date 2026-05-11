@@ -26,7 +26,6 @@ const CoursesSection = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } =
         scrollContainerRef.current;
-      // در حالت RTL، مقدار scrollLeft منفی یا صفر است
       const absScrollLeft = Math.abs(Math.round(scrollLeft));
       const maxScroll = scrollWidth - clientWidth;
 
@@ -36,7 +35,6 @@ const CoursesSection = () => {
     }
   };
 
-  // بررسی وضعیت اسکرول هنگام لود اولیه، تغییر دسته‌بندی یا تغییر سایز صفحه
   useEffect(() => {
     handleScroll();
     window.addEventListener("resize", handleScroll);
@@ -65,6 +63,7 @@ const CoursesSection = () => {
 
   return (
     <section
+      id="courses-section"
       dir="rtl"
       className="bg-[#f8f9fa] py-16 px-4 sm:px-8 font-yekan overflow-hidden"
     >

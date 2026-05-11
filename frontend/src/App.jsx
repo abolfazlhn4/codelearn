@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import CoursesArchive from "./pages/CoursesArchive";
 import Aboutus from "./pages/Aboutus";
+import ContactUs from "./pages/ContactUs";
 import Auth from "./pages/Auth";
 import UserPanel from "./pages/UserPanel";
 import InstructorPanel from "./pages/InstructorPanel";
@@ -27,6 +28,7 @@ function App() {
             <Route path="/product/:id" element={<Product />} />
             <Route path="/CoursesArchive" element={<CoursesArchive />} />
             <Route path="/Aboutus" element={<Aboutus />} />
+            <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/instructor-panel/*" element={<InstructorPanel />} />
             <Route

@@ -1,16 +1,23 @@
-import React from "react";
-import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
 import Features from "../components/Features";
 import CoursesSection from "../components/CoursesSection";
+import { useRef } from "react";
 
 const Home = () => {
+  const coursesRef = useRef(null);
+
+  const scrollToCourses = () => {
+    coursesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f8f9fa] to-white overflow-hidden">
       <main>
-        <HeroSection />
+        <HeroSection onScrollClick={scrollToCourses} />
         <Features />
-        <CoursesSection />
+        <div ref={coursesRef}>
+          <CoursesSection />
+        </div>
       </main>
     </div>
   );

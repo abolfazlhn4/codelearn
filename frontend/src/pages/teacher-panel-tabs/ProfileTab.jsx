@@ -35,6 +35,9 @@ const ProfileTab = () => {
   const [resumeFile, setResumeFile] = useState(null);
   const [verifyStatus, setVerifyStatus] = useState(null);
 
+  const [existingResume, setExistingResume] = useState(null);
+  const [existingIdImage, setExistingIdImage] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [savingProfile, setSavingProfile] = useState(false);
   const [submittingVerify, setSubmittingVerify] = useState(false);
@@ -62,8 +65,17 @@ const ProfileTab = () => {
 
         const verifyRes = await api.get("/api/v1/users/me/profile/verify/");
         if (verifyRes.data?.results?.length > 0) {
-          const latestVerify = verifyRes.data.results[0];
+          const latestVerify = Array.isArray(verifyRes.data.results[0])
+            ? verifyRes.data.results[0][0]
+            : verifyRes.data.results[0];
+
           setVerifyStatus(latestVerify.status);
+
+          if (latestVerify.resume) setExistingResume(latestVerify.resume);
+          if (latestVerify.national_card)
+            setExistingIdImage(latestVerify.national_card);
+          else if (latestVerify.identity_card)
+            setExistingIdImage(latestVerify.identity_card);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -240,7 +252,7 @@ const ProfileTab = () => {
         </div>
       )}
 
-      {/* بخش 1: اطلاعات پایه پروفایل (کد شما بدون تغییر) */}
+      {/* بخش 1: اطلاعات پایه پروفایل */}
       <div>
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           اطلاعات کاربری
@@ -397,7 +409,7 @@ const ProfileTab = () => {
         </form>
       </div>
 
-      {/* بخش 2: تایید هویت مدرس (با قابلیت آپلود رزومه) */}
+      {/* بخش 2: تایید هویت مدرس */}
       <div className="pt-6 border-t border-gray-200">
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           تایید هویت و اطلاعات مالی
@@ -435,23 +447,39 @@ const ProfileTab = () => {
               />
             </div>
 
-            {/* --- تغییر اصلی اینجا اعمال شده --- */}
+            {/* === ۳. تغییرات بخش نمایش/آپلود رزومه === */}
             <div className="md:col-span-2">
               <label className="block text-sm text-gray-700 mb-2 font-medium">
                 فایل رزومه (PDF، حداکثر 10MB)
               </label>
-              <input
-                type="file"
-                name="resume"
-                accept=".pdf"
-                onChange={handleResumeFileChange}
-                disabled={verifyStatus === "A" || verifyStatus === "P"}
-                className="w-full p-2 border border-gray-200 bg-white rounded-xl text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 disabled:opacity-60"
-              />
-              {resumeFile && (
-                <p className="text-xs text-gray-500 mt-2">
-                  فایل انتخاب شده: {resumeFile.name}
-                </p>
+              {(verifyStatus === "A" || verifyStatus === "P") &&
+              existingResume ? (
+                <div className="p-3 bg-indigo-50 text-indigo-700 rounded-xl border border-indigo-100 flex items-center justify-between">
+                  <span className="text-sm">رزومه شما قبلا ارسال شده است.</span>
+                  <a
+                    href={existingResume}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-bold underline"
+                  >
+                    مشاهده فایل
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <input
+                    type="file"
+                    name="resume"
+                    accept=".pdf"
+                    onChange={handleResumeFileChange}
+                    className="w-full p-2 border border-gray-200 bg-white rounded-xl text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                  />
+                  {resumeFile && (
+                    <p className="text-xs text-gray-500 mt-2">
+                      فایل انتخاب شده: {resumeFile.name}
+                    </p>
+                  )}
+                </>
               )}
             </div>
 
@@ -470,21 +498,38 @@ const ProfileTab = () => {
                   <option value="identity_card">شناسنامه</option>
                 </select>
               </div>
+
+              {/* === ۴. تغییرات بخش نمایش/آپلود تصویر مدرک === */}
               <div>
                 <label className="block text-sm text-gray-700 mb-2 font-medium">
                   آپلود تصویر مدرک (حداکثر 1MB)
                 </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleIdImageChange}
-                  disabled={verifyStatus === "A" || verifyStatus === "P"}
-                  className="w-full p-2 border border-gray-200 bg-white rounded-xl text-sm disabled:opacity-60"
-                />
+                {(verifyStatus === "A" || verifyStatus === "P") &&
+                existingIdImage ? (
+                  <div className="p-3 bg-indigo-50 text-indigo-700 rounded-xl border border-indigo-100 flex items-center justify-between mt-1">
+                    <span className="text-sm">مدرک ارسال شده است.</span>
+                    <a
+                      href={existingIdImage}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm font-bold underline"
+                    >
+                      مشاهده فایل
+                    </a>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleIdImageChange}
+                    className="w-full p-2 border border-gray-200 bg-white rounded-xl text-sm mt-1"
+                  />
+                )}
               </div>
             </div>
           </div>
           <div>
+            {/* === ۵. تغییرات دکمه سابمیت فرم === */}
             <button
               type="submit"
               disabled={
@@ -492,7 +537,13 @@ const ProfileTab = () => {
               }
               className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-xl transition-colors w-full md:w-auto"
             >
-              {submittingVerify ? "در حال ارسال..." : "ارسال جهت تایید حساب"}
+              {verifyStatus === "A"
+                ? "حساب شما تایید شده است"
+                : verifyStatus === "P"
+                  ? "در انتظار بررسی ادمین..."
+                  : submittingVerify
+                    ? "در حال ارسال..."
+                    : "ارسال جهت تایید حساب"}
             </button>
           </div>
         </form>

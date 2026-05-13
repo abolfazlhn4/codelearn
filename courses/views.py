@@ -1,14 +1,19 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
-from courses.models import Course
+from courses.models import Course, Category
 
-from courses.permissions import IsInstructor
-from courses.serializers import CourseSerializer
+from courses.permissions import IsVerifiedInstructor
+from courses.serializers import CourseSerializer, CategorySerializer
 
 
-class CourseListCreateView(generics.ListCreateAPIView):
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class CourseViewSet(viewsets.ViewSet):
     serializer_class = CourseSerializer
-    permission_classes = [IsInstructor]
+    permission_classes = [IsVerifiedInstructor]
 
     def get_queryset(self):
-        return Course.objects.filter(instructor__id=self.request.user.id)
+        return Course.objects.filter(instructor=self.request.user)

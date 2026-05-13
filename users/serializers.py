@@ -24,7 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class InstructorVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstructorVerification
-        exclude = ['reviewed_by']
+        exclude = ['user', 'reviewed_by']
         read_only_fields = [
             'status',
             'reject_reason',

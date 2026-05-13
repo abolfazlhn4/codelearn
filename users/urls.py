@@ -1,10 +1,11 @@
 from django.urls import path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from users.views.auth import SMSVerificationViewSet, CustomTokenRefreshView, LogoutView
 from users.views.dashboard import ProfileView, InstructorVerificationView
 
-router = SimpleRouter()
+
+router = DefaultRouter()
 router.register('auth/phone', SMSVerificationViewSet, basename='phone-auth')
 
 urlpatterns = [

@@ -10,7 +10,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from users.openapi import token_refresh_schema, logout_schema, sms_verification_schema_view
+from users.openapi.auth import token_refresh_schema, logout_schema, sms_verification_schema_view
 from users.serializers import CustomSMSVerificationSerializer
 from users.services import get_tokens_for_user, set_refresh_cookie
 
@@ -27,14 +27,14 @@ class SMSVerificationViewSet(VerificationViewSet):
         serializer = CustomSMSVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        phone_number: PhoneNumber = serializer.validated_data['phone_number']
+        phone_number = serializer.validated_data['phone_number']
         role = serializer.validated_data['role']
 
         # create or get user
         user, created = get_user_model().objects.get_or_create(
             phone_number=phone_number,
             role=role,
-            username=role.title() + '_' + phone_number.as_national,
+            username=role.title() + '_' + ''.join(phone_number.as_national.split()),
         )
 
         # create token

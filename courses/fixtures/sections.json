@@ -1,0 +1,52 @@
+[
+    {
+        "model": "courses.section",
+        "pk": 1,
+        "fields": {
+            "course": 1,
+            "title": "مقدمات و نصب",
+            "order": 0,
+            "is_free": true
+        }
+    },
+    {
+        "model": "courses.section",
+        "pk": 2,
+        "fields": {
+            "course": 1,
+            "title": "متغیرها و انواع داده",
+            "order": 1,
+            "is_free": false
+        }
+    },
+    {
+        "model": "courses.section",
+        "pk": 3,
+        "fields": {
+            "course": 1,
+            "title": "ساختارهای شرطی و حلقه‌ها",
+            "order": 2,
+            "is_free": false
+        }
+    },
+    {
+        "model": "courses.section",
+        "pk": 4,
+        "fields": {
+            "course": 2,
+            "title": "مفاهیم پایه جاوااسکریپت",
+            "order": 0,
+            "is_free": true
+        }
+    },
+    {
+        "model": "courses.section",
+        "pk": 5,
+        "fields": {
+            "course": 2,
+            "title": "آشنایی با Promise و Async/Await",
+            "order": 1,
+            "is_free": false
+        }
+    }
+]

@@ -4,10 +4,13 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from users.models import InstructorVerification
+from users.openapi.dashboard import instructor_verification_schema_view
+from users.openapi.dashboard import profile_schema_view
 from users.permissions import IsInstructor, IsCompleteProfileOrReadOnly
 from users.serializers import ProfileSerializer, InstructorVerificationSerializer
 
 
+@profile_schema_view
 class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
@@ -21,6 +24,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
+@instructor_verification_schema_view
 class InstructorVerificationView(ListCreateAPIView):
     permission_classes = [IsInstructor, IsCompleteProfileOrReadOnly]
     serializer_class = InstructorVerificationSerializer
@@ -31,3 +35,7 @@ class InstructorVerificationView(ListCreateAPIView):
 
     def get_object(self):
         return self.request.user
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        super().perform_create(serializer)

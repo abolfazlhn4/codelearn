@@ -1,0 +1,79 @@
+[
+    {
+        "model": "courses.lesson",
+        "pk": 1,
+        "fields": {
+            "section": 1,
+            "title": "معرفی دوره پایتون",
+            "description": "در این جلسه با سر فصل‌های دوره آشنا می‌شوید",
+            "order": 0,
+            "is_free": true
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 2,
+        "fields": {
+            "section": 1,
+            "title": "نصب پایتون و IDE",
+            "description": "آموزش نصب پایتون و VS Code",
+            "order": 1,
+            "is_free": true
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 3,
+        "fields": {
+            "section": 2,
+            "title": "متغیرها در پایتون",
+            "description": "آشنایی با متغیرها و قوانین نامگذاری",
+            "order": 0,
+            "is_free": false
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 4,
+        "fields": {
+            "section": 2,
+            "title": "انواع داده در پایتون",
+            "description": "اعداد، رشته‌ها، لیست‌ها و تاپل‌ها",
+            "order": 1,
+            "is_free": false
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 5,
+        "fields": {
+            "section": 3,
+            "title": "if, elif, else",
+            "description": "ساختارهای شرطی در پایتون",
+            "order": 0,
+            "is_free": false
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 6,
+        "fields": {
+            "section": 4,
+            "title": "Variables و Hoisting",
+            "description": "var، let و const در جاوااسکریپت",
+            "order": 0,
+            "is_free": true
+        }
+    },
+    {
+        "model": "courses.lesson",
+        "pk": 7,
+        "fields": {
+            "section": 5,
+            "title": "Callback و Promise",
+            "description": "آشنایی با مفهوم Callback و Promise",
+            "order": 0,
+            "is_free": false
+        }
+    }
+]

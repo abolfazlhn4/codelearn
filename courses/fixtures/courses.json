@@ -1,0 +1,55 @@
+[
+    {
+        "model": "courses.course",
+        "pk": 1,
+        "fields": {
+            "instructor": 2,
+            "category": 3,
+            "title": "دوره مقدماتی پایتون",
+            "description": "در این دوره با مفاهیم پایه پایتون آشنا می‌شوید.",
+            "short_description": "آموزش پایتون از صفر تا صد",
+            "real_price": 500000,
+            "discount": 20,
+            "requirements": "آشنایی اولیه با کامپیوتر",
+            "status": "PU",
+            "is_free": false,
+            "created_at": "2024-01-05T08:00:00Z",
+            "published_at": "2024-01-10T09:00:00Z"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 2,
+        "fields": {
+            "instructor": 2,
+            "category": 4,
+            "title": "جاوااسکریپت پیشرفته",
+            "description": "مفاهیم پیشرفته جاوااسکریپت شامل کلوسر، پرامیس و ...",
+            "short_description": "بهترین دوره جاوااسکریپت",
+            "real_price": 750000,
+            "discount": 15,
+            "requirements": "آشنایی پایه با جاوااسکریپت",
+            "status": "PU",
+            "is_free": false,
+            "created_at": "2024-02-01T08:00:00Z",
+            "published_at": "2024-02-05T09:00:00Z"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 3,
+        "fields": {
+            "instructor": 2,
+            "category": 6,
+            "title": "React برای مبتدیان",
+            "description": "آموزش React از پایه تا ساخت پروژه عملی",
+            "short_description": "دوره جامع React",
+            "real_price": 600000,
+            "discount": 10,
+            "requirements": "آشنایی با HTML، CSS و جاوااسکریپت",
+            "status": "DR",
+            "is_free": true,
+            "created_at": "2024-03-01T08:00:00Z"
+        }
+    }
+]

@@ -1,12 +1,13 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework import permissions
 
 
 class IsInstructor(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.role == 'instructor'
+        return not isinstance(request.user, AnonymousUser) and request.user.role == 'instructor'
     
     def has_object_permission(self, request, view, obj):
-        return request.user and request.user.role == 'instructor'
+        return not isinstance(request.user, AnonymousUser) and request.user.role == 'instructor'
 
 
 class IsCompleteProfileOrReadOnly(permissions.BasePermission):

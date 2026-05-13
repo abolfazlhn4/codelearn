@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from ordered_model.models import OrderedModel
 
 
 class Category(models.Model):
@@ -71,7 +72,7 @@ class Course(models.Model):
         return self.title
 
 
-class Section(models.Model):
+class Section(OrderedModel):
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
@@ -84,6 +85,8 @@ class Section(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    order_with_respect_to = 'course'
+
     def __str__(self):
         return self.title
 
@@ -91,7 +94,7 @@ class Section(models.Model):
 def lesson_directory_path(instance, filename):
     return f'courses/{instance.section.course.id}/{instance.section.title}/{filename}'
 
-class Lesson(models.Model):
+class Lesson(OrderedModel):
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE,
@@ -103,6 +106,8 @@ class Lesson(models.Model):
     description = models.TextField(null=True, blank=True)
     video = models.FileField(upload_to=lesson_directory_path)
     is_free = models.BooleanField(default=False)
+
+    order_with_respect_to = 'section'
 
     def __str__(self):
         return self.title

@@ -1,0 +1,68 @@
+[
+    {
+        "model": "users.user",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "password": "pbkdf2_sha256$...",  "first_name": "مدیر",
+            "last_name": "سیستم",
+            "email": "admin@example.com",
+            "role": "admin",
+            "phone_number": "+989123456789",
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 2,
+        "fields": {
+            "username": "instructor1",
+            "first_name": "علی",
+            "last_name": "محمدی",
+            "email": "ali@example.com",
+            "role": "instructor",
+            "birth_date": "1985-03-15",
+            "sex": "M",
+            "bio": "مدرس حرفه‌ای پایتون و جنگو با 10 سال سابقه",
+            "phone_number": "+989121234567",
+            "national_code": "1234567890",
+            "is_active": true
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 3,
+        "fields": {
+            "username": "student1",
+            "first_name": "سارا",
+            "last_name": "احمدی",
+            "email": "sara@example.com",
+            "role": "student",
+            "birth_date": "1998-07-22",
+            "sex": "F",
+            "bio": "علاقه‌مند به برنامه‌نویسی و هوش مصنوعی",
+            "phone_number": "+989132345678",
+            "national_code": "9876543210",
+            "is_active": true
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 4,
+        "fields": {
+            "username": "student2",
+            "first_name": "رضا",
+            "last_name": "کریمی",
+            "email": "reza@example.com",
+            "role": "student",
+            "birth_date": "2000-11-05",
+            "sex": "M",
+            "bio": "دانشجوی کامپیوتر",
+            "phone_number": "+989143456789",
+            "national_code": "1122334455",
+            "is_active": true
+        }
+    }
+]

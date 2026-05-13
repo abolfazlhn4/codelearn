@@ -1,0 +1,13 @@
+[
+    {
+        "model": "users.instructorverification",
+        "pk": 1,
+        "fields": {
+            "user": 2,
+            "status": "A",
+            "resume": "resumes/instructor1_resume.pdf",
+            "submitted_at": "2024-01-01T10:00:00Z",
+            "reviewed_at": "2024-01-02T15:30:00Z"
+        }
+    }
+]

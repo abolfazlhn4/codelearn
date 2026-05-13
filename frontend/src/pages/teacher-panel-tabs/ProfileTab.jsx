@@ -17,6 +17,8 @@ const ProfileTab = () => {
     birth_date: "",
     sex: "",
     phone_number: "",
+    bio: "",
+    national_code: "",
     avatar: null,
   });
   const [avatarFile, setAvatarFile] = useState(null);
@@ -52,6 +54,8 @@ const ProfileTab = () => {
           birth_date: pData.birth_date || "",
           sex: pData.sex || "",
           phone_number: pData.phone_number || "",
+          bio: pData.bio || "",
+          national_code: pData.national_code || "",
           avatar: pData.avatar || null,
         });
         setAvatarPreview(pData.avatar);
@@ -102,6 +106,8 @@ const ProfileTab = () => {
     formData.append("first_name", profileData.first_name);
     formData.append("last_name", profileData.last_name);
     formData.append("email", profileData.email);
+    formData.append("bio", profileData.bio);
+    formData.append("national_code", profileData.national_code);
     if (profileData.birth_date)
       formData.append("birth_date", profileData.birth_date);
     if (profileData.sex) formData.append("sex", profileData.sex);
@@ -160,19 +166,21 @@ const ProfileTab = () => {
 
   const handleVerifySubmit = async (e) => {
     e.preventDefault();
+
     if (!idImageFile) {
       alert("لطفاً تصویر مدرک هویتی خود را آپلود کنید.");
       return;
     }
+    if (!resumeFile) {
+      alert("لطفاً فایل رزومه خود را آپلود کنید.");
+      return;
+    }
+
     setSubmittingVerify(true);
     const formData = new FormData();
-    formData.append("national_id", verifyData.national_id);
-    formData.append("card_number", verifyData.card_number);
-    formData.append("shaba_number", verifyData.shaba_number);
+
     formData.append(idImageType, idImageFile);
-    if (resumeFile) {
-      formData.append("resume", resumeFile);
-    }
+    formData.append("resume", resumeFile);
 
     try {
       await api.post("/api/v1/users/me/profile/verify/", formData, {
@@ -182,7 +190,16 @@ const ProfileTab = () => {
       setVerifyStatus("P");
     } catch (error) {
       console.error("Failed to submit verification:", error);
-      alert("خطا در ارسال اطلاعات تایید حساب.");
+
+      if (error.response && error.response.status === 403) {
+        alert(
+          "پروفایل شما کامل نیست. طبق قوانین سیستم، ابتدا باید تمام اطلاعات کاربری (شامل نام، بیوگرافی، کد ملی، آواتار و...) را تکمیل و ذخیره کنید.",
+        );
+      } else if (error.response && error.response.status === 400) {
+        alert("اطلاعات ارسالی نامعتبر است یا فایلی ناقص است.");
+      } else {
+        alert("خطا در ارسال اطلاعات تایید حساب.");
+      }
     } finally {
       setSubmittingVerify(false);
     }
@@ -345,6 +362,28 @@ const ProfileTab = () => {
                 <option value="F">زن</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm text-gray-600 mb-2">کد ملی</label>
+              <input
+                type="text"
+                name="national_code"
+                value={profileData.national_code}
+                onChange={handleProfileChange}
+                className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-gray-50 focus:bg-white transition-colors"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm text-gray-600 mb-2">
+                بیوگرافی کوتاه
+              </label>
+              <textarea
+                name="bio"
+                value={profileData.bio}
+                onChange={handleProfileChange}
+                rows="3"
+                className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-gray-50 focus:bg-white transition-colors"
+              ></textarea>
+            </div>
           </div>
           <div>
             <button
@@ -365,20 +404,6 @@ const ProfileTab = () => {
         </h2>
         <form onSubmit={handleVerifySubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-2xl border border-gray-100">
-            <div>
-              <label className="block text-sm text-gray-700 mb-2 font-medium">
-                کد ملی
-              </label>
-              <input
-                type="text"
-                name="national_id"
-                value={verifyData.national_id}
-                onChange={handleVerifyChange}
-                disabled={verifyStatus === "A" || verifyStatus === "P"}
-                className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-white disabled:opacity-60"
-                placeholder="مثال: 0123456789"
-              />
-            </div>
             <div>
               <label className="block text-sm text-gray-700 mb-2 font-medium">
                 شماره کارت بانکی

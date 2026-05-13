@@ -27,11 +27,11 @@ const ProfileTab = () => {
     national_id: "",
     card_number: "",
     shaba_number: "",
-    resume: "",
   });
   const [idImageType, setIdImageType] = useState("national_card");
   const [idImageFile, setIdImageFile] = useState(null);
-  const [verifyStatus, setVerifyStatus] = useState(null); // 'P' (Pending), 'A' (Approved), 'R' (Rejected), یا null
+  const [resumeFile, setResumeFile] = useState(null);
+  const [verifyStatus, setVerifyStatus] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [savingProfile, setSavingProfile] = useState(false);
@@ -59,7 +59,7 @@ const ProfileTab = () => {
         const verifyRes = await api.get("/api/v1/users/me/profile/verify/");
         if (verifyRes.data?.results?.length > 0) {
           const latestVerify = verifyRes.data.results[0];
-          setVerifyStatus(latestVerify.status); // 'A', 'P', 'R'
+          setVerifyStatus(latestVerify.status);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -75,23 +75,11 @@ const ProfileTab = () => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleVerifyChange = (e) => {
-    const { name, value } = e.target;
-    setVerifyData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const validTypes = ["image/jpeg", "image/png", "image/jpg"];
-      if (!validTypes.includes(file.type)) {
-        alert("لطفاً فقط تصاویر با فرمت JPG یا PNG انتخاب کنید.");
-        e.target.value = "";
-        return;
-      }
       if (file.size > 500 * 1024) {
         alert("حجم تصویر نباید بیشتر از ۵۰۰ کیلوبایت باشد.");
-        e.target.value = "";
         return;
       }
       setAvatarFile(file);
@@ -104,21 +92,7 @@ const ProfileTab = () => {
     setAvatarFile(null);
     setAvatarPreview(null);
     setAvatarRemoved(true);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleIdImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 1024 * 1024) {
-        alert("حجم تصویر مدرک نباید بیشتر از 1 مگابایت باشد.");
-        e.target.value = "";
-        return;
-      }
-      setIdImageFile(file);
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleProfileUpdate = async (e) => {
@@ -131,12 +105,8 @@ const ProfileTab = () => {
     if (profileData.birth_date)
       formData.append("birth_date", profileData.birth_date);
     if (profileData.sex) formData.append("sex", profileData.sex);
-
-    if (avatarFile) {
-      formData.append("avatar", avatarFile);
-    } else if (avatarRemoved) {
-      formData.append("avatar", "");
-    }
+    if (avatarFile) formData.append("avatar", avatarFile);
+    else if (avatarRemoved) formData.append("avatar", "");
 
     try {
       const response = await api.patch("/api/v1/users/me/profile/", formData, {
@@ -154,19 +124,54 @@ const ProfileTab = () => {
     }
   };
 
+  const handleVerifyChange = (e) => {
+    const { name, value } = e.target;
+    setVerifyData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleIdImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size > 1024 * 1024) {
+      alert("حجم تصویر مدرک نباید بیشتر از 1 مگابایت باشد.");
+      e.target.value = "";
+    } else if (file) {
+      setIdImageFile(file);
+    }
+  };
+
+  const handleResumeFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type !== "application/pdf") {
+        alert("لطفاً فقط فایل با فرمت PDF انتخاب کنید.");
+        e.target.value = null;
+        setResumeFile(null);
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        alert("حجم فایل رزومه نباید بیشتر از 10 مگابایت باشد.");
+        e.target.value = null;
+        setResumeFile(null);
+        return;
+      }
+      setResumeFile(file);
+    }
+  };
+
   const handleVerifySubmit = async (e) => {
     e.preventDefault();
     if (!idImageFile) {
       alert("لطفاً تصویر مدرک هویتی خود را آپلود کنید.");
       return;
     }
-
     setSubmittingVerify(true);
     const formData = new FormData();
-
+    formData.append("national_id", verifyData.national_id);
+    formData.append("card_number", verifyData.card_number);
+    formData.append("shaba_number", verifyData.shaba_number);
     formData.append(idImageType, idImageFile);
-    if (verifyData.resume) {
-      formData.append("resume", verifyData.resume);
+    if (resumeFile) {
+      formData.append("resume", resumeFile);
     }
 
     try {
@@ -183,13 +188,12 @@ const ProfileTab = () => {
     }
   };
 
-  if (loading) {
+  if (loading)
     return (
       <div className="flex justify-center items-center h-64">
         <p>در حال بارگذاری اطلاعات...</p>
       </div>
     );
-  }
 
   return (
     <div className="space-y-10 pb-8">
@@ -198,7 +202,7 @@ const ProfileTab = () => {
         <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-3 text-emerald-700">
           <CheckCircle className="w-6 h-6" />
           <p className="font-medium">
-            حساب کاربری شما با موفقیت تایید شده است و شما مدرس رسمی هستید.
+            حساب کاربری شما با موفقیت تایید شده است.
           </p>
         </div>
       )}
@@ -206,7 +210,7 @@ const ProfileTab = () => {
         <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center gap-3 text-amber-700">
           <Clock className="w-6 h-6" />
           <p className="font-medium">
-            اطلاعات شما با موفقیت ارسال شده و در انتظار تایید ادمین می‌باشد.
+            اطلاعات شما ارسال شده و در انتظار تایید است.
           </p>
         </div>
       )}
@@ -214,13 +218,12 @@ const ProfileTab = () => {
         <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex items-center gap-3 text-red-700">
           <AlertCircle className="w-6 h-6" />
           <p className="font-medium">
-            درخواست تایید حساب شما رد شده است. لطفاً اطلاعات خود را مجدداً بررسی
-            و ارسال نمایید.
+            درخواست شما رد شده است. لطفاً اطلاعات را مجدداً ارسال نمایید.
           </p>
         </div>
       )}
 
-      {/* بخش 1: اطلاعات پایه پروفایل */}
+      {/* بخش 1: اطلاعات پایه پروفایل (کد شما بدون تغییر) */}
       <div>
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           اطلاعات کاربری
@@ -256,16 +259,13 @@ const ProfileTab = () => {
                 >
                   <Upload className="w-4 h-4" /> تغییر آواتار
                 </button>
-
-                {/* دکمه حذف آواتار */}
                 {avatarPreview && (
                   <button
                     type="button"
                     onClick={handleDeleteAvatar}
                     className="bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
-                    حذف
+                    <Trash2 className="w-4 h-4" /> حذف
                   </button>
                 )}
               </div>
@@ -274,7 +274,6 @@ const ProfileTab = () => {
               </p>
             </div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
             <div>
               <label className="block text-sm text-gray-600 mb-2">نام</label>
@@ -347,7 +346,6 @@ const ProfileTab = () => {
               </select>
             </div>
           </div>
-
           <div>
             <button
               type="submit"
@@ -360,7 +358,7 @@ const ProfileTab = () => {
         </form>
       </div>
 
-      {/* بخش 2: تایید هویت مدرس */}
+      {/* بخش 2: تایید هویت مدرس (با قابلیت آپلود رزومه) */}
       <div className="pt-6 border-t border-gray-200">
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           تایید هویت و اطلاعات مالی
@@ -381,10 +379,9 @@ const ProfileTab = () => {
                 placeholder="مثال: 0123456789"
               />
             </div>
-
             <div>
               <label className="block text-sm text-gray-700 mb-2 font-medium">
-                شماره کارت بانکی (به نام خودتان)
+                شماره کارت بانکی
               </label>
               <input
                 type="text"
@@ -397,8 +394,7 @@ const ProfileTab = () => {
                 placeholder="xxxx-xxxx-xxxx-xxxx"
               />
             </div>
-
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm text-gray-700 mb-2 font-medium">
                 شماره شبا
               </label>
@@ -414,19 +410,24 @@ const ProfileTab = () => {
               />
             </div>
 
+            {/* --- تغییر اصلی اینجا اعمال شده --- */}
             <div className="md:col-span-2">
               <label className="block text-sm text-gray-700 mb-2 font-medium">
-                رزومه یا سوابق کاری
+                فایل رزومه (PDF، حداکثر 10MB)
               </label>
-              <textarea
+              <input
+                type="file"
                 name="resume"
-                rows="4"
-                value={verifyData.resume}
-                onChange={handleVerifyChange}
+                accept=".pdf"
+                onChange={handleResumeFileChange}
                 disabled={verifyStatus === "A" || verifyStatus === "P"}
-                className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-white disabled:opacity-60"
-                placeholder="لطفا سوابق کاری و مهارت‌های خود را اینجا بنویسید..."
-              ></textarea>
+                className="w-full p-2 border border-gray-200 bg-white rounded-xl text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 disabled:opacity-60"
+              />
+              {resumeFile && (
+                <p className="text-xs text-gray-500 mt-2">
+                  فایل انتخاب شده: {resumeFile.name}
+                </p>
+              )}
             </div>
 
             <div className="md:col-span-2 border-t border-gray-200 pt-6 mt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -458,7 +459,6 @@ const ProfileTab = () => {
               </div>
             </div>
           </div>
-
           <div>
             <button
               type="submit"

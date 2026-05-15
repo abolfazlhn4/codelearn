@@ -1,13 +1,5 @@
 [
-    {
-        "model": "users.instructorverification",
-        "pk": 1,
-        "fields": {
-            "user": 2,
-            "status": "A",
-            "resume": "resumes/instructor1_resume.pdf",
-            "submitted_at": "2024-01-01T10:00:00Z",
-            "reviewed_at": "2024-01-02T15:30:00Z"
-        }
-    }
+    {"model": "users.instructorverification", "pk": 1, "fields": {"user": 2, "status": "A", "resume": "verification/resumes/ali_resume.pdf", "national_card": "verification/national/ali_national.jpg", "identity_card": "verification/identity/ali_identity.jpg", "submitted_at": "2024-01-10T10:00:00Z", "reviewed_at": "2024-01-12T15:30:00Z"}},
+    {"model": "users.instructorverification", "pk": 2, "fields": {"user": 3, "status": "A", "resume": "verification/resumes/sara_resume.pdf", "national_card": "verification/national/sara_national.jpg", "identity_card": "verification/identity/sara_identity.jpg", "submitted_at": "2024-02-05T09:00:00Z", "reviewed_at": "2024-02-07T11:00:00Z"}},
+    {"model": "users.instructorverification", "pk": 3, "fields": {"user": 4, "status": "P", "resume": "verification/resumes/mohammad_resume.pdf", "national_card": "verification/national/mohammad_national.jpg", "identity_card": "verification/identity/mohammad_identity.jpg", "submitted_at": "2024-03-20T14:00:00Z"}}
 ]

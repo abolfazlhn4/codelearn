@@ -9,7 +9,7 @@ from drf_spectacular.utils import (
 from drf_spectacular.types import OpenApiTypes
 from rest_framework import status
 
-from .serializers import CategorySerializer, CourseSerializer
+from .serializers import CategorySerializer, CourseInstructorSerializer
 
 # ========== Schema for CategoryListView ==========
 category_list_schema = extend_schema(
@@ -61,7 +61,7 @@ category_list_schema = extend_schema(
     tags=["Categories"],
 )
 
-# ========== Schema for CourseViewSet ==========
+# ========== Schema for CourseInstructorViewSet ==========
 course_list_schema = extend_schema(
     summary="List instructor's courses",
     description="""
@@ -82,7 +82,7 @@ course_list_schema = extend_schema(
     responses={
         status.HTTP_200_OK: OpenApiResponse(
             description="List of courses retrieved successfully",
-            response=CourseSerializer(many=True),
+            response=CourseInstructorSerializer(many=True),
         ),
         status.HTTP_401_UNAUTHORIZED: OpenApiResponse(
             description="Authentication required"
@@ -118,11 +118,11 @@ course_create_schema = extend_schema(
     - New courses are created as `draft` by default
     - Instructor must be verified before creating courses
     """,
-    request=CourseSerializer,
+    request=CourseInstructorSerializer,
     responses={
         status.HTTP_201_CREATED: OpenApiResponse(
             description="Course created successfully",
-            response=CourseSerializer,
+            response=CourseInstructorSerializer,
         ),
         status.HTTP_400_BAD_REQUEST: OpenApiResponse(
             description="Invalid data provided",
@@ -185,7 +185,7 @@ course_retrieve_schema = extend_schema(
     responses={
         status.HTTP_200_OK: OpenApiResponse(
             description="Course details retrieved successfully",
-            response=CourseSerializer,
+            response=CourseInstructorSerializer,
         ),
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
             description="Course not found"
@@ -204,11 +204,11 @@ course_update_schema = extend_schema(
     - Send all fields, even those you don't want to change
     - Use PATCH for partial updates
     """,
-    request=CourseSerializer,
+    request=CourseInstructorSerializer,
     responses={
         status.HTTP_200_OK: OpenApiResponse(
             description="Course updated successfully",
-            response=CourseSerializer,
+            response=CourseInstructorSerializer,
         ),
         status.HTTP_400_BAD_REQUEST: OpenApiResponse(
             description="Invalid data provided"
@@ -233,11 +233,11 @@ course_partial_update_schema = extend_schema(
     - Update `discount` without changing other fields
     - Modify `description` only
     """,
-    request=CourseSerializer,
+    request=CourseInstructorSerializer,
     responses={
         status.HTTP_200_OK: OpenApiResponse(
             description="Course updated successfully",
-            response=CourseSerializer,
+            response=CourseInstructorSerializer,
         ),
         status.HTTP_400_BAD_REQUEST: OpenApiResponse(
             description="Invalid data provided"

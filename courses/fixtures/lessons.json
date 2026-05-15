@@ -1,79 +1,28 @@
 [
-    {
-        "model": "courses.lesson",
-        "pk": 1,
-        "fields": {
-            "section": 1,
-            "title": "معرفی دوره پایتون",
-            "description": "در این جلسه با سر فصل‌های دوره آشنا می‌شوید",
-            "order": 0,
-            "is_free": true
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 2,
-        "fields": {
-            "section": 1,
-            "title": "نصب پایتون و IDE",
-            "description": "آموزش نصب پایتون و VS Code",
-            "order": 1,
-            "is_free": true
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 3,
-        "fields": {
-            "section": 2,
-            "title": "متغیرها در پایتون",
-            "description": "آشنایی با متغیرها و قوانین نامگذاری",
-            "order": 0,
-            "is_free": false
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 4,
-        "fields": {
-            "section": 2,
-            "title": "انواع داده در پایتون",
-            "description": "اعداد، رشته‌ها، لیست‌ها و تاپل‌ها",
-            "order": 1,
-            "is_free": false
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 5,
-        "fields": {
-            "section": 3,
-            "title": "if, elif, else",
-            "description": "ساختارهای شرطی در پایتون",
-            "order": 0,
-            "is_free": false
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 6,
-        "fields": {
-            "section": 4,
-            "title": "Variables و Hoisting",
-            "description": "var، let و const در جاوااسکریپت",
-            "order": 0,
-            "is_free": true
-        }
-    },
-    {
-        "model": "courses.lesson",
-        "pk": 7,
-        "fields": {
-            "section": 5,
-            "title": "Callback و Promise",
-            "description": "آشنایی با مفهوم Callback و Promise",
-            "order": 0,
-            "is_free": false
-        }
-    }
+    {"model": "courses.lesson", "pk": 1, "fields": {"section": 1, "title": "معرفی دوره", "description": "سرفصل‌ها", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 2, "fields": {"section": 1, "title": "نصب پایتون", "description": "نصب و راه‌اندازی", "order": 1, "is_free": true}},
+    {"model": "courses.lesson", "pk": 3, "fields": {"section": 2, "title": "متغیرها", "description": "تعریف متغیر", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 4, "fields": {"section": 2, "title": "انواع داده", "description": "اعداد، رشته", "order": 1, "is_free": false}},
+    {"model": "courses.lesson", "pk": 5, "fields": {"section": 3, "title": "if else", "description": "شرط", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 6, "fields": {"section": 3, "title": "حلقه for", "description": "تکرار", "order": 1, "is_free": false}},
+    {"model": "courses.lesson", "pk": 7, "fields": {"section": 4, "title": "دکوراتورها", "description": "ساده", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 8, "fields": {"section": 5, "title": "generator", "description": "توابع مولد", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 9, "fields": {"section": 6, "title": "معرفی جنگو", "description": "MVC", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 10, "fields": {"section": 6, "title": "ساخت پروژه", "description": "اولین پروژه", "order": 1, "is_free": true}},
+    {"model": "courses.lesson", "pk": 11, "fields": {"section": 7, "title": "مدل‌ها", "description": "ایجاد مدل", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 12, "fields": {"section": 8, "title": "JS basics", "description": "متغیرها", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 13, "fields": {"section": 9, "title": "توابع پیشرفته", "description": "arrow functions", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 14, "fields": {"section": 10, "title": "React چیست", "description": "معرفی", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 15, "fields": {"section": 11, "title": "Functional components", "description": "کامپوننت", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 16, "fields": {"section": 12, "title": "useState", "description": "state", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 17, "fields": {"section": 13, "title": "انواع پایه TS", "description": "string, number", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 18, "fields": {"section": 14, "title": "Interface", "description": "تعریف", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 19, "fields": {"section": 15, "title": "آرایه NumPy", "description": "ndarray", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 20, "fields": {"section": 16, "title": "Series و DataFrame", "description": "Pandas", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 21, "fields": {"section": 17, "title": "محیط Figma", "description": "آشنایی", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 22, "fields": {"section": 18, "title": "کامپوننت Figma", "description": "ساخت", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 23, "fields": {"section": 19, "title": "ابزارهای فتوشاپ", "description": "ابزارهای پایه", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 24, "fields": {"section": 20, "title": "معرفی Next.js", "description": "مفاهیم", "order": 0, "is_free": true}},
+    {"model": "courses.lesson", "pk": 25, "fields": {"section": 21, "title": "کلاس و شی", "description": "تعریف", "order": 0, "is_free": false}},
+    {"model": "courses.lesson", "pk": 26, "fields": {"section": 22, "title": "آشنایی با XD", "description": "محیط", "order": 0, "is_free": true}}
 ]

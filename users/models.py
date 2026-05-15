@@ -90,7 +90,7 @@ class InstructorVerification(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, max_length=10, default='P')
     reject_reason = models.TextField(null=True, blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
-    reviewed_at = models.DateTimeField(auto_now=True)
+    reviewed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.user.get_full_name()

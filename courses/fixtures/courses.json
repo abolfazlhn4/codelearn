@@ -1,55 +1,14 @@
 [
-    {
-        "model": "courses.course",
-        "pk": 1,
-        "fields": {
-            "instructor": 2,
-            "category": 3,
-            "title": "دوره مقدماتی پایتون",
-            "description": "در این دوره با مفاهیم پایه پایتون آشنا می‌شوید.",
-            "short_description": "آموزش پایتون از صفر تا صد",
-            "real_price": 500000,
-            "discount": 20,
-            "requirements": "آشنایی اولیه با کامپیوتر",
-            "status": "PU",
-            "is_free": false,
-            "created_at": "2024-01-05T08:00:00Z",
-            "published_at": "2024-01-10T09:00:00Z"
-        }
-    },
-    {
-        "model": "courses.course",
-        "pk": 2,
-        "fields": {
-            "instructor": 2,
-            "category": 4,
-            "title": "جاوااسکریپت پیشرفته",
-            "description": "مفاهیم پیشرفته جاوااسکریپت شامل کلوسر، پرامیس و ...",
-            "short_description": "بهترین دوره جاوااسکریپت",
-            "real_price": 750000,
-            "discount": 15,
-            "requirements": "آشنایی پایه با جاوااسکریپت",
-            "status": "PU",
-            "is_free": false,
-            "created_at": "2024-02-01T08:00:00Z",
-            "published_at": "2024-02-05T09:00:00Z"
-        }
-    },
-    {
-        "model": "courses.course",
-        "pk": 3,
-        "fields": {
-            "instructor": 2,
-            "category": 6,
-            "title": "React برای مبتدیان",
-            "description": "آموزش React از پایه تا ساخت پروژه عملی",
-            "short_description": "دوره جامع React",
-            "real_price": 600000,
-            "discount": 10,
-            "requirements": "آشنایی با HTML، CSS و جاوااسکریپت",
-            "status": "DR",
-            "is_free": true,
-            "created_at": "2024-03-01T08:00:00Z"
-        }
-    }
+    {"model": "courses.course", "pk": 1, "fields": {"instructor": 2, "category": 3, "title": "پایتون مقدماتی", "description": "مفاهیم پایه پایتون", "short_description": "مناسب برای مبتدیان", "real_price": 350000, "discount": 20, "requirements": "آشنایی با کامپیوتر", "status": "PU", "is_free": false, "created_at": "2024-01-15T08:00:00Z", "published_at": "2024-01-20T10:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 2, "fields": {"instructor": 2, "category": 3, "title": "پایتون پیشرفته", "description": "دکوراتورها، جنریتورها", "short_description": "حرفه‌ای شوید", "real_price": 550000, "discount": 10, "requirements": "پایتون مقدماتی", "status": "PE", "is_free": false, "created_at": "2024-02-01T08:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 3, "fields": {"instructor": 2, "category": 5, "title": "جنگو جامع", "description": "ساخت وب اپلیکیشن", "short_description": "پروژه محور", "real_price": 780000, "discount": 25, "requirements": "پایتون", "status": "DR", "is_free": false, "created_at": "2024-03-01T08:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 4, "fields": {"instructor": 3, "category": 4, "title": "جاوااسکریپت مدرن", "description": "ES6+", "short_description": "عمیق بیاموزید", "real_price": 420000, "discount": 15, "requirements": "HTML/CSS", "status": "PU", "is_free": false, "created_at": "2024-01-25T08:00:00Z", "published_at": "2024-02-01T09:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 5, "fields": {"instructor": 3, "category": 6, "title": "React از صفر تا صد", "description": "کامپوننت، هوک، context", "short_description": "برنامه‌نویسی مدرن", "real_price": 680000, "discount": 20, "requirements": "جاوااسکریپت", "status": "PU", "is_free": false, "created_at": "2024-02-10T08:00:00Z", "published_at": "2024-02-20T10:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 6, "fields": {"instructor": 3, "category": 10, "title": "TypeScript کاربردی", "description": "نوع‌دهی، اینترفیس", "short_description": "تایپ اسکریپت", "real_price": 500000, "discount": 10, "requirements": "جاوااسکریپت", "status": "PE", "is_free": false, "created_at": "2024-03-05T08:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 7, "fields": {"instructor": 2, "category": 11, "title": "علوم داده با پایتون", "description": "NumPy, Pandas", "short_description": "داده‌کاوی", "real_price": 890000, "discount": 0, "requirements": "پایتون مقدماتی", "status": "PU", "is_free": false, "created_at": "2024-01-30T08:00:00Z", "published_at": "2024-02-05T09:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 8, "fields": {"instructor": 4, "category": 8, "title": "طراحی UI با Figma", "description": "وایرفریم، پروتوتایپ", "short_description": "Figma", "real_price": 320000, "discount": 30, "requirements": "مبانی طراحی", "status": "PU", "is_free": false, "created_at": "2024-02-14T08:00:00Z", "published_at": "2024-02-18T12:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 9, "fields": {"instructor": 4, "category": 9, "title": "فتوشاپ حرفه‌ای", "description": "لایه‌ها، ماسک‌ها", "short_description": "گرافیک", "real_price": 450000, "discount": 15, "requirements": "آشنایی با کامپیوتر", "status": "DR", "is_free": false, "created_at": "2024-03-10T08:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 10, "fields": {"instructor": 3, "category": 6, "title": "Next.js پیشرفته", "description": "SSR, SSG", "short_description": "Next.js", "real_price": 720000, "discount": 20, "requirements": "React", "status": "AR", "is_free": false, "created_at": "2024-01-05T08:00:00Z", "archived_at": "2024-03-01T08:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 11, "fields": {"instructor": 2, "category": 3, "title": "OOP در پایتون", "description": "کلاس و شی", "short_description": "شی‌گرایی", "real_price": 400000, "discount": 10, "requirements": "پایتون مقدماتی", "status": "PU", "is_free": false, "created_at": "2024-02-20T08:00:00Z", "published_at": "2024-02-25T09:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}},
+    {"model": "courses.course", "pk": 12, "fields": {"instructor": 4, "category": 8, "title": "Adobe XD", "description": "طراحی تجربه کاربری", "short_description": "ابزار XD", "real_price": 380000, "discount": 0, "requirements": "بدون پیش‌نیاز", "status": "PU", "is_free": true, "created_at": "2024-03-01T08:00:00Z", "published_at": "2024-03-10T10:00:00Z", "updated_at": "2024-01-20T10:00:00Z"}}
 ]

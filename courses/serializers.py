@@ -9,7 +9,38 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseInstructorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
+
+
+class CourseListSerializer(serializers.ModelSerializer):
+    instructor = serializers.StringRelatedField(read_only=True)
+    student_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'thumbnail',
+            'title',
+            'short_description',
+            'instructor',
+            'student_count',
+            'price',
+            'is_free'
+        ]
+
+
+class CourseDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = [
+            'thumbnail',
+            'trailer',
+            'title',
+            'short_description',
+            'description',
+            'is_free'
+        ]

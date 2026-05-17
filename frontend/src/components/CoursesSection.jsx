@@ -7,7 +7,6 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import { coursesData } from "../data/coursesData";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import api from "../api/api";
@@ -16,22 +15,26 @@ const CoursesSection = () => {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
 
-  const scrollContainerRef = useRef(null);
+  const [courses, setCourses] = useState([]);
 
+  const scrollContainerRef = useRef(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await api.get("/api/v1/courses/categories/");
 
-        const fetchedCategories = response.data;
+        const fetchedCategories = response.data.results || response.data;
 
-        setCategories(fetchedCategories);
-
-        if (fetchedCategories.length > 0) {
-          setActiveCategory(fetchedCategories[0].id);
+        if (fetchedCategories && Array.isArray(fetchedCategories)) {
+          setCategories(fetchedCategories);
+          if (fetchedCategories.length > 0) {
+            setActiveCategory(fetchedCategories[0].id);
+          }
         }
       } catch (error) {
         console.error("خطا در دریافت دسته‌بندی‌ها:", error);
@@ -41,9 +44,24 @@ const CoursesSection = () => {
     fetchCategories();
   }, []);
 
-  const filteredCourses = coursesData.filter(
-    (course) => course.categoryId === activeCategory,
-  );
+  useEffect(() => {
+    const fetchCourses = async () => {
+      if (!activeCategory) return;
+
+      try {
+        const response = await api.get(
+          `/api/v1/courses/?category=${activeCategory}`,
+        );
+
+        const fetchedCourses = response.data.results || [];
+        setCourses(fetchedCourses);
+      } catch (error) {
+        console.error("خطا در دریافت دوره‌ها:", error);
+      }
+    };
+
+    fetchCourses();
+  }, [activeCategory]);
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -61,7 +79,7 @@ const CoursesSection = () => {
     handleScroll();
     window.addEventListener("resize", handleScroll);
     return () => window.removeEventListener("resize", handleScroll);
-  }, [activeCategory, filteredCourses.length]);
+  }, [activeCategory, courses.length]);
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -81,8 +99,6 @@ const CoursesSection = () => {
     }
   };
 
-  const { toggleFavorite, isFavorite } = useFavorites();
-
   return (
     <section
       id="courses-section"
@@ -92,12 +108,10 @@ const CoursesSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* هدر سکشن */}
         <div className="flex flex-col lg:flex-row items-center justify-between mb-10 gap-6">
-          {/* گروه سمت راست: عنوان و پیکان‌ها */}
           <div className="flex items-center justify-between w-full lg:w-auto gap-4 lg:gap-8">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-black whitespace-nowrap">
               دوره های آموزشی
             </h2>
-
             {/* پیکان‌های ناوبری */}
             <div className="flex items-center gap-2 shrink-0">
               <button
@@ -125,7 +139,7 @@ const CoursesSection = () => {
             </div>
           </div>
 
-          {/* گروه سمت چپ: دکمه‌های دسته‌بندی */}
+          {/* دکمه‌های دسته‌بندی */}
           <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
             {categories.map((cat) => (
               <button
@@ -137,7 +151,7 @@ const CoursesSection = () => {
                     : "bg-[#e5f0d1] text-gray-700 hover:bg-[#d8e8bc]"
                 }`}
               >
-                {cat.label}
+                {cat.label || cat.title || cat.name}
               </button>
             ))}
           </div>
@@ -149,29 +163,37 @@ const CoursesSection = () => {
           onScroll={handleScroll}
           className="grid grid-flow-col auto-cols-[100%] sm:auto-cols-[calc(50%-12px)] lg:auto-cols-[calc(25%-18px)] gap-6 overflow-x-auto pb-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth"
         >
-          {filteredCourses.length > 0 ? (
-            filteredCourses.map((course) => (
+          {courses.length > 0 ? (
+            courses.map((course) => (
               <Link
                 key={course.id}
                 to={`/product/${course.id}`}
                 className="snap-start bg-white rounded-[2rem] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(59,58,181,0.1)] transition-all duration-300 flex flex-col group cursor-pointer border border-transparent hover:border-[#3b3ab5]/10"
               >
-                <div className="bg-[#3b3ab5] w-full h-44 rounded-2xl mb-5 flex items-center justify-center text-white/50 group-hover:scale-[1.02] transition-transform duration-300">
-                  <ImageIcon className="w-12 h-12" />
+                <div className="bg-[#3b3ab5] w-full h-44 rounded-2xl mb-5 flex items-center justify-center overflow-hidden text-white/50 group-hover:scale-[1.02] transition-transform duration-300">
+                  {course.thumbnail ? (
+                    <img
+                      src={course.thumbnail}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ImageIcon className="w-12 h-12" />
+                  )}
                 </div>
 
-                <h3 className="font-black text-lg text-black mb-2 px-1 group-hover:text-[#3b3ab5] transition-colors">
+                <h3 className="font-black text-lg text-black mb-2 px-1 group-hover:text-[#3b3ab5] transition-colors line-clamp-1">
                   {course.title}
                 </h3>
-                <p className="font-normal text-gray-500 text-sm mb-6 leading-relaxed px-1">
-                  {course.description}
+                <p className="font-normal text-gray-500 text-sm mb-6 leading-relaxed px-1 line-clamp-2">
+                  {course.short_description}
                 </p>
 
                 <div className="flex items-center justify-between mt-auto px-1 mb-4">
                   <div className="flex items-center gap-2 text-gray-600">
                     <User className="w-4 h-4" strokeWidth={2} />
                     <span className="text-sm font-medium">
-                      {course.teacher}
+                      {course.instructor}
                     </span>
                   </div>
 
@@ -198,17 +220,21 @@ const CoursesSection = () => {
                 <div className="flex items-center justify-between px-1">
                   <div className="flex items-center gap-2 text-gray-500">
                     <Users className="w-4 h-4" strokeWidth={2} />
-                    <span className="text-sm">{course.studentsCount} نفر</span>
+                    <span className="text-sm">{course.student_count} نفر</span>
                   </div>
                   <span className="text-[#4caf50] font-medium text-sm">
-                    {course.price}
+                    {course.is_free
+                      ? "رایگان"
+                      : `${Number(course.price).toLocaleString()} تومان`}
                   </span>
                 </div>
               </Link>
             ))
           ) : (
-            <div className="col-span-full w-full text-center py-10 text-gray-500">
-              دوره‌ای در این دسته‌بندی یافت نشد.
+            <div className="col-span-full w-full flex items-center justify-center h-48">
+              <span className="text-gray-500 font-medium">
+                دوره‌ای در این دسته‌بندی یافت نشد.
+              </span>
             </div>
           )}
         </div>

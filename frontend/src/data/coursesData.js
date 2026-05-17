@@ -1,14 +1,14 @@
 export const categories = [
-  { id: "frontend", label: "فرانت اند" },
-  { id: "backend", label: "بک اند" },
-  { id: "android", label: "اندروید" },
-  { id: "desktop", label: "دسکتاپ" },
+  { id: 1, label: "فرانت اند" },
+  { id: 2, label: "بک اند" },
+  { id: 3, label: "اندروید" },
+  { id: 4, label: "دسکتاپ" },
 ];
 
 export const coursesData = [
   {
     id: 1,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش Node SJ",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -58,7 +58,7 @@ export const coursesData = [
   },
   {
     id: 2,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش زبان پایتون",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -112,7 +112,7 @@ export const coursesData = [
   },
   {
     id: 3,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش زبان پی اچ پی",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -166,7 +166,7 @@ export const coursesData = [
   },
   {
     id: 4,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش زبان جاوا",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -220,7 +220,7 @@ export const coursesData = [
   },
   {
     id: 5,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش جنگو (Django)",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -269,7 +269,7 @@ export const coursesData = [
   },
   {
     id: 6,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره آموزش ASP.NET Core",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -323,7 +323,7 @@ export const coursesData = [
   },
   {
     id: 7,
-    categoryId: "backend",
+    categoryId: 2,
     title: "دوره جامع فریم‌ورک لاراول",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -377,7 +377,7 @@ export const coursesData = [
   },
   {
     id: 8,
-    categoryId: "backend",
+    categoryId: 2,
     title: "آموزش گولنگ (Golang)",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -427,7 +427,7 @@ export const coursesData = [
   // ----------- فرانت اند -----------
   {
     id: 9,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "دوره جامع React JS",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -487,7 +487,7 @@ export const coursesData = [
   },
   {
     id: 10,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "آموزش مقدماتی HTML و CSS",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -541,7 +541,7 @@ export const coursesData = [
   },
   {
     id: 11,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "دوره پیشرفته جاوا اسکریپت",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -595,7 +595,7 @@ export const coursesData = [
   },
   {
     id: 12,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "آموزش فریم‌ورک Vue JS",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -649,7 +649,7 @@ export const coursesData = [
   },
   {
     id: 13,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "دوره متخصص Next.js",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -703,7 +703,7 @@ export const coursesData = [
   },
   {
     id: 14,
-    categoryId: "frontend",
+    categoryId: 1,
     title: "طراحی رابط کاربری با Tailwind",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -758,7 +758,7 @@ export const coursesData = [
   // ----------- اندروید -----------
   {
     id: 15,
-    categoryId: "android",
+    categoryId: 3,
     title: "برنامه‌نویسی اندروید با کاتلین",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -818,7 +818,7 @@ export const coursesData = [
   },
   {
     id: 17,
-    categoryId: "android",
+    categoryId: 3,
     title: "توسعه اپلیکیشن با React Native",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -873,7 +873,7 @@ export const coursesData = [
   },
   {
     id: 18,
-    categoryId: "android",
+    categoryId: 3,
     title: "جاوا برای توسعه‌دهندگان اندروید",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -930,7 +930,7 @@ export const coursesData = [
   // ----------- دسکتاپ -----------
   {
     id: 19,
-    categoryId: "desktop",
+    categoryId: 4,
     title: "برنامه‌نویسی ویندوز با #C",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -990,7 +990,7 @@ export const coursesData = [
   },
   {
     id: 20,
-    categoryId: "desktop",
+    categoryId: 4,
     title: "ساخت برنامه‌های دسکتاپ با Electron",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -1044,7 +1044,7 @@ export const coursesData = [
   },
   {
     id: 21,
-    categoryId: "desktop",
+    categoryId: 4,
     title: "دوره جامع ++C و Qt",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
@@ -1104,7 +1104,7 @@ export const coursesData = [
   },
   {
     id: 22,
-    categoryId: "desktop",
+    categoryId: 4,
     title: "رابط کاربری پیشرفته با WPF",
     description:
       "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",

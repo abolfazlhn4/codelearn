@@ -7,16 +7,39 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import { coursesData, categories } from "../data/coursesData";
+import { coursesData } from "../data/coursesData";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
+import api from "../api/api";
 
 const CoursesSection = () => {
-  const [activeCategory, setActiveCategory] = useState("backend");
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+
   const scrollContainerRef = useRef(null);
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await api.get("/api/v1/courses/categories/");
+
+        const fetchedCategories = response.data;
+
+        setCategories(fetchedCategories);
+
+        if (fetchedCategories.length > 0) {
+          setActiveCategory(fetchedCategories[0].id);
+        }
+      } catch (error) {
+        console.error("خطا در دریافت دسته‌بندی‌ها:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const filteredCourses = coursesData.filter(
     (course) => course.categoryId === activeCategory,
@@ -30,7 +53,6 @@ const CoursesSection = () => {
       const maxScroll = scrollWidth - clientWidth;
 
       setCanScrollPrev(absScrollLeft > 2);
-
       setCanScrollNext(absScrollLeft < maxScroll - 2);
     }
   };
@@ -104,12 +126,12 @@ const CoursesSection = () => {
           </div>
 
           {/* گروه سمت چپ: دکمه‌های دسته‌بندی */}
-          <div className="flex items-center gap-2 w-full lg:w-auto">
+          <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-1 lg:flex-none px-2 sm:px-6 py-2.5 rounded-xl text-[11px] sm:text-sm font-medium transition-all text-center whitespace-nowrap ${
+                className={`flex-1 lg:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-[11px] sm:text-sm font-medium transition-all text-center whitespace-nowrap ${
                   activeCategory === cat.id
                     ? "bg-[#3b3ab5] text-white shadow-md"
                     : "bg-[#e5f0d1] text-gray-700 hover:bg-[#d8e8bc]"

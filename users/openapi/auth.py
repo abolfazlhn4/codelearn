@@ -43,7 +43,7 @@ register_schema = extend_schema(
             response={
                 'type': 'string',
                 'properties': {
-                    'session_key': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+                    'session_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
                 }
             }
         ),
@@ -84,7 +84,7 @@ register_schema = extend_schema(
             name='Successful response',
             description='Response after successfully sending OTP',
             value={
-                'session_key': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+                'session_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
             },
             response_only=True,
         ),
@@ -218,7 +218,7 @@ verify_schema = extend_schema(
             value={
                 'phone_number': '+989123456789',
                 'role': 'instructor',
-                'session_key': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3...',
+                'session_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3...',
                 'security_code': 123456,
             },
             request_only=True,

@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from phone_verify.api import VerificationViewSet
-from phonenumbers.phonenumber import PhoneNumber
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated

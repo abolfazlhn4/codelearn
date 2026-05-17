@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from users.models import InstructorVerification
 from users.openapi.dashboard import instructor_verification_schema_view
 from users.openapi.dashboard import profile_schema_view
-from users.permissions import IsInstructor, IsCompleteProfileOrReadOnly
+from users.permissions import IsInstructor, IsCompleteProfile, ReadOnly
 from users.serializers import ProfileSerializer, InstructorVerificationSerializer
 
 
@@ -26,7 +26,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
 @instructor_verification_schema_view
 class InstructorVerificationView(ListCreateAPIView):
-    permission_classes = [IsInstructor, IsCompleteProfileOrReadOnly]
+    permission_classes = [IsInstructor, IsCompleteProfile | ReadOnly]
     serializer_class = InstructorVerificationSerializer
 
     def get_queryset(self):

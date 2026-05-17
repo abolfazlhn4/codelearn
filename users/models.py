@@ -81,7 +81,7 @@ class User(AbstractUser):
         return verify.exists() and verify.last().status == 'approved'
 
     def __str__(self):
-        return self.get_full_name()
+        return self.get_full_name() or str(self.phone_number)
 
     class Meta:
         unique_together = ('phone_number', 'role')

@@ -6,7 +6,7 @@ from users.models import Role, InstructorVerification
 
 
 class CustomSMSVerificationSerializer(SMSVerificationSerializer):
-    role = serializers.ChoiceField(choices=Role, default=Role.student)
+    role = serializers.ChoiceField(choices=[Role.student, Role.instructor], default=Role.student)
 
 
 class ProfileSerializer(serializers.ModelSerializer):

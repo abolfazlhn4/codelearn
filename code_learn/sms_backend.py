@@ -33,11 +33,11 @@ class SMSSandboxBackend(BaseBackend):
 
     def send_sms(self, number, message):
         # fakeclient.fake_send_sms(self, number, message)
-        pass
+        print(message)
 
     def send_bulk_sms(self, numbers, message):
         # fakeclient.send_bulk_sms(numbers, message)
-        pass
+        print(message)
 
     def generate_security_code(self):
         return self._token

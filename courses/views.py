@@ -3,7 +3,6 @@ from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from courses.models import Course, Category
@@ -11,14 +10,15 @@ from courses.openapi import category_list_schema, course_list_schema, course_ins
 
 from courses.permissions import IsVerifiedInstructor
 from courses.serializers import CourseInstructorSerializer, CategorySerializer, CourseListSerializer
-from users.permissions import IsInstructor
+from users.permissions import IsInstructor, ReadOnly
 
 
 @category_list_schema
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [permissions.IsAdminUser | ReadOnly]
+    pagination_class = None
 
 
 @course_instructor_schema_view

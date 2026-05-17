@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
@@ -16,8 +16,14 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import PaymentGateway from "./pages/PaymentGateway";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { initializeLocalStorage } from './data/initLocalStorage';
 
 function App() {
+
+    useEffect(() => {
+    initializeLocalStorage();
+  }, []);
+
   return (
     <FavoritesProvider>
       <CartProvider>

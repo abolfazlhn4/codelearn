@@ -6,3 +6,4 @@ dist
 docs/sprint-1/*
 !docs/sprint-1/USERSTORIES.md
 !docs/sprint-1/vision.pdf
+frontend/src/api/APIhelp.js

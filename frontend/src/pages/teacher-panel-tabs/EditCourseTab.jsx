@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Plus, Save, Send, ArrowRight } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
 
-const AddCourseTab = () => {
+const EditCourseTab = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -21,6 +23,60 @@ const AddCourseTab = () => {
   });
 
   const [syllabus, setSyllabus] = useState([]);
+
+  const [isApproved, setIsApproved] = useState(false);
+
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        const res = await api.get(`/api/v1/courses/me/${id}/`);
+        const data = res.data;
+
+        if (data.status === "AP") {
+          setIsApproved(true);
+          setIsLoading(false);
+          return;
+        }
+
+        setFormData({
+          title: data.title || "",
+          category: data.category?.toString() || "1",
+          short_description: data.short_description || "",
+          description: data.description || "",
+          real_price: data.real_price || "",
+          discount: data.discount || "",
+          requirements: data.requirements || "",
+          is_free: data.is_free || false,
+          thumbnail: null,
+          trailer: null,
+        });
+
+        if (data.sections) {
+          const mappedSyllabus = data.sections.map((sec) => ({
+            _dbId: sec.id,
+            chapterId: sec.id,
+            title: sec.title,
+            episodes: sec.lessons.map((les) => ({
+              _dbId: les.id,
+              id: les.id,
+              title: les.title,
+              description: les.description || "",
+              isFree: les.is_free,
+              video: null,
+            })),
+          }));
+          setSyllabus(mappedSyllabus);
+        }
+      } catch (error) {
+        console.error("Error fetching course:", error);
+        alert("خطا در دریافت اطلاعات دوره");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCourseData();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -114,7 +170,6 @@ const AddCourseTab = () => {
       const isValid = validateForm();
       if (!isValid) return;
     }
-
     try {
       setIsSubmitting(true);
       const payload = new FormData();
@@ -143,16 +198,22 @@ const AddCourseTab = () => {
       if (formData.trailer) payload.append("trailer", formData.trailer);
 
       const sectionsData = syllabus.map((chap, cIndex) => {
-        return {
+        const secPayload = {
           title: chap.title,
           order: cIndex,
-          lessons: chap.episodes.map((ep, eIndex) => ({
-            title: ep.title,
-            description: ep.description,
-            order: eIndex,
-            is_free: ep.isFree,
-          })),
+          lessons: chap.episodes.map((ep, eIndex) => {
+            const lessPayload = {
+              title: ep.title,
+              description: ep.description,
+              order: eIndex,
+              is_free: ep.isFree,
+            };
+            if (ep._dbId) lessPayload.id = ep._dbId;
+            return lessPayload;
+          }),
         };
+        if (chap._dbId) secPayload.id = chap._dbId;
+        return secPayload;
       });
 
       payload.append("sections_data", JSON.stringify(sectionsData));
@@ -165,42 +226,62 @@ const AddCourseTab = () => {
         });
       });
 
-      const res = await api.post("/api/v1/courses/me/", payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await api.patch(`/api/v1/courses/me/${id}/`, payload, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
-      const newCourseId = res.data?.id;
-
-      if (statusType === "PE" && newCourseId) {
-        await api.post(`/api/v1/courses/me/${newCourseId}/submit/`);
-        alert("دوره با موفقیت ثبت و برای تایید ادمین ارسال شد.");
+      if (statusType === "PE") {
+        await api.post(`/api/v1/courses/me/${id}/submit/`);
+        alert("تغییرات ذخیره و دوره با موفقیت برای ادمین ارسال شد.");
       } else {
-        alert("اطلاعات به عنوان پیش‌نویس با موفقیت ذخیره شد.");
+        alert("تغییرات با موفقیت ذخیره شد.");
       }
 
       navigate("/instructor-panel/manage-courses");
     } catch (error) {
-      console.error("Error submitting course:", error);
-      alert(
-        `خطا در ثبت دوره: ${error.response?.data ? JSON.stringify(error.response.data) : "خطای ناشناخته"}`,
-      );
+      console.error("Error updating course:", error);
+      alert("خطا در ذخیره تغییرات");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        در حال بارگذاری اطلاعات دوره...
+      </div>
+    );
+  }
+
+  if (isApproved) {
+    return (
+      <div className="flex flex-col justify-center items-center h-64 gap-4">
+        <h3 className="text-xl font-bold text-red-500">
+          این دوره توسط ادمین تایید شده است و دیگر قابل ویرایش نیست!
+        </h3>
+        <button
+          onClick={() => navigate("/instructor-panel/manage-courses")}
+          className="px-6 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
+        >
+          بازگشت به لیست دوره‌ها
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="pb-10">
-      <div className="flex items-center mb-8 gap-4">
-        <Link
-          to="/instructor-panel/manage-courses"
-          className="text-gray-400 hover:text-indigo-600 transition-colors"
-        >
-          <ArrowRight className="w-6 h-6" />
-        </Link>
-        <h2 className="text-2xl font-bold text-gray-800">افزودن دوره جدید</h2>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <Link
+            to="/instructor-panel/manage-courses"
+            className="text-gray-400 hover:text-indigo-600 transition-colors"
+          >
+            <ArrowRight className="w-6 h-6" />
+          </Link>
+          <h2 className="text-2xl font-bold text-gray-800">ویرایش دوره</h2>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -283,7 +364,7 @@ const AddCourseTab = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              تصویر کاور
+              تصویر کاور (انتخاب برای تغییر)
             </label>
             <input
               type="file"
@@ -295,7 +376,7 @@ const AddCourseTab = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              ویدیو معرفی
+              ویدیو معرفی (انتخاب برای تغییر)
             </label>
             <input
               type="file"
@@ -418,7 +499,7 @@ const AddCourseTab = () => {
 
                       <div>
                         <label className="block text-xs text-gray-500 mb-1">
-                          آپلود ویدیو
+                          آپلود ویدیو (انتخاب برای تغییر)
                         </label>
                         <input
                           type="file"
@@ -505,4 +586,4 @@ const AddCourseTab = () => {
   );
 };
 
-export default AddCourseTab;
+export default EditCourseTab;

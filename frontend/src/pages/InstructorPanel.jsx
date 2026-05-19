@@ -20,6 +20,7 @@ import {
 import DashboardTab from "./teacher-panel-tabs/DashboardTab";
 import ManageCoursesTab from "./teacher-panel-tabs/ManageCoursesTab";
 import AddCourseTab from "./teacher-panel-tabs/AddCourseTab";
+import EditCourseTab from "./teacher-panel-tabs/EditCourseTab";
 import RevenueTab from "./teacher-panel-tabs/RevenueTab";
 import TicketsTab from "./teacher-panel-tabs/TicketsTab";
 import ProfileTab from "./teacher-panel-tabs/ProfileTab";
@@ -100,14 +101,17 @@ const InstructorPanel = () => {
     { path: "/instructor-panel/profile", title: "ویرایش حساب", icon: UserCog },
   ];
 
-  // برای روشن ماندن تب وقتی داخل افزودن دوره هستیم
+  // فعال موندن دکمه مدیریت دوره‌ها هنگام حضور در صفحات افزودن یا ویرایش دوره
   const isActive = (path) => {
     const currentPath = location.pathname.replace(/\/$/, "");
-    if (
-      path === "/instructor-panel/manage-courses" &&
-      currentPath.includes("add-course")
-    )
-      return true;
+    if (path === "/instructor-panel/manage-courses") {
+      if (
+        currentPath.includes("add-course") ||
+        currentPath.includes("edit-course")
+      ) {
+        return true;
+      }
+    }
     return currentPath === path;
   };
 
@@ -191,6 +195,8 @@ const InstructorPanel = () => {
             <Route path="/" element={<DashboardTab />} />
             <Route path="manage-courses" element={<ManageCoursesTab />} />
             <Route path="add-course" element={<AddCourseTab />} />
+            <Route path="edit-course/:id" element={<EditCourseTab />} />{" "}
+            {/* مسیر ویرایش دوره اضافه شد */}
             <Route path="revenue" element={<RevenueTab />} />
             <Route path="tickets" element={<TicketsTab />} />
             <Route path="profile" element={<ProfileTab />} />

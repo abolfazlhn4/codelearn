@@ -31,7 +31,7 @@ const EditCourseTab = () => {
       try {
         const res = await api.get(`/api/v1/courses/me/${id}/`);
         const data = res.data;
-
+        console.log(data);
         if (data.status === "AP") {
           setIsApproved(true);
           setIsLoading(false);
@@ -47,8 +47,8 @@ const EditCourseTab = () => {
           discount: data.discount || "",
           requirements: data.requirements || "",
           is_free: data.is_free || false,
-          thumbnail: null,
-          trailer: null,
+          thumbnail: data.thumbnail || null,
+          trailer: data.trailer || null,
         });
 
         if (data.sections) {
@@ -292,11 +292,11 @@ const EditCourseTab = () => {
               عنوان دوره
             </label>
             <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full p-3 bg-white rounded-xl border border-gray-200 outline-none focus:border-indigo-500"
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full p-3 bg-white rounded-xl border border-gray-200 outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -305,10 +305,10 @@ const EditCourseTab = () => {
               دسته‌بندی
             </label>
             <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
             >
               <option value="1">فرانت‌اند</option>
               <option value="2">بک‌اند</option>
@@ -322,12 +322,12 @@ const EditCourseTab = () => {
               قیمت (تومان)
             </label>
             <input
-              type="number"
-              name="real_price"
-              value={formData.real_price}
-              onChange={handleChange}
-              disabled={formData.is_free}
-              className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500 disabled:opacity-50"
+                type="number"
+                name="real_price"
+                value={formData.real_price}
+                onChange={handleChange}
+                disabled={formData.is_free}
+                className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500 disabled:opacity-50"
             />
           </div>
 
@@ -336,27 +336,27 @@ const EditCourseTab = () => {
               درصد تخفیف
             </label>
             <input
-              type="number"
-              name="discount"
-              value={formData.discount}
-              onChange={handleChange}
-              disabled={formData.is_free}
-              className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500 disabled:opacity-50"
+                type="number"
+                name="discount"
+                value={formData.discount}
+                onChange={handleChange}
+                disabled={formData.is_free}
+                className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500 disabled:opacity-50"
             />
           </div>
 
           <div className="md:col-span-2 flex items-center gap-2">
             <input
-              type="checkbox"
-              id="is_free"
-              name="is_free"
-              checked={formData.is_free}
-              onChange={handleChange}
-              className="w-4 h-4 bg-white text-indigo-600 rounded"
+                type="checkbox"
+                id="is_free"
+                name="is_free"
+                checked={formData.is_free}
+                onChange={handleChange}
+                className="w-4 h-4 bg-white text-indigo-600 rounded"
             />
             <label
-              htmlFor="is_free"
-              className="text-sm font-medium text-gray-700"
+                htmlFor="is_free"
+                className="text-sm font-medium text-gray-700"
             >
               این دوره رایگان است
             </label>
@@ -366,25 +366,60 @@ const EditCourseTab = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               تصویر کاور (انتخاب برای تغییر)
             </label>
+
             <input
-              type="file"
-              name="thumbnail"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="w-full p-2 border border-gray-200 rounded-xl bg-white text-sm"
+                type="file"
+                name="thumbnail"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="w-full p-2 border border-gray-200 rounded-xl bg-white text-sm"
             />
+
+            {typeof formData.thumbnail === "string" && (
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-xs text-gray-500">فایل فعلی:</span>
+                  <a
+                      href={formData.thumbnail}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="برای مشاهده سایز بزرگ کلیک کنید"
+                      className="hover:opacity-80 transition-opacity"
+                  >
+                    <img
+                        src={formData.thumbnail}
+                        alt="کاور دوره"
+                        className="h-12 w-auto object-cover rounded-md border border-gray-200 cursor-pointer"
+                    />
+                  </a>
+                </div>
+            )}
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               ویدیو معرفی (انتخاب برای تغییر)
             </label>
+
             <input
-              type="file"
-              name="trailer"
-              accept="video/*"
-              onChange={handleFileChange}
-              className="w-full p-2 border border-gray-200 rounded-xl bg-white text-sm"
+                type="file"
+                name="trailer"
+                accept="video/*"
+                onChange={handleFileChange}
+                className="w-full p-2 border border-gray-200 rounded-xl bg-white text-sm"
             />
+
+            {typeof formData.trailer === "string" && (
+                <div className="mt-2">
+                  <a
+                      href={formData.trailer}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-indigo-600 hover:text-indigo-800 underline"
+                  >
+                    مشاهده ویدیوی فعلی
+                  </a>
+                </div>
+            )}
           </div>
 
           <div className="md:col-span-2">
@@ -392,12 +427,12 @@ const EditCourseTab = () => {
               توضیح کوتاه
             </label>
             <input
-              type="text"
-              name="short_description"
-              maxLength="150"
-              value={formData.short_description}
-              onChange={handleChange}
-              className="w-full p-3 bg-white rounded-xl border border-gray-200 outline-none focus:border-indigo-500"
+                type="text"
+                name="short_description"
+                maxLength="150"
+                value={formData.short_description}
+                onChange={handleChange}
+                className="w-full p-3 bg-white rounded-xl border border-gray-200 outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -406,11 +441,11 @@ const EditCourseTab = () => {
               توضیحات کامل
             </label>
             <textarea
-              name="description"
-              rows="4"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
+                name="description"
+                rows="4"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
             ></textarea>
           </div>
 
@@ -419,11 +454,11 @@ const EditCourseTab = () => {
               پیش‌نیازها
             </label>
             <input
-              type="text"
-              name="requirements"
-              value={formData.requirements}
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
+                type="text"
+                name="requirements"
+                value={formData.requirements}
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border bg-white border-gray-200 outline-none focus:border-indigo-500"
             />
           </div>
         </div>
@@ -435,30 +470,30 @@ const EditCourseTab = () => {
               محتوای دوره (سرفصل‌ها)
             </h3>
             <button
-              onClick={addChapter}
-              className="flex items-center gap-1 text-sm bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl hover:bg-indigo-100 transition-colors"
+                onClick={addChapter}
+                className="flex items-center gap-1 text-sm bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl hover:bg-indigo-100 transition-colors"
             >
-              <Plus className="w-4 h-4" /> افزودن سرفصل جدید
+              <Plus className="w-4 h-4"/> افزودن سرفصل جدید
             </button>
           </div>
 
           <div className="space-y-6">
             {syllabus.map((chapter, cIndex) => (
-              <div
-                key={chapter.chapterId}
-                className="bg-gray-50 border border-gray-200 rounded-xl p-5"
-              >
-                <div className="flex gap-4 items-end mb-6">
-                  <div className="flex-1">
-                    <label className="block text-xs text-gray-500 mb-1">
-                      عنوان سرفصل
-                    </label>
-                    <input
-                      type="text"
-                      value={chapter.title}
-                      onChange={(e) => {
-                        const newSyllabus = [...syllabus];
-                        newSyllabus[cIndex].title = e.target.value;
+                <div
+                    key={chapter.chapterId}
+                    className="bg-gray-50 border border-gray-200 rounded-xl p-5"
+                >
+                  <div className="flex gap-4 items-end mb-6">
+                    <div className="flex-1">
+                      <label className="block text-xs text-gray-500 mb-1">
+                        عنوان سرفصل
+                      </label>
+                      <input
+                          type="text"
+                          value={chapter.title}
+                          onChange={(e) => {
+                            const newSyllabus = [...syllabus];
+                            newSyllabus[cIndex].title = e.target.value;
                         setSyllabus(newSyllabus);
                       }}
                       className="w-full p-2.5 rounded-lg border bg-white border-gray-200 outline-none focus:border-indigo-500 text-sm"
@@ -516,7 +551,7 @@ const EditCourseTab = () => {
                         />
                       </div>
 
-                      <div className="flex items-center h-[38px] gap-2">
+                      <div className="flex items-center h-9.5 gap-2">
                         <input
                           type="checkbox"
                           id={`free-${ep.id}`}

@@ -15,7 +15,7 @@ const ManageCoursesTab = () => {
         let status = null;
         if (verifyRes.data?.results?.length > 0) {
           const latestVerify = Array.isArray(verifyRes.data.results[0])
-            ? verifyRes.data.results[0][0]
+            ? verifyRes.data.results[0][0] //اگه بک اند به صورت تو در تو اطلاعاتو بفرسته
             : verifyRes.data.results[0];
           status = latestVerify.status;
           setVerifyStatus(status);
@@ -62,7 +62,7 @@ const ManageCoursesTab = () => {
 
   if (verifyStatus !== "A") {
     return (
-      <div className="bg-indigo-50/40 border border-indigo-100 p-10 rounded-[2rem] flex flex-col items-center justify-center text-center my-6 mx-auto max-w-2xl shadow-sm">
+      <div className="bg-indigo-50/40 border border-indigo-100 p-10 rounded-4xl flex flex-col items-center justify-center text-center my-6 mx-auto max-w-2xl shadow-sm">
         <AlertCircle
           className="w-16 h-16 text-indigo-600 mb-4"
           strokeWidth={1.8}

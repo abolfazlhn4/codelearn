@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { coursesData } from "../data/coursesData.js";
-import { courseFeedbackData } from '../data/mockComments';
-import CommentsSection from '../components/comment/CommentsSection';
-import ReviewsSection from '../components/comment/ReviewsSection';
+import { courseFeedbackData } from "../data/mockComments";
+import CommentsSection from "../components/comment/CommentsSection";
+import ReviewsSection from "../components/comment/ReviewsSection";
 import {
   Play,
   ShoppingBag,
@@ -40,13 +40,14 @@ const Product = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
   const isLoggedIn = Boolean(currentUser);
 
- useEffect(() => {
+  useEffect(() => {
     // بهتر است وضعیت خرید را ابتدا از روی یوزر فعلی بسنجیم
     if (currentUser && currentUser.purchasedCourses) {
       setIsPurchased(currentUser.purchasedCourses.includes(Number(id)));
     } else {
       // در غیر این صورت از آرایه خریدهای مهمان می‌خوانیم
-      const purchased = JSON.parse(localStorage.getItem("purchasedCourses")) || [];
+      const purchased =
+        JSON.parse(localStorage.getItem("purchasedCourses")) || [];
       setIsPurchased(purchased.includes(Number(id)));
     }
   }, [id]);
@@ -368,8 +369,16 @@ const Product = () => {
         </div>
 
         {/*  بخش نظرات و ریویوها */}
-        <ReviewsSection reviews={feedback.reviews} courseId={id} canComment={isPurchased} />
-        <CommentsSection courseId={id} isPurchased={isPurchased} isLoggedIn={isLoggedIn} />
+        <ReviewsSection
+          reviews={feedback.reviews}
+          courseId={id}
+          canComment={isPurchased}
+        />
+        <CommentsSection
+          courseId={id}
+          isPurchased={isPurchased}
+          isLoggedIn={isLoggedIn}
+        />
 
         {/* بخش دوره‌های مشابه */}
         {relatedCourses.length > 0 && (

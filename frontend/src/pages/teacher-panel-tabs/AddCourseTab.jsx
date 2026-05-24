@@ -23,7 +23,11 @@ const AddCourseTab = () => {
   const [syllabus, setSyllabus] = useState([]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const {name, value, type, checked} = e.target;
+    //name : title, category, short_description, description, real_price, discount, requirements, is_free
+    // value : ReactCourse , frontend , sadad , asdasd , 1200000 , 20% , ...
+    // type : number , text , checkbox
+    // checked :true , false
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -31,17 +35,19 @@ const AddCourseTab = () => {
   };
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
+    const {name, files} = e.target;
+    //thumbnail, trailer
     setFormData((prev) => ({
       ...prev,
       [name]: files[0] || null,
+
     }));
   };
 
   const addChapter = () => {
     setSyllabus([
       ...syllabus,
-      { chapterId: Date.now(), title: "", episodes: [] },
+      {chapterId: Date.now(), title: "", episodes: [] },
     ]);
   };
 

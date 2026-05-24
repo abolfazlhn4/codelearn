@@ -174,7 +174,7 @@ const UserPanel = () => {
                       className={`w-5 h-5 shrink-0 ${active ? "text-blue-600" : "text-gray-400"}`}
                       strokeWidth={2}
                     />
-                    {item.title}
+                    {item.title} 
                   </Link>
                 );
               })}

@@ -33,6 +33,7 @@ app_urls = [
 ]
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     path('api/v1/', include(app_urls)),
     path('api/schema/', include(schema_urls)),

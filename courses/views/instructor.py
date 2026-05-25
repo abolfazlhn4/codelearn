@@ -5,9 +5,9 @@ from rest_framework.response import Response
 
 from courses.models import Course
 from courses.openapi import course_instructor_schema_view
-from courses.permissions import IsVerifiedInstructor
+from courses.permissions import IsVerifiedUser
 from courses.serializers import CourseInstructorSerializer
-from users.permissions import IsInstructor
+from users.permissions import IsInstructor, ReadOnly
 
 
 @course_instructor_schema_view
@@ -21,7 +21,7 @@ class CourseInstructorViewSet(viewsets.ModelViewSet):
         if self.request.method in permissions.SAFE_METHODS:
             permission_classes = [IsInstructor]
         else:
-            permission_classes = [IsVerifiedInstructor]
+            permission_classes = [IsInstructor, IsVerifiedUser]
         return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):

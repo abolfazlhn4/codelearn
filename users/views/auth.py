@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from phone_verify.api import VerificationViewSet
 from rest_framework import status
 from rest_framework.decorators import action
@@ -27,13 +28,22 @@ class SMSVerificationViewSet(VerificationViewSet):
         serializer.is_valid(raise_exception=True)
 
         phone_number = serializer.validated_data['phone_number']
-        role = serializer.validated_data['role']
+        role = serializer.validated_data.get('role', 'student')
+        if role not in ['student', 'instructor']:
+            return Response(
+                {'detail': 'Role must be student or instructor'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # create or get user
         user, created = get_user_model().objects.get_or_create(
             phone_number=phone_number,
-            role=role,
         )
+
+        # set user group
+        group_name = role.capitalize()
+        group = Group.objects.get(name=group_name)
+        user.groups.add(group)
 
         # create token
         tokens = get_tokens_for_user(user)

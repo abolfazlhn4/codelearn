@@ -9,7 +9,6 @@ import {
   Trash2,
 } from "lucide-react";
 
-// ۱. ایمپورت کردن کامپوننت‌های تاریخ شمسی
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -22,7 +21,7 @@ const ProfileTab = ({ onProfileUpdate }) => {
     first_name: "",
     last_name: "",
     email: "",
-    birth_date: "", // این مقدار همچنان به صورت YYYY-MM-DD میلادی ذخیره می‌شود
+    birth_date: "",
     sex: "",
     phone_number: "",
     bio: "",
@@ -41,7 +40,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
   const [idImageType, setIdImageType] = useState("national_card");
   const [idImageFile, setIdImageFile] = useState(null);
   const [resumeFile, setResumeFile] = useState(null);
+
   const [verifyStatus, setVerifyStatus] = useState(null);
+  const [rejectReason, setRejectReason] = useState("");
 
   const [existingResume, setExistingResume] = useState(null);
   const [existingIdImage, setExistingIdImage] = useState(null);
@@ -79,6 +80,10 @@ const ProfileTab = ({ onProfileUpdate }) => {
 
           setVerifyStatus(latestVerify.status);
 
+          if (latestVerify.reject_reason) {
+            setRejectReason(latestVerify.reject_reason);
+          }
+
           if (latestVerify.resume) setExistingResume(latestVerify.resume);
           if (latestVerify.national_card)
             setExistingIdImage(latestVerify.national_card);
@@ -99,7 +104,6 @@ const ProfileTab = ({ onProfileUpdate }) => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // تابع کمکی برای تبدیل تاریخ میلادی دریافتی از بک‌اِند به شیء تاریخ شمسی جهت نمایش در کامپوننت دیت‌پیکر
   const getDisplayDate = (dateString) => {
     if (!dateString) return "";
     return new DateObject({ date: dateString, calendar: gregorian, locale: gregorian_en })
@@ -258,9 +262,17 @@ const ProfileTab = ({ onProfileUpdate }) => {
         </div>
       )}
       {verifyStatus === "R" && (
-        <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex items-center gap-3 text-red-700">
-          <AlertCircle className="w-6 h-6" />
-          <p className="font-medium">درخواست شما رد شده است. لطفاً اطلاعات را مجدداً ارسال نمایید.</p>
+        <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex flex-col gap-3 text-red-700">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-6 h-6 shrink-0" />
+            <p className="font-medium">درخواست شما رد شده است. لطفاً اطلاعات را بررسی و مجدداً ارسال نمایید.</p>
+          </div>
+          {rejectReason && (
+            <div className="mt-1 mr-9 text-sm bg-white/60 p-3 rounded-lg border border-red-100 text-red-800">
+              <span className="font-bold">علت رد درخواست: </span>
+              {rejectReason}
+            </div>
+          )}
         </div>
       )}
 

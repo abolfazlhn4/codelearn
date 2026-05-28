@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/api";
 import { User, Upload, Trash2 } from "lucide-react";
 
-// ایمپورت ابزارهای تاریخ شمسی
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -10,7 +9,6 @@ import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import DateObject from "react-date-object";
 
-// دریافت پراپ onProfileUpdate برای هماهنگی با سایدبار پنل کاربری
 const ProfileTab = ({ onProfileUpdate }) => {
   const [profileData, setProfileData] = useState({
     first_name: "",
@@ -64,7 +62,6 @@ const ProfileTab = ({ onProfileUpdate }) => {
     }));
   };
 
-  // تبدیل تاریخ میلادی دیتابیس به شیء تاریخ شمسی جهت نمایش در تقویم
   const getDisplayDate = (dateString) => {
     if (!dateString) return "";
     return new DateObject({ date: dateString, calendar: gregorian, locale: gregorian_en })
@@ -138,7 +135,6 @@ const ProfileTab = ({ onProfileUpdate }) => {
       setAvatarFile(null);
       setAvatarRemoved(false);
 
-      // اجرای لایو بروزرسانی سایدبار پنل
       if (onProfileUpdate) {
         onProfileUpdate();
       }

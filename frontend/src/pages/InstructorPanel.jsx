@@ -37,6 +37,19 @@ const InstructorPanel = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const fetchUserData = async () => {
+    try {
+      const response = await api.get("/api/v1/users/me/profile/");
+      setUserInfo({
+        firstName: response.data.first_name || "",
+        lastName: response.data.last_name || "",
+        avatar: response.data.avatar || null,
+      });
+    } catch (error) {
+      console.error("Failed to fetch user data for sidebar:", error);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     const role = localStorage.getItem("user_role");
@@ -49,19 +62,6 @@ const InstructorPanel = () => {
       navigate("/user-panel", { replace: true });
       return;
     }
-
-    const fetchUserData = async () => {
-      try {
-        const response = await api.get("/api/v1/users/me/profile/");
-        setUserInfo({
-          firstName: response.data.first_name || "",
-          lastName: response.data.last_name || "",
-          avatar: response.data.avatar || null,
-        });
-      } catch (error) {
-        console.error("Failed to fetch user data for sidebar:", error);
-      }
-    };
 
     fetchUserData();
   }, [navigate]);
@@ -101,7 +101,6 @@ const InstructorPanel = () => {
     { path: "/instructor-panel/profile", title: "ویرایش حساب", icon: UserCog },
   ];
 
-  // فعال موندن دکمه مدیریت دوره‌ها هنگام حضور در صفحات افزودن یا ویرایش دوره
   const isActive = (path) => {
     const currentPath = location.pathname.replace(/\/$/, "");
     if (path === "/instructor-panel/manage-courses") {
@@ -196,11 +195,9 @@ const InstructorPanel = () => {
             <Route path="manage-courses" element={<ManageCoursesTab />} />
             <Route path="add-course" element={<AddCourseTab />} />
             <Route path="edit-course/:id" element={<EditCourseTab />} />{" "}
-            {/* مسیر ویرایش دوره اضافه شد */}
             <Route path="revenue" element={<RevenueTab />} />
             <Route path="tickets" element={<TicketsTab />} />
-            <Route path="profile" element={<ProfileTab />} />
-          </Routes>
+            <Route path="profile" element={<ProfileTab onProfileUpdate={fetchUserData} />} />          </Routes>
         </main>
       </div>
     </div>

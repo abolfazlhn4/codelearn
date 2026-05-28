@@ -2,7 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/api";
 import { User, Upload, Trash2 } from "lucide-react";
 
-const ProfileTab = () => {
+// ایمپورت ابزارهای تاریخ شمسی
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import gregorian from "react-date-object/calendars/gregorian";
+import gregorian_en from "react-date-object/locales/gregorian_en";
+import DateObject from "react-date-object";
+
+// دریافت پراپ onProfileUpdate برای هماهنگی با سایدبار پنل کاربری
+const ProfileTab = ({ onProfileUpdate }) => {
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -55,6 +64,13 @@ const ProfileTab = () => {
     }));
   };
 
+  // تبدیل تاریخ میلادی دیتابیس به شیء تاریخ شمسی جهت نمایش در تقویم
+  const getDisplayDate = (dateString) => {
+    if (!dateString) return "";
+    return new DateObject({ date: dateString, calendar: gregorian, locale: gregorian_en })
+      .convert(persian, persian_fa);
+  };
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
 
@@ -74,14 +90,14 @@ const ProfileTab = () => {
       }
       setAvatarFile(file);
       setAvatarPreview(URL.createObjectURL(file));
-      setAvatarRemoved(false); // اگر عکس جدید انتخاب کرد، حالت حذف لغو می‌شود
+      setAvatarRemoved(false);
     }
   };
 
   const handleDeleteAvatar = () => {
     setAvatarFile(null);
     setAvatarPreview(null);
-    setAvatarRemoved(true); // فعال کردن پرچم حذف آواتار برای ارسال به سرور
+    setAvatarRemoved(true);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -92,7 +108,6 @@ const ProfileTab = () => {
     setSaving(true);
 
     const formData = new FormData();
-
     formData.append("first_name", profileData.first_name);
     formData.append("last_name", profileData.last_name);
     formData.append("email", profileData.email);
@@ -122,6 +137,11 @@ const ProfileTab = () => {
       setAvatarPreview(data.avatar);
       setAvatarFile(null);
       setAvatarRemoved(false);
+
+      // اجرای لایو بروزرسانی سایدبار پنل
+      if (onProfileUpdate) {
+        onProfileUpdate();
+      }
     } catch (error) {
       console.error("Failed to update profile:", error.response?.data);
       alert("خطا در بروزرسانی اطلاعات. لطفاً دوباره تلاش کنید.");
@@ -241,18 +261,29 @@ const ProfileTab = () => {
               className="w-full border border-gray-200 rounded-xl p-3 bg-gray-100 text-gray-500 cursor-not-allowed text-left opacity-70"
             />
           </div>
-          <div>
-            <label className="block text-sm text-gray-600 mb-2">
-              تاریخ تولد
-            </label>
-            <input
-              type="date"
-              name="birth_date"
-              value={profileData.birth_date}
-              onChange={handleChange}
-              className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-blue-500 bg-gray-50 focus:bg-white transition-colors"
+
+          <div className="flex flex-col">
+            <label className="block text-sm text-gray-600 mb-2">تاریخ تولد</label>
+            <DatePicker
+              calendar={persian}
+              locale={persian_fa}
+              value={getDisplayDate(profileData.birth_date)}
+              onChange={(date) => {
+                if (date) {
+                  const gregorianString = new DateObject(date)
+                    .convert(gregorian, gregorian_en)
+                    .format("YYYY-MM-DD");
+                  setProfileData((prev) => ({ ...prev, birth_date: gregorianString }));
+                } else {
+                  setProfileData((prev) => ({ ...prev, birth_date: "" }));
+                }
+              }}
+              calendarPosition="bottom-right"
+              containerClassName="w-full"
+              inputClass="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-blue-500 bg-gray-50 focus:bg-white transition-colors text-right"
             />
           </div>
+
           <div>
             <label className="block text-sm text-gray-600 mb-2">جنسیت</label>
             <select

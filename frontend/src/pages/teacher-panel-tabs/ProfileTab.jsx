@@ -9,12 +9,20 @@ import {
   Trash2,
 } from "lucide-react";
 
-const ProfileTab = () => {
+// ۱. ایمپورت کردن کامپوننت‌های تاریخ شمسی
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import gregorian from "react-date-object/calendars/gregorian";
+import gregorian_en from "react-date-object/locales/gregorian_en";
+import DateObject from "react-date-object";
+
+const ProfileTab = ({ onProfileUpdate }) => {
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
     email: "",
-    birth_date: "",
+    birth_date: "", // این مقدار همچنان به صورت YYYY-MM-DD میلادی ذخیره می‌شود
     sex: "",
     phone_number: "",
     bio: "",
@@ -91,6 +99,13 @@ const ProfileTab = () => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // تابع کمکی برای تبدیل تاریخ میلادی دریافتی از بک‌اِند به شیء تاریخ شمسی جهت نمایش در کامپوننت دیت‌پیکر
+  const getDisplayDate = (dateString) => {
+    if (!dateString) return "";
+    return new DateObject({ date: dateString, calendar: gregorian, locale: gregorian_en })
+      .convert(persian, persian_fa);
+  };
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -120,8 +135,7 @@ const ProfileTab = () => {
     formData.append("email", profileData.email);
     formData.append("bio", profileData.bio);
     formData.append("national_code", profileData.national_code);
-    if (profileData.birth_date)
-      formData.append("birth_date", profileData.birth_date);
+    if (profileData.birth_date) formData.append("birth_date", profileData.birth_date);
     if (profileData.sex) formData.append("sex", profileData.sex);
     if (avatarFile) formData.append("avatar", avatarFile);
     else if (avatarRemoved) formData.append("avatar", "");
@@ -134,6 +148,11 @@ const ProfileTab = () => {
       setAvatarPreview(response.data.avatar);
       setAvatarFile(null);
       setAvatarRemoved(false);
+
+      if (onProfileUpdate) {
+        onProfileUpdate();
+      }
+
     } catch (error) {
       console.error("Failed to update profile:", error);
       alert("خطا در بروزرسانی اطلاعات.");
@@ -226,33 +245,25 @@ const ProfileTab = () => {
 
   return (
     <div className="space-y-10 pb-8">
-      {/* نوتیفیکیشن وضعیت تایید حساب */}
       {verifyStatus === "A" && (
         <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-3 text-emerald-700">
           <CheckCircle className="w-6 h-6" />
-          <p className="font-medium">
-            حساب کاربری شما با موفقیت تایید شده است.
-          </p>
+          <p className="font-medium">حساب کاربری شما با موفقیت تایید شده است.</p>
         </div>
       )}
       {verifyStatus === "P" && (
         <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center gap-3 text-amber-700">
           <Clock className="w-6 h-6" />
-          <p className="font-medium">
-            اطلاعات شما ارسال شده و در انتظار تایید است.
-          </p>
+          <p className="font-medium">اطلاعات شما ارسال شده و در انتظار تایید است.</p>
         </div>
       )}
       {verifyStatus === "R" && (
         <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex items-center gap-3 text-red-700">
           <AlertCircle className="w-6 h-6" />
-          <p className="font-medium">
-            درخواست شما رد شده است. لطفاً اطلاعات را مجدداً ارسال نمایید.
-          </p>
+          <p className="font-medium">درخواست شما رد شده است. لطفاً اطلاعات را مجدداً ارسال نمایید.</p>
         </div>
       )}
 
-      {/* بخش 1: اطلاعات پایه پروفایل */}
       <div>
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           اطلاعات کاربری
@@ -298,11 +309,10 @@ const ProfileTab = () => {
                   </button>
                 )}
               </div>
-              <p className="text-xs text-gray-500 mt-2">
-                تصاویر با فرمت JPG, PNG (حداکثر 500KB)
-              </p>
+              <p className="text-xs text-gray-500 mt-2">تصاویر با فرمت JPG, PNG (حداکثر 500KB)</p>
             </div>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
             <div>
               <label className="block text-sm text-gray-600 mb-2">نام</label>
@@ -315,9 +325,7 @@ const ProfileTab = () => {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">
-                نام خانوادگی
-              </label>
+              <label className="block text-sm text-gray-600 mb-2">نام خانوادگی</label>
               <input
                 type="text"
                 name="last_name"
@@ -338,9 +346,7 @@ const ProfileTab = () => {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">
-                شماره موبایل (غیرقابل تغییر)
-              </label>
+              <label className="block text-sm text-gray-600 mb-2">شماره موبایل (غیرقابل تغییر)</label>
               <input
                 type="text"
                 value={profileData.phone_number}
@@ -349,18 +355,29 @@ const ProfileTab = () => {
                 className="w-full border border-gray-200 rounded-xl p-3 bg-gray-100 text-gray-500 cursor-not-allowed text-left opacity-70"
               />
             </div>
-            <div>
-              <label className="block text-sm text-gray-600 mb-2">
-                تاریخ تولد
-              </label>
-              <input
-                type="date"
-                name="birth_date"
-                value={profileData.birth_date}
-                onChange={handleProfileChange}
-                className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-gray-50 focus:bg-white transition-colors"
+
+            <div className="flex flex-col">
+              <label className="block text-sm text-gray-600 mb-2">تاریخ تولد</label>
+              <DatePicker
+                calendar={persian}
+                locale={persian_fa}
+                value={getDisplayDate(profileData.birth_date)}
+                onChange={(date) => {
+                  if (date) {
+                    const gregorianString = new DateObject(date)
+                      .convert(gregorian, gregorian_en)
+                      .format("YYYY-MM-DD");
+                    setProfileData((prev) => ({ ...prev, birth_date: gregorianString }));
+                  } else {
+                    setProfileData((prev) => ({ ...prev, birth_date: "" }));
+                  }
+                }}
+                calendarPosition="bottom-right"
+                containerClassName="w-full"
+                inputClass="w-full border border-gray-200 rounded-xl p-3 outline-none focus:border-indigo-500 bg-gray-50 focus:bg-white transition-colors text-right"
               />
             </div>
+
             <div>
               <label className="block text-sm text-gray-600 mb-2">جنسیت</label>
               <select
@@ -385,9 +402,7 @@ const ProfileTab = () => {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-600 mb-2">
-                بیوگرافی کوتاه
-              </label>
+              <label className="block text-sm text-gray-600 mb-2">بیوگرافی کوتاه</label>
               <textarea
                 name="bio"
                 value={profileData.bio}
@@ -409,7 +424,6 @@ const ProfileTab = () => {
         </form>
       </div>
 
-      {/* بخش 2: تایید هویت مدرس */}
       <div className="pt-6 border-t border-gray-200">
         <h2 className="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">
           تایید هویت و اطلاعات مالی
@@ -447,7 +461,6 @@ const ProfileTab = () => {
               />
             </div>
 
-            {/* === ۳. تغییرات بخش نمایش/آپلود رزومه === */}
             <div className="md:col-span-2">
               <label className="block text-sm text-gray-700 mb-2 font-medium">
                 فایل رزومه (PDF، حداکثر 10MB)
@@ -499,7 +512,6 @@ const ProfileTab = () => {
                 </select>
               </div>
 
-              {/* === ۴. تغییرات بخش نمایش/آپلود تصویر مدرک === */}
               <div>
                 <label className="block text-sm text-gray-700 mb-2 font-medium">
                   آپلود تصویر مدرک (حداکثر 1MB)
@@ -529,7 +541,6 @@ const ProfileTab = () => {
             </div>
           </div>
           <div>
-            {/* === ۵. تغییرات دکمه سابمیت فرم === */}
             <button
               type="submit"
               disabled={

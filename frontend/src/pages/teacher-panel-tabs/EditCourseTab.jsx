@@ -31,7 +31,6 @@ const EditCourseTab = () => {
       try {
         const res = await api.get(`/api/v1/courses/me/${id}/`);
         const data = res.data;
-        console.log(data);
         if (data.status === "AP") {
           setIsApproved(true);
           setIsLoading(false);

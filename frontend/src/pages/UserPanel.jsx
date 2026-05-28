@@ -45,6 +45,19 @@ const UserPanel = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const fetchUserData = async () => {
+    try {
+      const response = await api.get("/api/v1/users/me/profile/");
+      setUserInfo({
+        firstName: response.data.first_name || "",
+        lastName: response.data.last_name || "",
+        avatar: response.data.avatar || null,
+      });
+    } catch (error) {
+      console.error("Failed to fetch user data for sidebar:", error);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
@@ -56,19 +69,6 @@ const UserPanel = () => {
     const storedPurchases =
       JSON.parse(localStorage.getItem("purchasedCourses")) || [];
     setPurchasedIds(storedPurchases);
-
-    const fetchUserData = async () => {
-      try {
-        const response = await api.get("/api/v1/users/me/profile/");
-        setUserInfo({
-          firstName: response.data.first_name || "",
-          lastName: response.data.last_name || "",
-          avatar: response.data.avatar || null,
-        });
-      } catch (error) {
-        console.error("Failed to fetch user data for sidebar:", error);
-      }
-    };
 
     fetchUserData();
   }, [navigate]);
@@ -90,7 +90,7 @@ const UserPanel = () => {
       localStorage.removeItem("user_phone");
       localStorage.removeItem("user_role");
 
-      navigate("/auth", { replace: true });
+      navigate("/auth", { replace: true }); //این باعث میشه که کاربر وقتی دکمه بازگشت مرورگر رو بزنه دوباره نره تو صفحه پنل کاربری,در واقع از تاریخچه مرورگر پاکش میکنه
       setIsLoggingOut(false);
     }
   };
@@ -221,7 +221,7 @@ const UserPanel = () => {
                 />
               }
             />
-            <Route path="profile" element={<ProfileTab />} />
+            <Route path="profile" element={<ProfileTab onProfileUpdate={fetchUserData} />} />
             <Route path="certificates" element={<CertificatesTab />} />
             <Route path="tickets" element={<TicketsTab />} />
             <Route path="wallet" element={<WalletTab />} />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
-// تبدیل اعداد فارسی به انگلیسی و محاسبه قیمت
 const parsePrice = (priceString) => {
   if (typeof priceString !== "string" || priceString === "رایگان") return 0;
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];

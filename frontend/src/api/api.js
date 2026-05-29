@@ -45,9 +45,15 @@ api.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("user_phone");
-        window.location.href = "/auth";
+        if (
+          refreshError.response &&
+          (refreshError.response.status === 401 || refreshError.response.status === 400)
+        ) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("user_phone");
+          localStorage.removeItem("user_role");
+          window.location.href = "/auth";
+        }
         return Promise.reject(refreshError);
       }
     }

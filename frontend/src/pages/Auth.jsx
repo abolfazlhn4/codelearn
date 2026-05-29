@@ -14,7 +14,7 @@ export default function Auth() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname;
+  const from = location.state?.from?.pathname; //    /checkout
 
   const handleTabChange = (newRole) => {
     setRole(newRole);
@@ -45,16 +45,29 @@ export default function Auth() {
       setStep("verify");
       setTimeout(() => otpInputs.current[0]?.focus(), 100);
     } catch (err) {
-      setError("خطا در ارسال کد. شماره را بررسی کنید.");
+      if (!err.response) {
+        setError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
+      } else if (err.response.status === 429) {
+        setError("تعداد درخواست‌ها بیش از حد مجاز است. لطفاً کمی بعد تلاش کنید.");
+      } else if (err.response.status === 400) {
+        const errors = err.response.data;
+        if (errors?.phone_number) {
+          setError("شماره موبایل وارد شده نامعتبر است.");
+        } else {
+          setError("اطلاعات ارسال شده نامعتبر است.");
+        }
+      } else {
+        setError("خطای ناشناخته‌ای رخ داد. لطفاً دوباره تلاش کنید.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   const handleOtpChange = (index, value) => {
-    if (!/^\d*$/.test(value)) return;
+    if (!/^\d*$/.test(value)) return; //فقط عدد
     const newOtp = [...otp];
-    newOtp[index] = value.slice(-1);
+    newOtp[index] = value.slice(-1); //فقط ذخیره اخرین عدد تایپ شده
     setOtp(newOtp);
     if (value && index < 5) {
       otpInputs.current[index + 1]?.focus();
@@ -104,7 +117,6 @@ export default function Auth() {
       localStorage.setItem("user_phone", fullPhone);
       localStorage.setItem("user_role", role);
 
-      //کاربر یا بعد از لاگین میره پنل کاربری یا دکمه پرداخت رو زده بوده که اومده لاگین کنه و بعد بره ادامه پرداخت
       if (from) {
         navigate(from, { replace: true });
       } else if (role === "instructor") {
@@ -113,7 +125,21 @@ export default function Auth() {
         navigate("/user-panel", { replace: true });
       }
     } catch (err) {
-      setError("کد واردشده اشتباه است یا منقضی شده.");
+      if (!err.response) {
+        setError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
+      } else if (err.response.status === 401) {
+        setError("کد تایید وارد شده اشتباه است یا منقضی شده.");
+      } else if (err.response.status === 400) {
+        const errors = err.response.data;
+        if (errors?.non_field_errors) {
+          setError("خطایی در تایید اطلاعات رخ داد. لطفاً مجدد تلاش کنید.");
+        } else {
+          setError("اطلاعات ارسال شده نامعتبر است.");
+        }
+      } else {
+        setError("خطا در تایید کد. لطفاً دوباره تلاش کنید.");
+      }
+
       setOtp(["", "", "", "", "", ""]);
       otpInputs.current[0]?.focus();
     } finally {
@@ -124,14 +150,13 @@ export default function Auth() {
   return (
     <div className="flex justify-center mt-20 mb-16 bg-transparent" dir="rtl">
       <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-6 sm:p-8 w-full max-w-md mx-4 transition-all">
-        {/* 3. نمایش نوتیفیکیشن در صورتی که کاربر از صفحه پرداخت به اینجا ارجاع داده شده باشد */}
+
         {from && (
           <div className="bg-amber-50 text-amber-700 px-4 py-3 rounded-xl mb-6 text-sm font-bold border border-amber-200 text-center">
             برای ادامه مراحل پرداخت، لطفاً ابتدا وارد حساب کاربری خود شوید.
           </div>
         )}
 
-        {/* تب‌های انتخاب نقش */}
         <div className="flex bg-gray-50 p-1.5 rounded-2xl mb-8 border border-gray-100">
           <button
             onClick={() => handleTabChange("student")}
@@ -167,7 +192,7 @@ export default function Auth() {
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-medium border border-red-100 flex items-center justify-center">
+          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-medium border border-red-100 flex items-center justify-center text-center">
             {error}
           </div>
         )}
@@ -176,7 +201,6 @@ export default function Auth() {
           onSubmit={step === "phone" ? handleSendOtp : handleVerifyOtp}
           className="space-y-5"
         >
-          {/* ... ادامه فرم که تغییری نکرده ... */}
           {step === "phone" ? (
             <div
               className="flex items-center w-full p-4 rounded-2xl bg-gray-50 border border-gray-200 focus-within:bg-white focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-indigo-500/10 transition-all text-left"
@@ -235,6 +259,7 @@ export default function Auth() {
             onClick={() => {
               setStep("phone");
               setOtp(["", "", "", "", "", ""]);
+              setError(null);
             }}
           >
             ویرایش شماره موبایل

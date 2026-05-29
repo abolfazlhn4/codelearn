@@ -106,8 +106,11 @@ const ProfileTab = ({ onProfileUpdate }) => {
 
   const getDisplayDate = (dateString) => {
     if (!dateString) return "";
-    return new DateObject({ date: dateString, calendar: gregorian, locale: gregorian_en })
-      .convert(persian, persian_fa);
+    return new DateObject({
+      date: dateString,
+      calendar: gregorian,
+      locale: gregorian_en,
+    }).convert(persian, persian_fa);
   };
 
   const handleAvatarChange = (e) => {
@@ -139,7 +142,8 @@ const ProfileTab = ({ onProfileUpdate }) => {
     formData.append("email", profileData.email);
     formData.append("bio", profileData.bio);
     formData.append("national_code", profileData.national_code);
-    if (profileData.birth_date) formData.append("birth_date", profileData.birth_date);
+    if (profileData.birth_date)
+      formData.append("birth_date", profileData.birth_date);
     if (profileData.sex) formData.append("sex", profileData.sex);
     if (avatarFile) formData.append("avatar", avatarFile);
     else if (avatarRemoved) formData.append("avatar", "");
@@ -156,7 +160,6 @@ const ProfileTab = ({ onProfileUpdate }) => {
       if (onProfileUpdate) {
         onProfileUpdate();
       }
-
     } catch (error) {
       console.error("Failed to update profile:", error);
       alert("خطا در بروزرسانی اطلاعات.");
@@ -252,20 +255,27 @@ const ProfileTab = ({ onProfileUpdate }) => {
       {verifyStatus === "A" && (
         <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-3 text-emerald-700">
           <CheckCircle className="w-6 h-6" />
-          <p className="font-medium">حساب کاربری شما با موفقیت تایید شده است.</p>
+          <p className="font-medium">
+            حساب کاربری شما با موفقیت تایید شده است.
+          </p>
         </div>
       )}
       {verifyStatus === "P" && (
         <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center gap-3 text-amber-700">
           <Clock className="w-6 h-6" />
-          <p className="font-medium">اطلاعات شما ارسال شده و در انتظار تایید است.</p>
+          <p className="font-medium">
+            اطلاعات شما ارسال شده و در انتظار تایید است.
+          </p>
         </div>
       )}
       {verifyStatus === "R" && (
         <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex flex-col gap-3 text-red-700">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-6 h-6 shrink-0" />
-            <p className="font-medium">درخواست شما رد شده است. لطفاً اطلاعات را بررسی و مجدداً ارسال نمایید.</p>
+            <p className="font-medium">
+              درخواست شما رد شده است. لطفاً اطلاعات را بررسی و مجدداً ارسال
+              نمایید.
+            </p>
           </div>
           {rejectReason && (
             <div className="mt-1 mr-9 text-sm bg-white/60 p-3 rounded-lg border border-red-100 text-red-800">
@@ -321,7 +331,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
                   </button>
                 )}
               </div>
-              <p className="text-xs text-gray-500 mt-2">تصاویر با فرمت JPG, PNG (حداکثر 500KB)</p>
+              <p className="text-xs text-gray-500 mt-2">
+                تصاویر با فرمت JPG, PNG (حداکثر 500KB)
+              </p>
             </div>
           </div>
 
@@ -337,7 +349,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">نام خانوادگی</label>
+              <label className="block text-sm text-gray-600 mb-2">
+                نام خانوادگی
+              </label>
               <input
                 type="text"
                 name="last_name"
@@ -358,7 +372,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">شماره موبایل (غیرقابل تغییر)</label>
+              <label className="block text-sm text-gray-600 mb-2">
+                شماره موبایل (غیرقابل تغییر)
+              </label>
               <input
                 type="text"
                 value={profileData.phone_number}
@@ -369,7 +385,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-sm text-gray-600 mb-2">تاریخ تولد</label>
+              <label className="block text-sm text-gray-600 mb-2">
+                تاریخ تولد
+              </label>
               <DatePicker
                 calendar={persian}
                 locale={persian_fa}
@@ -379,7 +397,10 @@ const ProfileTab = ({ onProfileUpdate }) => {
                     const gregorianString = new DateObject(date)
                       .convert(gregorian, gregorian_en)
                       .format("YYYY-MM-DD");
-                    setProfileData((prev) => ({ ...prev, birth_date: gregorianString }));
+                    setProfileData((prev) => ({
+                      ...prev,
+                      birth_date: gregorianString,
+                    }));
                   } else {
                     setProfileData((prev) => ({ ...prev, birth_date: "" }));
                   }
@@ -414,7 +435,9 @@ const ProfileTab = ({ onProfileUpdate }) => {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-600 mb-2">بیوگرافی کوتاه</label>
+              <label className="block text-sm text-gray-600 mb-2">
+                بیوگرافی کوتاه
+              </label>
               <textarea
                 name="bio"
                 value={profileData.bio}

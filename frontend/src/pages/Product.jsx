@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { coursesData } from "../data/coursesData.js";
-import { courseFeedbackData } from "../data/mockComments";
-import CommentsSection from "../components/comment/CommentsSection";
-import ReviewsSection from "../components/comment/ReviewsSection";
+import { courseFeedbackData } from "../data/mockComments.js";
+import CommentsSection from "../components/CommentsSection.jsx";
+
 import {
   Play,
   ShoppingBag,
@@ -368,18 +368,12 @@ const Product = () => {
           </div>
         </div>
 
-        {/*  بخش نظرات و ریویوها */}
-        <ReviewsSection
-          reviews={feedback.reviews}
-          courseId={id}
-          canComment={isPurchased}
-        />
-        <CommentsSection
-          courseId={id}
-          isPurchased={isPurchased}
-          isLoggedIn={isLoggedIn}
-        />
-
+   {/*  بخش نظرات  */}
+<CommentsSection
+  courseId={id}
+  isLoggedIn={isLoggedIn}
+  isPurchased={isPurchased}
+/>
         {/* بخش دوره‌های مشابه */}
         {relatedCourses.length > 0 && (
           <div className="mt-16 border-t border-gray-200 pt-10">

@@ -21,6 +21,17 @@ import { initializeLocalStorage } from "./data/initLocalStorage";
 function App() {
   useEffect(() => {
     initializeLocalStorage();
+    // ۲. پاکسازی اتوماتیک کلیدهای مخرب و نامعتبر قدیمی کامنت‌ها
+    Object.keys(localStorage).forEach((key) => {
+      if (
+        key.includes("course_") ||
+        key.includes("comments") ||
+        key.includes("reviews") ||
+        key.includes("undefined")
+      ) {
+        localStorage.removeItem(key);
+      }
+    });
   }, []);
 
   return (

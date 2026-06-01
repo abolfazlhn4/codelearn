@@ -38,7 +38,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'django_daisy',
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.auth',
@@ -67,7 +66,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -125,20 +123,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'en-us'
 LANGUAGES = [
     ('fa', _('Persian')),
     ('en', _('English')),
 ]
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 USE_TZ = True
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-    BASE_DIR / 'locale/phone_verify',
-]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -165,8 +159,8 @@ PHONE_VERIFICATION = {
     'TOKEN_LENGTH': 6,
     'MIN_TOKEN_LENGTH': 6,
     'MAX_FAILED_ATTEMPTS': 5,
-    'MESSAGE': _('Enter to {app}\nCode: {security_code}'),
-    'APP_NAME': _('Code Learn'),
+    'MESSAGE': 'کد ورود به ' + '{app}\nCode: {security_code}',
+    'APP_NAME': 'کدلرن',
     'SECURITY_CODE_EXPIRATION_SECONDS': 120,
     'VERIFY_SECURITY_CODE_ONLY_ONCE': True,
 }
@@ -176,8 +170,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -206,28 +200,4 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
     'COMPONENT_SPLIT_REQUEST': True,
-}
-
-DAISY_SETTINGS = {
-    'SITE_TITLE': _('Code Learn'),
-    'SITE_HEADER': _('Administration'),
-    'SITE_LOGO': '/static/admin/logo.jpg',
-    'INDEX_TITLE': _('Hi, welcome to your dashboard'),
-    'DONT_SUPPORT_ME': True,
-
-    'APPS_REORDER': {
-        'auth': {
-            'name': _('Authentication and Authorization'),
-            'icon': 'fa-solid fa-person-military-pointing',
-        },
-        'phone_verify': {
-            'name': _('Phone Verification'),
-            'icon': 'fa fa-phone',
-            'divider_title': _('Phone Verification'),
-        },
-        'token_blacklist': {
-            'icon': 'fa fa-ban',
-            'divider_title': _('Tokens'),
-        },
-    }
 }

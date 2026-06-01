@@ -2,11 +2,11 @@ from django.contrib.auth import get_user_model
 from phone_verify.serializers import SMSVerificationSerializer
 from rest_framework import serializers
 
-from users.models import InstructorVerification
+from users.models import Role, InstructorVerification
 
 
 class CustomSMSVerificationSerializer(SMSVerificationSerializer):
-    role = serializers.ChoiceField(choices=['student', 'instructor'], default='student')
+    role = serializers.ChoiceField(choices=[Role.student, Role.instructor], default=Role.student)
 
 
 class ProfileSerializer(serializers.ModelSerializer):

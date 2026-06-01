@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api.js";
+import { useToast } from "../context/ToastContext.jsx";
 
 export default function Auth() {
   const [role, setRole] = useState("student");
@@ -9,28 +10,26 @@ export default function Auth() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [sessionToken, setSessionToken] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const otpInputs = useRef([]);
 
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname; //    /checkout
+  const from = location.state?.from?.pathname;
+  const { showSuccess, showError } = useToast();
 
   const handleTabChange = (newRole) => {
     setRole(newRole);
     setStep("phone");
     setPhonePart("");
     setOtp(["", "", "", "", "", ""]);
-    setError(null);
   };
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
-    setError(null);
 
     const phoneRegex = /^9\d{9}$/;
     if (!phoneRegex.test(phonePart)) {
-      setError("شماره باید با 9 شروع شود و 10 رقم باشد (مثال: 9123456789)");
+      showError("شماره باید با 9 شروع شود و 10 رقم باشد.");
       return;
     }
 
@@ -43,21 +42,22 @@ export default function Auth() {
       });
       setSessionToken(res.data.session_token);
       setStep("verify");
+      showSuccess("کد تایید به شماره موبایل شما ارسال شد");
       setTimeout(() => otpInputs.current[0]?.focus(), 100);
     } catch (err) {
       if (!err.response) {
-        setError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
+        showError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
       } else if (err.response.status === 429) {
-        setError("تعداد درخواست‌ها بیش از حد مجاز است. لطفاً کمی بعد تلاش کنید.");
+        showError("تعداد درخواست‌ها بیش از حد مجاز است. لطفاً کمی بعد تلاش کنید.");
       } else if (err.response.status === 400) {
         const errors = err.response.data;
         if (errors?.phone_number) {
-          setError("شماره موبایل وارد شده نامعتبر است.");
+          showError("شماره موبایل وارد شده نامعتبر است.");
         } else {
-          setError("اطلاعات ارسال شده نامعتبر است.");
+          showError("اطلاعات ارسال شده نامعتبر است.");
         }
       } else {
-        setError("خطای ناشناخته‌ای رخ داد. لطفاً دوباره تلاش کنید.");
+        showError("خطای ناشناخته‌ای رخ داد. لطفاً دوباره تلاش کنید.");
       }
     } finally {
       setLoading(false);
@@ -65,9 +65,9 @@ export default function Auth() {
   };
 
   const handleOtpChange = (index, value) => {
-    if (!/^\d*$/.test(value)) return; //فقط عدد
+    if (!/^\d*$/.test(value)) return;
     const newOtp = [...otp];
-    newOtp[index] = value.slice(-1); //فقط ذخیره اخرین عدد تایپ شده
+    newOtp[index] = value.slice(-1);
     setOtp(newOtp);
     if (value && index < 5) {
       otpInputs.current[index + 1]?.focus();
@@ -96,7 +96,6 @@ export default function Auth() {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
     const fullPhone = `+98${phonePart}`;
     const otpCode = otp.join("");
@@ -110,12 +109,14 @@ export default function Auth() {
           session_token: sessionToken,
           role: role,
         },
-        { withCredentials: true },
+        { withCredentials: true }
       );
 
       localStorage.setItem("access_token", res.data.access_token);
       localStorage.setItem("user_phone", fullPhone);
       localStorage.setItem("user_role", role);
+
+      showSuccess("ورود با موفقیت انجام شد");
 
       if (from) {
         navigate(from, { replace: true });
@@ -126,18 +127,18 @@ export default function Auth() {
       }
     } catch (err) {
       if (!err.response) {
-        setError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
+        showError("خطا در ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.");
       } else if (err.response.status === 401) {
-        setError("کد تایید وارد شده اشتباه است یا منقضی شده.");
+        showError("کد تایید وارد شده اشتباه است یا منقضی شده.");
       } else if (err.response.status === 400) {
         const errors = err.response.data;
         if (errors?.non_field_errors) {
-          setError("خطایی در تایید اطلاعات رخ داد. لطفاً مجدد تلاش کنید.");
+          showError("خطایی در تایید اطلاعات رخ داد. لطفاً مجدد تلاش کنید.");
         } else {
-          setError("اطلاعات ارسال شده نامعتبر است.");
+          showError("اطلاعات ارسال شده نامعتبر است.");
         }
       } else {
-        setError("خطا در تایید کد. لطفاً دوباره تلاش کنید.");
+        showError("خطا در تایید کد. لطفاً دوباره تلاش کنید.");
       }
 
       setOtp(["", "", "", "", "", ""]);
@@ -191,12 +192,6 @@ export default function Auth() {
           </p>
         </div>
 
-        {error && (
-          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-medium border border-red-100 flex items-center justify-center text-center">
-            {error}
-          </div>
-        )}
-
         <form
           onSubmit={step === "phone" ? handleSendOtp : handleVerifyOtp}
           className="space-y-5"
@@ -248,8 +243,8 @@ export default function Auth() {
             {loading
               ? "چند لحظه صبر کنید..."
               : step === "phone"
-                ? "دریافت کد تایید"
-                : "تأیید و ورود"}
+              ? "دریافت کد تایید"
+              : "تأیید و ورود"}
           </button>
         </form>
 
@@ -259,7 +254,6 @@ export default function Auth() {
             onClick={() => {
               setStep("phone");
               setOtp(["", "", "", "", "", ""]);
-              setError(null);
             }}
           >
             ویرایش شماره موبایل

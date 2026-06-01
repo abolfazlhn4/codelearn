@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
+import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -16,67 +17,54 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import PaymentGateway from "./pages/PaymentGateway";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { initializeLocalStorage } from "./data/initLocalStorage";
 
 function App() {
-  useEffect(() => {
-    initializeLocalStorage();
-    // ۲. پاکسازی اتوماتیک کلیدهای مخرب و نامعتبر قدیمی کامنت‌ها
-    Object.keys(localStorage).forEach((key) => {
-      if (
-        key.includes("course_") ||
-        key.includes("comments") ||
-        key.includes("reviews") ||
-        key.includes("undefined")
-      ) {
-        localStorage.removeItem(key);
-      }
-    });
-  }, []);
 
   return (
-    <FavoritesProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/CoursesArchive" element={<CoursesArchive />} />
-            <Route path="/Aboutus" element={<Aboutus />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/instructor-panel/*" element={<InstructorPanel />} />
-            <Route
-              path="/user-panel/*"
-              element={
-                <ProtectedRoute allowedRoles={["student"]}>
-                  <UserPanel />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/cart" element={<Cart />} />
-            <Route
-              path="/checkout"
-              element={
-                <ProtectedRoute>
-                  <Checkout />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/payment"
-              element={
-                <ProtectedRoute>
-                  <PaymentGateway />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </CartProvider>
-    </FavoritesProvider>
+    <ToastProvider>
+      <FavoritesProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<Product />} />
+              <Route path="/CoursesArchive" element={<CoursesArchive />} />
+              <Route path="/Aboutus" element={<Aboutus />} />
+              <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/instructor-panel/*" element={<InstructorPanel />} />
+              <Route
+                path="/user-panel/*"
+                element = {
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <UserPanel />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/cart" element={<Cart />} />
+              <Route
+                path="/checkout"
+                element = {
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/payment"
+                element = {
+                  <ProtectedRoute>
+                    <PaymentGateway />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </CartProvider>
+      </FavoritesProvider>
+    </ToastProvider>
   );
 }
 

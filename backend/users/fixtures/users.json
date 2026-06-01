@@ -1,0 +1,144 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$260000$...",
+      "first_name": "مدیر",
+      "last_name": "کل",
+      "email": "admin@example.com",
+      "role": "admin",
+      "phone_number": "+989111111111",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "username": "ali_karimi",
+      "first_name": "علیرضا",
+      "last_name": "کریمی",
+      "email": "ali@example.com",
+      "role": "instructor",
+      "phone_number": "+989122222222",
+      "birth_date": "1985-06-15",
+      "sex": "M",
+      "bio": "مدرس پایتون",
+      "national_code": "1234567890",
+      "avatar": "users/2/avatars/ali.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "username": "sara_hosseini",
+      "first_name": "سارا",
+      "last_name": "حسینی",
+      "email": "sara@example.com",
+      "role": "instructor",
+      "phone_number": "+989133333333",
+      "birth_date": "1990-03-20",
+      "sex": "F",
+      "bio": "مدرس جاوااسکریپت",
+      "national_code": "2345678901",
+      "avatar": "users/3/avatars/sara.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "username": "mohammad_rezaei",
+      "first_name": "محمد",
+      "last_name": "رضایی",
+      "email": "mohammad@example.com",
+      "role": "instructor",
+      "phone_number": "+989144444444",
+      "birth_date": "1988-11-10",
+      "sex": "M",
+      "bio": "طراح UI",
+      "national_code": "3456789012",
+      "avatar": "users/4/avatars/mohammad.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "username": "zahra_mohammadi",
+      "first_name": "زهرا",
+      "last_name": "محمدی",
+      "email": "zahra@example.com",
+      "role": "student",
+      "phone_number": "+989155555555",
+      "birth_date": "1995-05-05",
+      "sex": "F",
+      "bio": "دانشجوی برنامه‌نویسی",
+      "national_code": "4567890123",
+      "avatar": "users/5/avatars/zahra.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "username": "amir_ghasemi",
+      "first_name": "امیر",
+      "last_name": "قاسمی",
+      "email": "amir@example.com",
+      "role": "student",
+      "phone_number": "+989166666666",
+      "birth_date": "2000-12-01",
+      "sex": "M",
+      "bio": "دانشجو",
+      "national_code": "5678901234",
+      "avatar": "users/6/avatars/amir.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+      "username": "fateme_ahmadi",
+      "first_name": "فاطمه",
+      "last_name": "احمدی",
+      "email": "fateme@example.com",
+      "role": "student",
+      "phone_number": "+989177777777",
+      "birth_date": "1998-08-19",
+      "sex": "F",
+      "bio": "علاقه‌مند به طراحی",
+      "national_code": "6789012345",
+      "avatar": "users/7/avatars/fateme.jpg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 8,
+    "fields": {
+      "username": "hossein_jafari",
+      "first_name": "حسین",
+      "last_name": "جعفری",
+      "email": "hossein@example.com",
+      "role": "support",
+      "phone_number": "+989188888888",
+      "birth_date": "1992-04-11",
+      "sex": "M",
+      "bio": "پشتیبان",
+      "national_code": "7890123456",
+      "avatar": "users/8/avatars/hossein.jpg",
+      "is_active": true
+    }
+  }
+]

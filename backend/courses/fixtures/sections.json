@@ -1,0 +1,1094 @@
+[
+  {
+    "model": "courses.section",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "Node.js چیست؟",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 2,
+    "fields": {
+      "course": 1,
+      "title": "نصب Node و NPM",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 3,
+    "fields": {
+      "course": 1,
+      "title": "ایجاد برنامه ساده با Node",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 4,
+    "fields": {
+      "course": 1,
+      "title": "نصب و تنظیم Express",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 5,
+    "fields": {
+      "course": 1,
+      "title": "Routing و Middleware",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 6,
+    "fields": {
+      "course": 2,
+      "title": "نصب پایتون و محیط کاری",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 7,
+    "fields": {
+      "course": 2,
+      "title": "متغیرها و انواع داده",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 8,
+    "fields": {
+      "course": 2,
+      "title": "شرط‌ها و حلقه‌ها",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 9,
+    "fields": {
+      "course": 2,
+      "title": "تابع‌ها و ماژول‌ها",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 10,
+    "fields": {
+      "course": 3,
+      "title": "مبانی و تاریخچه PHP",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 11,
+    "fields": {
+      "course": 3,
+      "title": "سینتکس و متغیرها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 12,
+    "fields": {
+      "course": 3,
+      "title": "ارتباط با MySQL",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 13,
+    "fields": {
+      "course": 3,
+      "title": "عملیات CRUD و اعتبارسنجی فرم",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 14,
+    "fields": {
+      "course": 4,
+      "title": "JVM و ساختار زبان",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 15,
+    "fields": {
+      "course": 4,
+      "title": "کلاس‌ها و متدها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 16,
+    "fields": {
+      "course": 4,
+      "title": "Inheritance و Polymorphism",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 17,
+    "fields": {
+      "course": 4,
+      "title": "Interface و Abstract Class",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 18,
+    "fields": {
+      "course": 5,
+      "title": "ساخت پروژه و تنظیمات",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 19,
+    "fields": {
+      "course": 5,
+      "title": "View و URL ها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 20,
+    "fields": {
+      "course": 5,
+      "title": "ایجاد Models و Migration",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 21,
+    "fields": {
+      "course": 5,
+      "title": "کار با پنل ادمین",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 22,
+    "fields": {
+      "course": 6,
+      "title": "ایجاد پروژه جدید",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 23,
+    "fields": {
+      "course": 6,
+      "title": "Controller و Routing",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 24,
+    "fields": {
+      "course": 6,
+      "title": "مدل‌سازی دیتا با EF Core",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 25,
+    "fields": {
+      "course": 6,
+      "title": "احراز هویت و JWT",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 26,
+    "fields": {
+      "course": 7,
+      "title": "نصب و راه‌اندازی پروژه",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 27,
+    "fields": {
+      "course": 7,
+      "title": "Routing و Controller ها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 28,
+    "fields": {
+      "course": 7,
+      "title": "مدیریت داده‌ها با Eloquent",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 29,
+    "fields": {
+      "course": 7,
+      "title": "Authentication در Laravel",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 30,
+    "fields": {
+      "course": 8,
+      "title": "ساختار زبان Go",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 31,
+    "fields": {
+      "course": 8,
+      "title": "توابع و متغیرها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 32,
+    "fields": {
+      "course": 8,
+      "title": "ایجاد HTTP Server",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 33,
+    "fields": {
+      "course": 8,
+      "title": "کار با JSON و REST",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 34,
+    "fields": {
+      "course": 9,
+      "title": "چیست و چرا React؟",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 35,
+    "fields": {
+      "course": 9,
+      "title": "کامپوننت‌ها و JSX",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 36,
+    "fields": {
+      "course": 9,
+      "title": "مدیریت state و props",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 37,
+    "fields": {
+      "course": 9,
+      "title": "useState و useEffect",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 38,
+    "fields": {
+      "course": 9,
+      "title": "Context API و Custom Hooks",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 39,
+    "fields": {
+      "course": 10,
+      "title": "تگ‌ها و عناصر پایه",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 40,
+    "fields": {
+      "course": 10,
+      "title": "لینک، تصویر و لیست‌ها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 41,
+    "fields": {
+      "course": 10,
+      "title": "انتخابگرها و رنگ‌ها",
+      "is_free": true,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 42,
+    "fields": {
+      "course": 10,
+      "title": "Flexbox و Layout ها",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 43,
+    "fields": {
+      "course": 11,
+      "title": "Scope و Closure",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 44,
+    "fields": {
+      "course": 11,
+      "title": "Higher-order Functions",
+      "is_free": false,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 45,
+    "fields": {
+      "course": 11,
+      "title": "Callback و Promise",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 46,
+    "fields": {
+      "course": 11,
+      "title": "Async/Await عمیق",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 47,
+    "fields": {
+      "course": 12,
+      "title": "نصب و ایجاد پروژه Vue",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 48,
+    "fields": {
+      "course": 12,
+      "title": "کامپوننت‌ها و داده‌ها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 49,
+    "fields": {
+      "course": 12,
+      "title": "Vuex و State Management",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 50,
+    "fields": {
+      "course": 12,
+      "title": "Routing در Vue",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 51,
+    "fields": {
+      "course": 13,
+      "title": "ساخت پروژه و صفحه‌ها",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 52,
+    "fields": {
+      "course": 13,
+      "title": "Data Fetching و استاتیک جنریشن",
+      "is_free": false,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 53,
+    "fields": {
+      "course": 13,
+      "title": "SSR و SSG عمیق",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 54,
+    "fields": {
+      "course": 13,
+      "title": "SEO و Performance",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 55,
+    "fields": {
+      "course": 14,
+      "title": "آشنایی با Utility کلاس‌ها",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 56,
+    "fields": {
+      "course": 14,
+      "title": "کار با رنگ‌ها و تایپوگرافی",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 57,
+    "fields": {
+      "course": 14,
+      "title": "Layout و Grid سیستم",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 58,
+    "fields": {
+      "course": 14,
+      "title": "Responsive و Dark Mode",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 59,
+    "fields": {
+      "course": 15,
+      "title": "معرفی Kotlin و نصب ابزارها",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 60,
+    "fields": {
+      "course": 15,
+      "title": "متغیرها و ساختارهای کنترلی",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 61,
+    "fields": {
+      "course": 15,
+      "title": "توابع و کلاس‌ها",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 62,
+    "fields": {
+      "course": 15,
+      "title": "Activity و Lifecycle",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 63,
+    "fields": {
+      "course": 15,
+      "title": "کار با Layout ها",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 64,
+    "fields": {
+      "course": 17,
+      "title": "معرفی React Native",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 65,
+    "fields": {
+      "course": 17,
+      "title": "نصب محیط توسعه",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 66,
+    "fields": {
+      "course": 17,
+      "title": "ساخت اولین اپلیکیشن",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 67,
+    "fields": {
+      "course": 17,
+      "title": "کامپوننت‌های اصلی",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 68,
+    "fields": {
+      "course": 17,
+      "title": "Navigation در اپلیکیشن",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 69,
+    "fields": {
+      "course": 18,
+      "title": "معرفی Java و نصب JDK",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 70,
+    "fields": {
+      "course": 18,
+      "title": "متغیرها و انواع داده",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 71,
+    "fields": {
+      "course": 18,
+      "title": "شرط‌ها و حلقه‌ها",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 72,
+    "fields": {
+      "course": 18,
+      "title": "کلاس و آبجکت",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 73,
+    "fields": {
+      "course": 18,
+      "title": "Inheritance و Polymorphism",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 74,
+    "fields": {
+      "course": 19,
+      "title": "معرفی C# و Visual Studio",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 75,
+    "fields": {
+      "course": 19,
+      "title": "انواع داده و عملگرها",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 76,
+    "fields": {
+      "course": 19,
+      "title": "کنترل جریان برنامه",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 77,
+    "fields": {
+      "course": 19,
+      "title": "طراحی رابط کاربری با WinForms",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 78,
+    "fields": {
+      "course": 19,
+      "title": "کار با کنترل‌ها و رویدادها",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 79,
+    "fields": {
+      "course": 20,
+      "title": "معرفی Electron و کاربردها",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 80,
+    "fields": {
+      "course": 20,
+      "title": "HTML, CSS, JS در Electron",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 81,
+    "fields": {
+      "course": 20,
+      "title": "فایل‌سیستم و APIهای بومی",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 82,
+    "fields": {
+      "course": 20,
+      "title": "ساخت و توزیع برنامه",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 83,
+    "fields": {
+      "course": 21,
+      "title": "مرور C++ پیشرفته",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 84,
+    "fields": {
+      "course": 21,
+      "title": "معرفی Qt Creator و Widgets",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 85,
+    "fields": {
+      "course": 21,
+      "title": "سیگنال‌ها و اسلات‌ها",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 86,
+    "fields": {
+      "course": 21,
+      "title": "کار با Layoutها و QML",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 87,
+    "fields": {
+      "course": 21,
+      "title": "اتصال به دیتابیس",
+      "is_free": false,
+      "order": 4,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 88,
+    "fields": {
+      "course": 22,
+      "title": "معرفی WPF و ساختار آن",
+      "is_free": true,
+      "order": 0,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 89,
+    "fields": {
+      "course": 22,
+      "title": "زبان XAML برای UI",
+      "is_free": true,
+      "order": 1,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 90,
+    "fields": {
+      "course": 22,
+      "title": "Data Binding عمیق",
+      "is_free": false,
+      "order": 2,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "courses.section",
+    "pk": 91,
+    "fields": {
+      "course": 22,
+      "title": "استایل‌دهی و انیمیشن در WPF",
+      "is_free": false,
+      "order": 3,
+      "created_at": "2024-05-16T10:00:00Z",
+      "updated_at": "2024-05-16T10:00:00Z"
+    }
+  }
+]

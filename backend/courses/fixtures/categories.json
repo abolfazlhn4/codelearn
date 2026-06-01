@@ -1,0 +1,38 @@
+[
+  {
+    "model": "courses.category",
+    "pk": 1,
+    "fields": {
+      "parent": null,
+      "label": "فرانت اند",
+      "description": "دوره‌های توسعه فرانت اند"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 2,
+    "fields": {
+      "parent": null,
+      "label": "بک اند",
+      "description": "دوره‌های برنامه‌نویسی بک اند"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 3,
+    "fields": {
+      "parent": null,
+      "label": "اندروید",
+      "description": "دوره‌های توسعه اپلیکیشن اندروید"
+    }
+  },
+  {
+    "model": "courses.category",
+    "pk": 4,
+    "fields": {
+      "parent": null,
+      "label": "دسکتاپ",
+      "description": "دوره‌های برنامه‌نویسی دسکتاپ"
+    }
+  }
+]

@@ -1,0 +1,497 @@
+[
+  {
+    "model": "courses.lesson",
+    "pk": 1,
+    "fields": {
+      "section": 1,
+      "title": "Node.js چیست؟",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 2,
+    "fields": {
+      "section": 1,
+      "title": "نصب Node و NPM",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 3,
+    "fields": {
+      "section": 1,
+      "title": "ایجاد برنامه ساده با Node",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 3,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 4,
+    "fields": {
+      "section": 2,
+      "title": "نصب و تنظیم Express",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 5,
+    "fields": {
+      "section": 2,
+      "title": "Routing و Middleware",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 6,
+    "fields": {
+      "section": 3,
+      "title": "نصب پایتون و محیط کاری",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 7,
+    "fields": {
+      "section": 3,
+      "title": "متغیرها و انواع داده",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 8,
+    "fields": {
+      "section": 4,
+      "title": "شرط‌ها و حلقه‌ها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 9,
+    "fields": {
+      "section": 4,
+      "title": "تابع‌ها و ماژول‌ها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 10,
+    "fields": {
+      "section": 5,
+      "title": "مبانی و تاریخچه PHP",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 11,
+    "fields": {
+      "section": 5,
+      "title": "سینتکس و متغیرها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 12,
+    "fields": {
+      "section": 6,
+      "title": "ارتباط با MySQL",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 13,
+    "fields": {
+      "section": 6,
+      "title": "عملیات CRUD و اعتبارسنجی فرم",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 14,
+    "fields": {
+      "section": 7,
+      "title": "JVM و ساختار زبان",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 15,
+    "fields": {
+      "section": 7,
+      "title": "کلاس‌ها و متدها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 16,
+    "fields": {
+      "section": 8,
+      "title": "Inheritance و Polymorphism",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 17,
+    "fields": {
+      "section": 8,
+      "title": "Interface و Abstract Class",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 18,
+    "fields": {
+      "section": 9,
+      "title": "ساخت پروژه و تنظیمات",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 19,
+    "fields": {
+      "section": 9,
+      "title": "View و URL ها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 20,
+    "fields": {
+      "section": 10,
+      "title": "ایجاد Models و Migration",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 21,
+    "fields": {
+      "section": 10,
+      "title": "کار با پنل ادمین",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 22,
+    "fields": {
+      "section": 11,
+      "title": "معرفی HTML و ساختار صفحات",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 23,
+    "fields": {
+      "section": 11,
+      "title": "تگ‌های متنی و لینک‌ها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 24,
+    "fields": {
+      "section": 12,
+      "title": "آشنایی با CSS و سلکتورها",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 25,
+    "fields": {
+      "section": 12,
+      "title": "فلکس‌باکس و گرید در CSS",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 26,
+    "fields": {
+      "section": 13,
+      "title": "آشنایی با جاوا اسکریپت",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 27,
+    "fields": {
+      "section": 13,
+      "title": "متغیرها و توابع در JS",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 28,
+    "fields": {
+      "section": 14,
+      "title": "کار با DOM",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 29,
+    "fields": {
+      "section": 14,
+      "title": "ایونت‌ها در جاوا اسکریپت",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 30,
+    "fields": {
+      "section": 15,
+      "title": "نصب و راه‌اندازی React",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 31,
+    "fields": {
+      "section": 15,
+      "title": "کامپوننت‌ها و JSX",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 32,
+    "fields": {
+      "section": 16,
+      "title": "مدیریت State و Props",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 33,
+    "fields": {
+      "section": 16,
+      "title": "هوک‌های کاربردی ریکت",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 34,
+    "fields": {
+      "section": 17,
+      "title": "آشنایی با کاتلین و نصب",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 35,
+    "fields": {
+      "section": 17,
+      "title": "متغیرها و توابع پایه",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 36,
+    "fields": {
+      "section": 18,
+      "title": "شروع کار با Android Studio",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 37,
+    "fields": {
+      "section": 18,
+      "title": "طراحی لایوت‌های اندروید",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 38,
+    "fields": {
+      "section": 19,
+      "title": "مقدمه‌ای بر فلاتر",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 39,
+    "fields": {
+      "section": 19,
+      "title": "ساخت اولین اپلیکیشن فلاتر",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 40,
+    "fields": {
+      "section": 20,
+      "title": "ویجت‌های Stateless و Stateful",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 41,
+    "fields": {
+      "section": 20,
+      "title": "ناوبری بین صفحات",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 42,
+    "fields": {
+      "section": 21,
+      "title": "آشنایی با Electron.js",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 43,
+    "fields": {
+      "section": 21,
+      "title": "معماری Main و Renderer",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": true
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 44,
+    "fields": {
+      "section": 22,
+      "title": "ارتباط بین پردازش‌ها (IPC)",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 1,
+      "is_free": false
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 45,
+    "fields": {
+      "section": 22,
+      "title": "ساخت فایل اجرایی (Build)",
+      "description": "توضیحات این جلسه به زودی اضافه می‌شود.",
+      "order": 2,
+      "is_free": false
+    }
+  }
+]

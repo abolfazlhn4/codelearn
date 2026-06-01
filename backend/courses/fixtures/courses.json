@@ -1,0 +1,401 @@
+[
+  {
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش Node SJ",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "در این دوره به صورت کاملاً عملی و پروژه‌محور با محیط اجرای نود جی‌اس آشنا می‌شویم. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.",
+      "real_price": 237000,
+      "discount": 0,
+      "requirements": "تسلط به جاوا اسکریپت",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 2,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش زبان پایتون",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "پایتون یکی از محبوب‌ترین زبان‌های برنامه‌نویسی دنیاست. در این دوره از صفر مطلق شروع می‌کنیم و تا مباحث پیشرفته پیش می‌رویم. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.",
+      "real_price": 0,
+      "discount": 0,
+      "requirements": "ندارد (مناسب برای مبتدیان)",
+      "status": "PU",
+      "is_free": true,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 3,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش زبان پی اچ پی",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "زبان PHP قلب تپنده بسیاری از سایت‌های وب است. با گذراندن این دوره می‌توانید سیستم‌های مدیریت محتوای اختصاصی خود را بسازید. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.",
+      "real_price": 237000,
+      "discount": 0,
+      "requirements": "آشنایی با HTML و CSS",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 4,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش زبان جاوا",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "جاوا زبانی قدرتمند برای توسعه سیستم‌های بزرگ و سازمانی است. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
+      "real_price": 300000,
+      "discount": 0,
+      "requirements": "مبانی برنامه‌نویسی",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 5,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش جنگو (Django)",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "فریم‌ورک جنگو توسعه وب با پایتون را بسیار سریع و لذت‌بخش می‌کند. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.",
+      "real_price": 250000,
+      "discount": 0,
+      "requirements": "تسلط بر پایتون",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 6,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره آموزش ASP.NET Core",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "بهترین انتخاب برای ورود به بازار کار شرکت‌های بزرگ و سازمانی. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.",
+      "real_price": 280000,
+      "discount": 0,
+      "requirements": "آشنایی با #C",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 7,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "دوره جامع فریم‌ورک لاراول",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "محبوب‌ترین فریم‌ورک PHP که بازار کار فوق‌العاده‌ای دارد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان.",
+      "real_price": 400000,
+      "discount": 0,
+      "requirements": "تسلط بر PHP و شی‌گرایی",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 8,
+    "fields": {
+      "instructor": 1,
+      "category": 2,
+      "title": "آموزش گولنگ (Golang)",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "زبان برنامه‌نویسی توسعه یافته توسط گوگل، با سرعت بالا و مناسب برای میکروسرویس‌ها. لورم ایپسوم متن ساختگی با تولید سادگی.",
+      "real_price": 350000,
+      "discount": 0,
+      "requirements": "تجربه برنامه‌نویسی با یک زبان دیگر",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 9,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "دوره جامع React JS",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "با ریکت می‌توانید رابط‌های کاربری پیچیده و تعاملی را به سادگی بسازید. این دوره دقیقاً همان چیزی است که برای ورود به بازار کار نیاز دارید. لورم ایپسوم متن ساختگی.",
+      "real_price": 500000,
+      "discount": 0,
+      "requirements": "جاوا اسکریپت مدرن (ES6)",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 10,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "آموزش مقدماتی HTML و CSS",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "دروازه ورود به دنیای طراحی وب. در این دوره صفحات وب را از صفر ساختاردهی و استایل‌دهی می‌کنیم. لورم ایپسوم متن ساختگی.",
+      "real_price": 0,
+      "discount": 0,
+      "requirements": "ندارد",
+      "status": "PU",
+      "is_free": true,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 11,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "دوره پیشرفته جاوا اسکریپت",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "درک عمیق از مکانیزم‌های جاوا اسکریپت برای تبدیل شدن به یک برنامه‌نویس ارشد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.",
+      "real_price": 320000,
+      "discount": 0,
+      "requirements": "مبانی جاوا اسکریپت",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 12,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "آموزش فریم‌ورک Vue JS",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "فریم‌ورکی سبک و دوست‌داشتنی برای توسعه فرانت‌اند. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.",
+      "real_price": 290000,
+      "discount": 0,
+      "requirements": "آشنایی با جاوا اسکریپت",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 13,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "دوره متخصص Next.js",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "آموزش رندرینگ سمت سرور (SSR) و بهینه‌سازی سئو برای اپلیکیشن‌های ریکت با استفاده از Next.js. لورم ایپسوم متن ساختگی.",
+      "real_price": 450000,
+      "discount": 0,
+      "requirements": "تسلط بر React JS",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 14,
+    "fields": {
+      "instructor": 1,
+      "category": 1,
+      "title": "طراحی رابط کاربری با Tailwind",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "یادگیری فریم‌ورک Tailwind CSS برای استایل‌دهی سریع و منعطف پروژه‌های وب. لورم ایپسوم متن ساختگی با تولید سادگی.",
+      "real_price": 150000,
+      "discount": 0,
+      "requirements": "آشنایی با HTML و CSS",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 15,
+    "fields": {
+      "instructor": 1,
+      "category": 3,
+      "title": "برنامه‌نویسی اندروید با کاتلین",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "زبان رسمی و پیشنهادی گوگل برای توسعه اپلیکیشن‌های اندروید. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.",
+      "real_price": 420000,
+      "discount": 0,
+      "requirements": "آشنایی با شی‌گرایی",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 17,
+    "fields": {
+      "instructor": 1,
+      "category": 3,
+      "title": "توسعه اپلیکیشن با React Native",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "یک بار کد بنویسید و هم برای اندروید و هم برای iOS خروجی بگیرید. لورم ایپسوم متن ساختگی با تولید سادگی.",
+      "real_price": 380000,
+      "discount": 0,
+      "requirements": "تسلط بر React JS",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 18,
+    "fields": {
+      "instructor": 1,
+      "category": 3,
+      "title": "جاوا برای توسعه‌دهندگان اندروید",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "یادگیری مفاهیم پایه جاوا با رویکرد ورود به دنیای برنامه‌نویسی اندروید. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.",
+      "real_price": 0,
+      "discount": 0,
+      "requirements": "ندارد",
+      "status": "PU",
+      "is_free": true,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 19,
+    "fields": {
+      "instructor": 1,
+      "category": 4,
+      "title": "برنامه‌نویسی ویندوز با #C",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "آموزش ساخت نرم‌افزارهای دسکتاپ قدرتمند برای سیستم‌عامل ویندوز با زبان سی‌شارپ. لورم ایپسوم متن ساختگی.",
+      "real_price": 260000,
+      "discount": 0,
+      "requirements": "آشنایی با الگوریتم‌ها",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 20,
+    "fields": {
+      "instructor": 1,
+      "category": 4,
+      "title": "ساخت برنامه‌های دسکتاپ با Electron",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "با استفاده از تکنولوژی‌های وب (HTML/CSS/JS) نرم‌افزارهای دسکتاپ کراس‌پلتفرم بسازید. لورم ایپسوم متن ساختگی.",
+      "real_price": 310000,
+      "discount": 0,
+      "requirements": "جاوا اسکریپت",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 21,
+    "fields": {
+      "instructor": 1,
+      "category": 4,
+      "title": "دوره جامع ++C و Qt",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "ترکیب قدرت زبان سی‌پلاس‌پلاس با فریم‌ورک Qt برای ساخت رابط‌های کاربری نرم‌افزارهای سنگین و سریع. لورم ایپسوم متن ساختگی.",
+      "real_price": 400000,
+      "discount": 0,
+      "requirements": "آشنایی با مبانی ++C",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 22,
+    "fields": {
+      "instructor": 1,
+      "category": 4,
+      "title": "رابط کاربری پیشرفته با WPF",
+      "short_description": "لورم ایپسوم متن ساختگی است که با تولید سادگی نامفهوم از صنعت چاپ",
+      "description": "طراحی فرم‌های ویندوزی مدرن و زیبا با تکنولوژی WPF در دات‌نت. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.",
+      "real_price": 220000,
+      "discount": 0,
+      "requirements": "تسلط به #C",
+      "status": "PU",
+      "is_free": false,
+      "created_at": "2026-05-15T10:00:00Z",
+      "published_at": "2026-05-15T12:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
+    }
+  }
+]

@@ -2,18 +2,26 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend/code-learn-back
+    build:
+      context: ./backend/code-learn-back
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
       - ./backend/code-learn-back:/app
-    environment:
-      - PYTHONUNBUFFERED=1
+    env_file:
+      - ./backend/code-learn-back/.env
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+    # volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules
+    tty: true
+    stdin_open: true
+    depends_on:
+      - backend
